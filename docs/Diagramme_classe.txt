@@ -1,0 +1,88 @@
+@startuml
+
+title Zeldiablo
+
+class ScreenAdapter
+class Game
+
+class DesktopLauncher {
+    - {static} void main(String[] arg)
+}
+
+class Zeldiablo {
+    + void create()
+}
+
+package views {
+    class GameScreen {
+        - SpriteBatch sprite
+        + void render(float delta)
+        - void update()
+        + void dispose()
+    }
+}
+
+package models {
+    class GameWorld {
+        - World world
+    }
+    
+    interface Entity {
+        + int getHP()
+        + String getName()
+        + void draw(SpriteBatch batch)
+    }
+    
+    class Player {
+        - int hp
+        - int att
+        - int def
+        - Body body
+    
+        + int getHP()
+        + String getName()
+        + void draw(SpriteBatch batch)
+    }
+}
+
+package controllers {
+    interface InputProcessor
+    
+    class KeyboardListener {
+        + String getCMD()
+        + boolean keyDown(int keycode)
+        + boolean keyUp(int keycode)
+        + boolean keyTyped(char character)
+        + boolean touchDown(int screenX, int screenY, int pointer, int button)
+        + boolean touchUp(int screenX, int screenY, int pointer, int button)
+        + boolean touchDragged(int screenX, int screenY, int pointer)
+        + boolean mouseMoved(int screenX, int screenY)
+        + boolean scrolled(int amount)
+    }
+    
+    enum Direction {
+        UP
+        RIGHT
+        DOWN
+        LEFT
+    }
+}
+
+DesktopLauncher *.. Zeldiablo
+
+Zeldiablo --|> Game
+GameScreen --|> ScreenAdapter
+
+Zeldiablo *.. GameScreen
+
+Player ..|> Entity
+GameScreen --> "1" GameWorld: "- game"
+
+GameWorld --> "1" GameScreen: "- screen"
+GameWorld --> "1" Player: "- player"
+
+KeyboardListener --> "1" Direction: "- direction"
+KeyboardListener ..|> InputProcessor
+GameScreen --> "1" KeyboardListener: "- keyboard"
+
+@enduml
