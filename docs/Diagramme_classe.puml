@@ -25,6 +25,27 @@ package views {
 package models {
     class GameWorld {
         - World world
+        - static int widthWorld = 80
+        - static int heightWorld = 80
+
+        + void changeMaze(Portal p)
+        + int getWidthWorld()
+        + int getHeightWorld()
+    }
+
+    class GameState {
+        + boolean isLost()
+        + boolean isWinned()
+        + boolean isPaused()
+        + boolean isInProgress()
+    }
+
+    enum Etat {
+        IN_PROGRESS
+        WINNED
+        LOST
+        PAUSED
+        STOPPED
     }
     
     interface Entity {
@@ -38,10 +59,40 @@ package models {
         - int att
         - int def
         - Body body
+        - GameWorld gs
     
         + int getHP()
-        + String getName()
+        + void attack()
         + void draw(SpriteBatch batch)
+    }
+
+    class Weapon {
+        - int damage
+        - int scope
+        - int speed
+        - String name
+        - Body bodyWeapon
+
+        + void draw(SpriteBatch batch)
+    }
+
+    class Maze {
+        - int currentNumMaze
+
+        + void loadMaze(ArrayList<Portail> portals)
+        + int getCurrentNumMaze()
+        + void draw(SpriteBatch batch)
+    }
+
+    class Portal {
+        - Vector2 posPortal
+        - Body bodyPortal
+        - int numMaze
+
+        + void draw(SpriteBatch batch)
+        + int getNumMaze()
+        + Vector2 getPosPortal()
+        + Vector2 getPosPortalExit()
     }
 }
 
@@ -66,6 +117,10 @@ package controllers {
         DOWN
         LEFT
     }
+
+    enum Action {
+        LEFT_CLICK
+    }
 }
 
 DesktopLauncher *.. Zeldiablo
@@ -75,13 +130,24 @@ GameScreen --|> ScreenAdapter
 
 Zeldiablo *.. GameScreen
 
+
+GameState --> "1" Etat: "- etat"
+
 Player ..|> Entity
+Player --> "1" Weapon: "- weapon"
+
+Portal --> "1" Portal
+
 GameScreen --> "1" GameWorld: "- game"
+GameScreen --> "1" GameState: "- state"
 
 GameWorld --> "1" GameScreen: "- screen"
 GameWorld --> "1" Player: "- player"
+GameWorld --> "1" Maze
+GameWorld --> "*" Portal
 
 KeyboardListener --> "1" Direction: "- direction"
+KeyboardListener --> "1" Action: "- action"
 KeyboardListener ..|> InputProcessor
 GameScreen --> "1" KeyboardListener: "- keyboard"
 
