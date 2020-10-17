@@ -2,6 +2,12 @@
 
 Le diagramme de classe est dans le dossier docs du projet, une capture d'écran sera mise dans le document qui décrit le déroulement de chaque sprint.
 
+# Comment lancer le projet ?
+
+Pour lancer le projet il faut se placer à la racine de celui-ci et faire :
+
+  - "gradle" puis "gradle run"
+
 # Sprint 1
 
 Lien vers le document qui décrit le déroulement de notre Sprint 1 : 
