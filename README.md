@@ -1,6 +1,9 @@
-# Labyrinthe
+# ACL_2020_Zeldiablo
 
-##Brouillon
-2 documents par sprint:
-- document qui présente ce qu’on veut faire
-- document qui présente ce qu’on va faire
+Le diagramme de classe est dans le dossier docs du projet, une capture d'écran sera mise dans le document qui décrit le déroulement de chaque sprint.
+
+# Sprint 1
+
+Lien vers le document qui décrit le déroulement de notre Sprint 1 : 
+
+https://docs.google.com/document/d/1b1qwR1hIukincS5WMaz_JUT8zRdObeMpFrNgQDwCmdw/edit?usp=sharing
