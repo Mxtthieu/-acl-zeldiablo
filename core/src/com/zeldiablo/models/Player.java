@@ -44,9 +44,13 @@ public class Player implements Entity {
      * @param dx déplacement en X
      * @param dy déplacement en Y
      */
-    public void move(float dx, float dy) {
+    public void move(float dx, float dy, float angle) {
         Vector2 pos = body.getPosition();
-        this.body.setTransform(pos.x + dx, pos.y + dy, 0);
+        this.body.setTransform(pos.x + dx, pos.y + dy, angle);
+    }
+
+    public Vector2 getPosition() {
+        return this.body.getPosition();
     }
 
     /**
