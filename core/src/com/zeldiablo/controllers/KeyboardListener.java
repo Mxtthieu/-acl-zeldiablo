@@ -63,18 +63,6 @@ public class KeyboardListener extends ControllerAdapter {
     }
 
     /**
-     * Appelée quand la souris bouge sans cliquer.
-     *
-     * @param screenX coordonée X du pointeur
-     * @param screenY coordonée Y du pointeur
-     * @return si l'entrée à été traitée
-     */
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return true;
-    }
-
-    /**
      * Appelée lorsque une touche du clavier est relachée
      *
      * @param keycode une des constantes dans {@link Input.Keys}
