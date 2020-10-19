@@ -1,8 +1,12 @@
 package com.zeldiablo.models;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 
+/**
+ * @author Sousa Ribeiro Pedro
+ */
 public class Player implements Entity {
 
     private final String name;
@@ -11,9 +15,38 @@ public class Player implements Entity {
     private int def;
     private Body body;
 
-    public Player(String n) {
+    public Player(World world, String n) {
         this.name = n;
         this.hp = 20;
+        this.att = 0;
+        this.def = 0;
+
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.position.set(0, 0);
+        body = world.createBody(bd);
+
+        FixtureDef fixture = new FixtureDef();
+        Shape shape = new CircleShape();
+        shape.setRadius(20);
+        fixture.shape = shape;
+        fixture.density = 1f;
+        fixture.restitution = 0.25f;
+        fixture.friction = 0f;
+
+        body.createFixture(fixture);
+        shape.dispose();
+    }
+
+    /**
+     * Effectue un déplacement du joueur
+     *
+     * @param dx déplacement en X
+     * @param dy déplacement en Y
+     */
+    public void move(float dx, float dy) {
+        Vector2 pos = body.getPosition();
+        this.body.setTransform(pos.x + dx, pos.y + dy, 0);
     }
 
     /**

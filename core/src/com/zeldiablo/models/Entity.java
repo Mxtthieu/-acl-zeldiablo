@@ -2,6 +2,9 @@ package com.zeldiablo.models;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * @author Sousa Ribeiro Pedro
+ */
 public interface Entity {
 
     /**
