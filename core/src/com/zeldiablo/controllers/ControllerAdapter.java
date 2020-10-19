@@ -2,6 +2,9 @@ package com.zeldiablo.controllers;
 
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * @author Sousa Ribeiro Pedro
+ */
 public class ControllerAdapter implements InputProcessor {
     /**
      * Called when a key was pressed
