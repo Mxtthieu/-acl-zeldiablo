@@ -9,12 +9,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.zeldiablo.controllers.KeyboardListener;
 import com.zeldiablo.controllers.MouseListener;
 import com.zeldiablo.models.Player;
+
+import java.util.Random;
 
 public class Zeldiablo extends Game {
 	SpriteBatch batch;
@@ -44,6 +45,9 @@ public class Zeldiablo extends Game {
 		world = new World(new Vector2(0, 0), true);
 		player = new Player(world, "Pedro");
 
+		for (int i = 0; i < 5; i++)
+			createTestBody();
+
 		InputMultiplexer multi = new InputMultiplexer();
 		multi.addProcessor(keyboard);
 		multi.addProcessor(mouse);
@@ -52,6 +56,8 @@ public class Zeldiablo extends Game {
 
 	@Override
 	public void render () {
+
+		world.step(1f/60f, 6, 2);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -81,5 +87,29 @@ public class Zeldiablo extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+	}
+
+	/**
+	 * Fonction pour la version de développement permettant de générer facilmenet des body statique
+	 */
+	private void createTestBody() {
+		Random rand = new Random();
+		float randX = rand.nextFloat()*Gdx.graphics.getWidth();
+		float randY = rand.nextFloat()*Gdx.graphics.getHeight();
+		float randSize = 10+rand.nextFloat()*100;
+
+		BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.StaticBody;
+		bd.position.set(randX, randY);
+
+		Body body = world.createBody(bd);
+		FixtureDef fixture = new FixtureDef();
+		Shape shape = new CircleShape();
+		shape.setRadius(randSize);
+		fixture.shape = shape;
+		fixture.isSensor = false;
+
+		body.createFixture(fixture);
+		shape.dispose();
 	}
 }
