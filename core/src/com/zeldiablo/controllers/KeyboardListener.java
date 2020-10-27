@@ -89,7 +89,19 @@ public class KeyboardListener extends ControllerAdapter {
         return true;
     }
 
+    /**
+     * Indique le déplacement à faire par le personnage
+     * @return Vector2
+     */
     public Vector2 getStep() {
         return this.step;
+    }
+
+    /**
+     * Indique si le mode debug est activé ou non
+     * @return mode debug activé
+     */
+    public boolean isDebug() {
+        return this.debug;
     }
 }
