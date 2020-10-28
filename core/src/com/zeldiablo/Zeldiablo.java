@@ -24,6 +24,9 @@ public class Zeldiablo extends Game {
 	World world;
 	Player player;
 
+	boolean tp = false;
+	Portal por = null;
+
 	float width = 1024;
 	float height = 720;
 
@@ -85,6 +88,11 @@ public class Zeldiablo extends Game {
 
 		this.player.move(step.x, step.y, angle);
 
+		if (tp){
+			this.player.getBody().setTransform(0f,0f,0f);
+			tp = false;
+		}
+
 		batch.begin();
 		debug.render(world, camera.combined);
 		batch.end();
@@ -122,7 +130,7 @@ public class Zeldiablo extends Game {
 
 	/***
 	 * Fonction pour mettre en place une gestion de collision
-	 */
+	 ***/
 
 	private void createCollisionListener() {
 
@@ -144,7 +152,6 @@ public class Zeldiablo extends Game {
 					// Si l'objet en contact avec le personnage est un portail alors je teleporte le personnage
 					if(obj.getClass().getSimpleName().equals("Portal")) {
 						Portal por = ((Portal) obj);
-
 						teleport(getPlayer(), por);
 					}
 
@@ -176,7 +183,9 @@ public class Zeldiablo extends Game {
 		if(por.isActif()) {
 			// Si le portail de sortie est dans le meme labyrinthe on teleporte le joueur
 			if (por.exitSameMaze()) {
-				//p.move(40,40,0f);
+				//p.getBody().setTransform(0f,0f,0f);
+				this.por = por;
+				this.tp = true;
 			} else {
 				// Si le portail de sortie n'est pas situer dans le meme labirynthe on charge le nouveau labirynthe et on teleporte le joueur
 

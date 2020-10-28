@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+/**
+ * @author Vasaune Christian
+ */
 public class Portal {
 
     Vector2 posPortal;
@@ -37,32 +40,60 @@ public class Portal {
 
     }
 
+    /***
+     * Methode permettant de retourner le numero au quel le labirynthe appartient
+     * @return int le numero de labirynthe
+     ***/
+    public int getNumMaze() {
+        return numMaze;
+    }
+
+    /***
+     * Methode permettant de retourner la position du portail
+     * @return Vector2 position du portail
+     ***/
+    public Vector2 getPosPortal() {
+        return posPortal;
+    }
+
+    /***
+     * Methode permettant de retourner la position du portail de sortie
+     * @return Vector2 position du portail de sortie
+     ***/
+    public Vector2 getPosPortalExit() {
+        return exitPortal.getPosPortal();
+    }
+
+    /***
+     * Methode permettant de retourner la position du portail de sortie
+     * @return Vector2 position du portail de sortie
+     ***/
+    public int getExitPortalNumMaze(){
+        return this.exitPortal.getNumMaze();
+    }
+
+    /***
+     * Methode permettant de savoir si les portails se trouve dans le meme monde ou pas
+     * @return boolean true si vrai false sinon
+     ***/
+    public boolean exitSameMaze(){
+        return getNumMaze() == getExitPortalNumMaze();
+    }
+
+    /**
+     * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
+     * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
+     */
     public void draw(SpriteBatch batch){
         batch.begin();
         //batch.draw(); Ajout Sprite
         batch.end();
     }
 
-    public int getNumMaze() {
-        return numMaze;
-    }
-
-    public Vector2 getPosPortal() {
-        return posPortal;
-    }
-
-    public Vector2 getPosPortalExit() {
-        return exitPortal.getPosPortal();
-    }
-
-    public int getExitPortalNumMaze(){
-        return this.exitPortal.getNumMaze();
-    }
-
-    public boolean exitSameMaze(){
-        return getNumMaze() == getExitPortalNumMaze();
-    }
-
+    /***
+     * Methode permettant de savoir si le portail est actif
+     * @return boolean true si vrai false sinon
+     ***/
     public boolean isActif() {
         return actif;
     }
