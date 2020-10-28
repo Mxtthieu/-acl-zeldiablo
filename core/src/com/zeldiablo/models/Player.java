@@ -34,6 +34,7 @@ public class Player implements Entity {
         fixture.restitution = 0.25f;
         fixture.friction = 0f;
 
+        body.setUserData(this);
         body.createFixture(fixture);
         shape.dispose();
     }
@@ -108,4 +109,5 @@ public class Player implements Entity {
         //TODO: Ajouter ici la texture du personnage
         batch.end();
     }
+
 }

@@ -11,34 +11,36 @@ public class Portal {
     int numMaze;
     Portal exitPortal;
     private static float taille;
+    private boolean actif;
 
-    public Portal(int num, Vector2 pos ,World world){
+    public Portal(int num, Vector2 pos , Portal exitP, World world){
 
-        posPortal = pos;
-        taille = (1/40f)* 800;
+        this.numMaze = num;
+        this.exitPortal = exitP;
+        this.actif = true;
+        this.posPortal = pos;
+
+        taille = (1/40f)* 700;
         BodyDef bodydef = new BodyDef();
         bodydef.type = BodyDef.BodyType.StaticBody;
         bodydef.position.set(posPortal);
         bodyPortal = world.createBody(bodydef);
+
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(taille);
         fixtureDef.shape = shape;
+        //fixtureDef.isSensor = true;
+        bodyPortal.setUserData(this);
         bodyPortal.createFixture(fixtureDef);
-        bodyPortal.setUserData("P");
         shape.dispose();
 
     }
 
     public void draw(SpriteBatch batch){
-        /*batch.begin();
-        batch.draw();
-        batch.end();*/
-    }
-
-    public Portal(int num, Portal p){
-        this.numMaze = num;
-        this.exitPortal = p;
+        batch.begin();
+        //batch.draw(); Ajout Sprite
+        batch.end();
     }
 
     public int getNumMaze() {
@@ -52,4 +54,17 @@ public class Portal {
     public Vector2 getPosPortalExit() {
         return exitPortal.getPosPortal();
     }
+
+    public int getExitPortalNumMaze(){
+        return this.exitPortal.getNumMaze();
+    }
+
+    public boolean exitSameMaze(){
+        return getNumMaze() == getExitPortalNumMaze();
+    }
+
+    public boolean isActif() {
+        return actif;
+    }
+
 }
