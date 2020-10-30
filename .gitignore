@@ -107,3 +107,4 @@ Temporary Items
 
 .idea/*
 core/build/libs/*
+/core/build/
