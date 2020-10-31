@@ -12,8 +12,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zeldiablo.controllers.KeyboardListener;
 import com.zeldiablo.controllers.MouseListener;
+import com.zeldiablo.factories.TextureFactory;
+import com.zeldiablo.models.GameState;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
+import com.zeldiablo.models.enums.State;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -25,6 +28,7 @@ public class GameScreen extends ScreenAdapter {
     private Box2DDebugRenderer debug;       // Rendu de debug pour vérifier le placement des corps du jeu
 
     private GameWorld game;                 // Instance du jeu
+    private GameState gameState;            // Instance de l'état du jeu
     private KeyboardListener keyboard;      // Controleur du clavier
     private MouseListener mouse;            // Controleur de la souris
 
@@ -37,6 +41,7 @@ public class GameScreen extends ScreenAdapter {
 
         // --- Instanciation des modèles --- //
         this.game = new GameWorld(this);
+        this.gameState = new GameState();
         this.keyboard = new KeyboardListener();
         this.mouse = new MouseListener();
 
@@ -60,7 +65,17 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.update();
+        if(!this.gameState.isPaused()){
+            this.update();
+        }
+
+        // --- Gestion de la pause --- //
+        if(this.keyboard.isPaused()){
+            this.gameState.setState(State.PAUSED);
+            this.drawPause();
+        } else {
+            this.gameState.setState(State.IN_PROGRESS);
+        }
 
         if (this.keyboard.isDebug()) {
             batch.begin();
@@ -73,13 +88,6 @@ public class GameScreen extends ScreenAdapter {
      * Méthode privée. Permet de mettre à jour tous les modèles selon les actions des controleurs.
      */
     private void update() {
-
-        // --- Gestion de la pause --- //
-        if(this.kl.isPaused()){
-            this.gameState.setState(State.PAUSED);
-        } else {
-            this.gameState.setState(State.IN_PROGRESS);
-        }
 
         // --- Gestion du déplacement et de la rotation du personnage dans le jeu --- //
         Vector2 step = keyboard.getStep();
@@ -105,8 +113,8 @@ public class GameScreen extends ScreenAdapter {
         p.move(step.x, step.y, angle);
         // --- Fin de la gestion --- //
 
+        // Si le jeu n'est pas en pause on avance dans le monde
         this.stepWorld();
-
     }
 
     /**
@@ -138,29 +146,12 @@ public class GameScreen extends ScreenAdapter {
     public void dispose() {
         this.batch.dispose();
     }
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(gameState.isPaused()){
-            this.drawPause();
-        }
-
-        this.update();
-    }
-
-
-    private void update() {
-        if(this.kl.isPaused()){
-            this.gameState.setState(State.PAUSED);
-        } else {
-            this.gameState.setState(State.IN_PROGRESS);
-        }
-    }
 
     private void drawPause() {
-        gameBatch.begin();
-        gameBatch.draw(TextureFactory.INSTANCE.getPause(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        gameBatch.end();
+        batch.begin();
+        batch.draw(TextureFactory.INSTANCE.getPause(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
     }
 
 

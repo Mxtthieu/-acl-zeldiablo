@@ -35,9 +35,6 @@ public class KeyboardListener extends ControllerAdapter {
                 this.direction = Direction.Up;
                 y+=10;
                 break;
-            case Input.Keys.P:
-                this.pause = !this.pause;
-                break;
             case Input.Keys.RIGHT:
                 this.direction = Direction.Right;
                 x+=10;
@@ -50,11 +47,11 @@ public class KeyboardListener extends ControllerAdapter {
                 this.direction = Direction.Left;
                 x-=10;
                 break;
-            case Input.Keys.P:
-                this.pause = !this.pause;
-                break;
             case Input.Keys.D:
                 this.debug = !this.debug;
+                break;
+            case Input.Keys.P:
+                this.pause = !this.pause;
                 break;
             default:
                 this.direction = Direction.None;
@@ -106,5 +103,13 @@ public class KeyboardListener extends ControllerAdapter {
      */
     public boolean isDebug() {
         return this.debug;
+    }
+
+    /**
+     * Indique si le mode pause est activé ou non
+     * @return le boolean est en pause
+     */
+    public boolean isPaused() {
+        return this.pause;
     }
 }
