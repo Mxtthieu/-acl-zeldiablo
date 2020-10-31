@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class KeyboardListener extends ControllerAdapter {
 
-    private Direction direction;
     private boolean pause;
     private boolean debug;
 
@@ -17,7 +16,6 @@ public class KeyboardListener extends ControllerAdapter {
     private float y;
 
     public KeyboardListener() {
-        this.direction = Direction.None;
         this.pause = false;
         this.debug = true;
         this.step = new Vector2();
@@ -33,19 +31,15 @@ public class KeyboardListener extends ControllerAdapter {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.Z:
-                this.direction = Direction.Up;
                 this.y += 10;
                 break;
             case Input.Keys.D:
-                this.direction = Direction.Right;
                 this.x += 10;
                 break;
             case Input.Keys.S:
-                this.direction = Direction.Down;
                 this.y -= 10;
                 break;
             case Input.Keys.Q:
-                this.direction = Direction.Left;
                 this.x -= 10;
                 break;
             case Input.Keys.P:
@@ -55,7 +49,6 @@ public class KeyboardListener extends ControllerAdapter {
                 this.debug = !this.debug;
                 break;
             default:
-                this.direction = Direction.None;
                 break;
         }
 
