@@ -23,7 +23,7 @@ public class Player implements Entity {
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(0, 0);
+        bd.position.set(40, 40);
         body = world.createBody(bd);
 
         FixtureDef fixture = new FixtureDef();
@@ -34,6 +34,7 @@ public class Player implements Entity {
         fixture.restitution = 0.25f;
         fixture.friction = 0f;
 
+        body.setUserData(this);
         body.createFixture(fixture);
         shape.dispose();
     }
@@ -108,4 +109,5 @@ public class Player implements Entity {
         //TODO: Ajouter ici la texture du personnage
         batch.end();
     }
+
 }
