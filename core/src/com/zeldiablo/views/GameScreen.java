@@ -15,6 +15,7 @@ import com.zeldiablo.controllers.MouseListener;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameState;
 import com.zeldiablo.models.GameWorld;
+import com.zeldiablo.models.Maze;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.enums.State;
 
@@ -33,7 +34,6 @@ public class GameScreen extends ScreenAdapter {
     private MouseListener mouse;            // Controleur de la souris
 
     private OrthographicCamera camera;      // La caméra du jeu
-    private Viewport view;                  // Adapte le jeu a tous type d'écran
 
     public GameScreen() {
         this.batch = new SpriteBatch();
@@ -45,13 +45,7 @@ public class GameScreen extends ScreenAdapter {
         this.keyboard = new KeyboardListener();
         this.mouse = new MouseListener();
 
-        // --- Définition de la caméra du jeu --- //
-        this.camera = new OrthographicCamera();
-        this.view = new FitViewport(GameWorld.WIDTH, GameWorld.HEIGHT, this.camera);
-        this.view.apply();
-        this.camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);   // Placement de la camera au centre sur un plan 2D
-        this.camera.update();
-        this.batch.setProjectionMatrix(camera.combined);
+        new Maze(game);
 
         // --- Ajout des controleurs au jeu --- //
         InputMultiplexer multi = new InputMultiplexer();    // Permet d'ajouter plusieurs écouteurs au jeu
@@ -105,7 +99,7 @@ public class GameScreen extends ScreenAdapter {
         float x = xM - xP;
         float y = yM - yP;
 
-            // Un peu de magie (et de la trigo) et on obtient l'angle
+        // Un peu de magie (et de la trigo) et on obtient l'angle
         float angle = (float) Math.atan(y/x);
         if (x < 0)
             angle += Math.PI;
@@ -144,8 +138,11 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void resize(int width, int height) {
-        this.view.update(width, height);
+        // --- Définition de la caméra du jeu --- //
+        this.camera = new OrthographicCamera((float)GameWorld.WIDTH,GameWorld.HEIGHT);
+        this.camera.position.set((float)GameWorld.WIDTH / 2, (float) GameWorld.HEIGHT / 2, 0);
         this.camera.update();
+        this.batch.setProjectionMatrix(camera.combined);
     }
 
     @Override

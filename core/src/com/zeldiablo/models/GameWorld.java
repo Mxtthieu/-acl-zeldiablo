@@ -3,6 +3,8 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.zeldiablo.views.GameScreen;
 
 import java.util.ArrayList;
@@ -10,8 +12,8 @@ import java.util.ArrayList;
 public class GameWorld {
 
     // --- Variables static qui définissent la taille du monde virtuel
-    public static final int WIDTH = 1024;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 60;
+    public static final int HEIGHT = 60;
 
     // --- Eléments du jeu
     private GameScreen screen;
@@ -28,19 +30,6 @@ public class GameWorld {
         this.player = new Player(this.world, "Tester");
         this.portals = new ArrayList<>();
         this.isTp = false;
-        this.portal = null;
-        Portal p1 = new Portal(1, new Vector2(600, 300),this.world);
-        Portal p2 = new Portal(1, new Vector2(300, 40),this.world);
-        Portal p3 = new Portal(1, new Vector2(500, 600),this.world);
-        Portal p4 = new Portal(1, new Vector2(200, 200),this.world);
-        p2.setExitPortal(p1);
-        p1.setExitPortal(p2);
-        p3.setExitPortal(p4);
-        p4.setExitPortal(p3);
-        this.portals.add(p1);
-        this.portals.add(p2);
-        this.portals.add(p3);
-        this.portals.add(p4);
         createCollisionListener();
     }
 

@@ -23,12 +23,12 @@ public class Player implements Entity {
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(50, 100);
+        bd.position.set(10, 10);
         body = world.createBody(bd);
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();
-        shape.setRadius(20);
+        shape.setRadius(1f/50f*GameWorld.WIDTH);
         fixture.shape = shape;
         fixture.density = 1f;
         fixture.restitution = 0.25f;
@@ -47,7 +47,7 @@ public class Player implements Entity {
      */
     public void move(float dx, float dy, float angle) {
         Vector2 pos = body.getPosition();
-        this.body.setTransform(pos.x + dx, pos.y + dy, angle);
+        this.body.setLinearVelocity(dx, dy);
     }
 
     public Vector2 getPosition() {
