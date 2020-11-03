@@ -109,6 +109,9 @@ package factories {
 
 package controllers {
     class MouseListener {
+        - float x
+        - float y
+
         + mouseMoved(int screenX, int screenY)
         + public float getX()
         + public float getY()
@@ -128,15 +131,17 @@ package controllers {
     interface InputProcessor
 
     class KeyboardListener {
-        + String getCMD()
+        - boolean pause
+        - boolean debug
+        - Vector2 step
+        - float x
+        - float y
+
         + boolean keyDown(int keycode)
         + boolean keyUp(int keycode)
-        + boolean keyTyped(char character)
-        + boolean touchDown(int screenX, int screenY, int pointer, int button)
-        + boolean touchUp(int screenX, int screenY, int pointer, int button)
-        + boolean touchDragged(int screenX, int screenY, int pointer)
-        + boolean mouseMoved(int screenX, int screenY)
-        + boolean scrolled(int amount)
+        + Vector2 getStep()
+        + boolean isDebug()
+        + boolean isPaused()
     }
 
     enum Action {
@@ -169,6 +174,7 @@ GameWorld --> "*" Portal
 
 KeyboardListener --> "1" Action: "- action"
 KeyboardListener --|> ControllerAdapter
+MouseListener --|> ControllerAdapter
 ControllerAdapter ..|> InputProcessor
 GameScreen --> "1" KeyboardListener: "- keyboard"
 GameScreen --> "1" MouseListener: "- mouse"
