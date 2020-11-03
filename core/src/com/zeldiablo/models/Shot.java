@@ -1,7 +1,5 @@
 package com.zeldiablo.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.PolygonBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -30,18 +28,17 @@ public class Shot {
 
         FixtureDef fixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(reach / 2f, width / 2f, new Vector2(-20, -20), angle);
+        shape.setAsBox(reach / 2f, width / 2f, new Vector2(0, 0), angle);
         fixture.shape = shape;
         fixture.density = 1f;
-        fixture.restitution = 0.25f;
+        fixture.restitution = 0f;
         fixture.friction = 0f;
 
         body.createFixture(fixture);
         shape.dispose();
     }
 
-    public void update(float deltaTime){
-        y += SPEED + deltaTime;
+    public void update(){
         body.destroyFixture(body.getFixtureList().items[0]);
         world.destroyBody(body);
     }
@@ -51,5 +48,6 @@ public class Shot {
         //TODO: Texture du coup (coup d'épée / fleche / etc..
         //sb.draw(texture, x ,y);
         sb.end();
+        //this.update();
     }
 }

@@ -58,7 +58,7 @@ public class KeyboardListener extends ControllerAdapter {
             case Input.Keys.D:
                 this.debug = !this.debug;
                 break;
-            case Input.Keys.A:
+            case Input.Keys.SPACE:
                 this.attack = true;
                 this.action = Action.Left_click;
                 break;
