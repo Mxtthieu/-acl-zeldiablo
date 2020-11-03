@@ -34,6 +34,8 @@ package models {
         + void changeMaze(Portal p)
         + int getWidthWorld()
         + int getHeightWorld()
+        + void teleport(Player player, Portal portal)
+        + void createCollisionListener()
     }
 
     class GameState {
