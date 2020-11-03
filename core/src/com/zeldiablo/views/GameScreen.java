@@ -98,6 +98,12 @@ public class GameScreen extends ScreenAdapter {
         p.move(step.x, step.y, angle);
         // --- Fin de la gestion --- //
 
+        // --- Gestion de la téléportation ---//
+        if(game.isTp){
+            game.teleport(p,game.portal);
+            game.isTp = false;
+        }
+
         this.stepWorld();
 
     }
