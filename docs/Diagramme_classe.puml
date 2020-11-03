@@ -91,11 +91,18 @@ package models {
         - Vector2 posPortal
         - Body bodyPortal
         - int numMaze
+        - boolean actif
 
         + void draw(SpriteBatch batch)
         + int getNumMaze()
         + Vector2 getPosPortal()
         + Vector2 getPosPortalExit()
+        + void setActif(boolean actif)
+        + void setExitPortalActif(boolean actif)
+        + void set ExitPortal(Portal exitPortal)
+        + int getExitPortalNumMaze()
+        + boolean exitSameMaze()
+        + boolean isActif()
     }
 }
 
