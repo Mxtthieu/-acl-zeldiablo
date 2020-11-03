@@ -18,3 +18,4 @@ public class Zeldiablo extends Game {
 		setScreen(this.gameScreen);
 	}
 }
+
