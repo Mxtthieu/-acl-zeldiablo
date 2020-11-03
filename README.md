@@ -14,6 +14,12 @@ Lien vers le document qui décrit le déroulement de notre Sprint 1 :
 
 https://docs.google.com/document/d/1b1qwR1hIukincS5WMaz_JUT8zRdObeMpFrNgQDwCmdw/edit?usp=sharing
 
-Lien vers le document qui décrit la fin de notre Sprint 1 :
+Lien vers le document du sprint review et du sprint retrospective de notre Sprint 1 :
 
-https://docs.google.com/document/d/1rmOAoUcFwAg5_g_Q1eE__pyka9fyj9t8tDEaJ7EfZbA/edit?usp=sharing
+https://docs.google.com/document/d/13t5UO-YXhVdZHQi3hLloMJbUa_Pkx4I7yqCDf4McuZA/edit?usp=sharing
+
+# Sprint 2
+
+Lien vers le document qui décrit le déroulement de notre Sprint 2 :
+
+https://docs.google.com/document/d/1c-QqIp6g--KTkimu69hkha2MXkiM_1MiSqSOMicLLng/edit?usp=sharing
