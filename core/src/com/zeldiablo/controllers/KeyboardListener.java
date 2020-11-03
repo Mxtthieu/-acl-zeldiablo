@@ -8,13 +8,14 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class KeyboardListener extends ControllerAdapter {
 
-    private Direction direction;
     private boolean pause;
     private boolean debug;
+
     private Vector2 step;
+    private float x;
+    private float y;
 
     public KeyboardListener() {
-        this.direction = Direction.None;
         this.pause = false;
         this.debug = true;
         this.step = new Vector2();
@@ -28,37 +29,29 @@ public class KeyboardListener extends ControllerAdapter {
      */
     @Override
     public boolean keyDown(int keycode) {
-        float x = this.step.x;
-        float y = this.step.y;
         switch (keycode) {
-            case Input.Keys.UP:
-                this.direction = Direction.Up;
-                y+=10;
-                break;
-            case Input.Keys.RIGHT:
-                this.direction = Direction.Right;
-                x+=10;
-                break;
-            case Input.Keys.DOWN:
-                this.direction = Direction.Down;
-                y-=10;
-                break;
-            case Input.Keys.LEFT:
-                this.direction = Direction.Left;
-                x-=10;
+            case Input.Keys.Z:
+                this.y += 10;
                 break;
             case Input.Keys.D:
-                this.debug = !this.debug;
+                this.x += 10;
+                break;
+            case Input.Keys.S:
+                this.y -= 10;
+                break;
+            case Input.Keys.Q:
+                this.x -= 10;
                 break;
             case Input.Keys.P:
                 this.pause = !this.pause;
                 break;
+            case Input.Keys.O:
+                this.debug = !this.debug;
+                break;
             default:
-                this.direction = Direction.None;
                 break;
         }
 
-        this.step.set(x, y);
         return true;
     }
 
@@ -70,22 +63,23 @@ public class KeyboardListener extends ControllerAdapter {
      */
     @Override
     public boolean keyUp(int keycode) {
-        float x = this.step.x;
-        float y = this.step.y;
         switch (keycode) {
-            case Input.Keys.UP:
-            case Input.Keys.DOWN:
-                y = 0;
+            case Input.Keys.Z:
+                this.y -= 10;
                 break;
-            case Input.Keys.RIGHT:
-            case Input.Keys.LEFT:
-                x = 0;
+            case Input.Keys.D:
+                this.x -= 10;
+                break;
+            case Input.Keys.S:
+                this.y += 10;
+                break;
+            case Input.Keys.Q:
+                this.x += 10;
                 break;
             default:
                 break;
         }
 
-        this.step.set(x, y);
         return true;
     }
 
@@ -94,6 +88,7 @@ public class KeyboardListener extends ControllerAdapter {
      * @return Vector2
      */
     public Vector2 getStep() {
+        this.step.set(this.x, this.y);
         return this.step;
     }
 
