@@ -13,3 +13,7 @@ Pour lancer le projet il faut se placer à la racine de celui-ci et faire :
 Lien vers le document qui décrit le déroulement de notre Sprint 1 : 
 
 https://docs.google.com/document/d/1b1qwR1hIukincS5WMaz_JUT8zRdObeMpFrNgQDwCmdw/edit?usp=sharing
+
+Lien vers le document qui décrit la fin de notre Sprint 1 :
+
+https://docs.google.com/document/d/1rmOAoUcFwAg5_g_Q1eE__pyka9fyj9t8tDEaJ7EfZbA/edit?usp=sharing
