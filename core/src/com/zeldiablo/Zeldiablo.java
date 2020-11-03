@@ -49,8 +49,11 @@ public class Zeldiablo extends Game {
 
 		world = new World(new Vector2(0, 0), true);
 		player = new Player(world, "Pedro");
-		Portal p2 = new Portal(1, new Vector2(400, 400),null,world);
-		Portal p1 = new Portal(1, new Vector2(200, 200),p2,world);
+		Portal p2 = new Portal(1, new Vector2(400, 400),world);
+		Portal p1 = new Portal(1, new Vector2(200, 200),world);
+		p2.setExitPortal(p1);
+		p1.setExitPortal(p2);
+
 		createCollisionListener();
 
 		for (int i = 0; i < 5; i++)
@@ -69,6 +72,7 @@ public class Zeldiablo extends Game {
 		world.step(1f/60f, 6, 2);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//createCollisionListener();
 
 		Vector2 step = keyboard.getStep();
 
@@ -88,10 +92,15 @@ public class Zeldiablo extends Game {
 
 		this.player.move(step.x, step.y, angle);
 
+		// Temporaire
 		if (tp){
-			this.player.getBody().setTransform(0f,0f,0f);
+			// Je rend le portail de sortie inactif pour eviter de teleporter en boucle
+			this.por.setExitPortalActif(false);
+			// Je teleporte le joueur a la position du portail de sortie.
+			this.player.getBody().setTransform(this.por.getPosPortalExit().x,this.por.getPosPortalExit().y,0f);
 			tp = false;
 		}
+		// Fin Temporaire
 
 		batch.begin();
 		debug.render(world, camera.combined);
@@ -139,8 +148,8 @@ public class Zeldiablo extends Game {
 			@Override
 			public void beginContact(Contact contact) {
 
-				// je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
 				Object obj;
+				// je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
 				if(contact.getFixtureA().getBody() == getPlayer().getBody()){
 					obj = contact.getFixtureB().getBody().getUserData();
 				}else{
@@ -148,7 +157,6 @@ public class Zeldiablo extends Game {
 				}
 
 				if(obj != null){
-
 					// Si l'objet en contact avec le personnage est un portail alors je teleporte le personnage
 					if(obj.getClass().getSimpleName().equals("Portal")) {
 						Portal por = ((Portal) obj);
@@ -161,6 +169,25 @@ public class Zeldiablo extends Game {
 
 			@Override
 			public void endContact(Contact contact) {
+
+
+				Object obj;
+				// je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
+				if(contact.getFixtureA().getBody() == getPlayer().getBody()){
+					obj = contact.getFixtureB().getBody().getUserData();
+				}else{
+					obj = contact.getFixtureA().getBody().getUserData();
+				}
+
+				if(obj != null){
+					// Si l'objet en contact avec le personnage est un portail alors je met le portail en actif
+					if(obj.getClass().getSimpleName().equals("Portal")) {
+						Portal por = ((Portal) obj);
+						por.setActif(true);
+
+					}
+
+				}
 			}
 
 			@Override
@@ -183,7 +210,11 @@ public class Zeldiablo extends Game {
 		if(por.isActif()) {
 			// Si le portail de sortie est dans le meme labyrinthe on teleporte le joueur
 			if (por.exitSameMaze()) {
-				//p.getBody().setTransform(0f,0f,0f);
+				/*
+				A remplir ....
+				*/
+
+				// Temporaire
 				this.por = por;
 				this.tp = true;
 			} else {

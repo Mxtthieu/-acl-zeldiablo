@@ -16,14 +16,13 @@ public class Portal {
     private static float taille;
     private boolean actif;
 
-    public Portal(int num, Vector2 pos , Portal exitP, World world){
+    public Portal(int num, Vector2 pos , World world){
 
         this.numMaze = num;
-        this.exitPortal = exitP;
         this.actif = true;
         this.posPortal = pos;
 
-        taille = (1/40f)* 700;
+        taille = (1/40f)* 720;
         BodyDef bodydef = new BodyDef();
         bodydef.type = BodyDef.BodyType.StaticBody;
         bodydef.position.set(posPortal);
@@ -38,6 +37,31 @@ public class Portal {
         bodyPortal.createFixture(fixtureDef);
         shape.dispose();
 
+    }
+
+    /**
+     * Permet mettre le portail en actif  true = on peut l'utiliser false = on peut pas
+     * @param actif Booelan
+     */
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
+    /**
+     * Permet de mettre le portail de sortie en actif  true = on peut l'utiliser false = on peut pas
+     * @param actif Booelan
+     */
+    public void setExitPortalActif(boolean actif){
+        this.exitPortal.setActif(actif);
+    }
+
+    /**
+     * Permet d'initialisé un portail de sortie
+     * "Important sinon ca ne marchera pas"
+     * @param exitPortal Portal
+     */
+    public void setExitPortal(Portal exitPortal) {
+        this.exitPortal = exitPortal;
     }
 
     /***
@@ -70,6 +94,7 @@ public class Portal {
      ***/
     public int getExitPortalNumMaze(){
         return this.exitPortal.getNumMaze();
+
     }
 
     /***
@@ -78,6 +103,14 @@ public class Portal {
      ***/
     public boolean exitSameMaze(){
         return getNumMaze() == getExitPortalNumMaze();
+    }
+
+    /***
+     * Methode permettant de savoir si le portail est actif
+     * @return boolean true si vrai false sinon
+     ***/
+    public boolean isActif() {
+        return actif;
     }
 
     /**
@@ -90,12 +123,5 @@ public class Portal {
         batch.end();
     }
 
-    /***
-     * Methode permettant de savoir si le portail est actif
-     * @return boolean true si vrai false sinon
-     ***/
-    public boolean isActif() {
-        return actif;
-    }
 
 }
