@@ -49,15 +49,17 @@ public class Zeldiablo extends Game {
 
 		world = new World(new Vector2(0, 0), true);
 		player = new Player(world, "Pedro");
-		Portal p2 = new Portal(1, new Vector2(400, 400),world);
+		Portal p4 = new Portal(1, new Vector2(600, 300),world);
+		Portal p3 = new Portal(1, new Vector2(300, 40),world);
+		Portal p2 = new Portal(1, new Vector2(500, 600),world);
 		Portal p1 = new Portal(1, new Vector2(200, 200),world);
 		p2.setExitPortal(p1);
 		p1.setExitPortal(p2);
+		p3.setExitPortal(p4);
+		p4.setExitPortal(p3);
 
 		createCollisionListener();
-
-		for (int i = 0; i < 5; i++)
-			createTestBody();
+		createTestBody();
 
 		InputMultiplexer multi = new InputMultiplexer();
 		multi.addProcessor(keyboard);
@@ -117,18 +119,16 @@ public class Zeldiablo extends Game {
 	 */
 	private void createTestBody() {
 		Random rand = new Random();
-		float randX = rand.nextFloat()*Gdx.graphics.getWidth();
-		float randY = rand.nextFloat()*Gdx.graphics.getHeight();
-		float randSize = 10+rand.nextFloat()*100;
 
+		float[] pos = {15f, 15f, 15f, 705f, 1009f, 705f, 1009f, 15f, 15f, 15f};
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
-		bd.position.set(randX, randY);
+		bd.position.set(0, 0);
 
 		Body body = world.createBody(bd);
 		FixtureDef fixture = new FixtureDef();
-		Shape shape = new CircleShape();
-		shape.setRadius(randSize);
+		ChainShape shape = new ChainShape();
+		shape.createChain(pos);
 		fixture.shape = shape;
 		fixture.isSensor = false;
 

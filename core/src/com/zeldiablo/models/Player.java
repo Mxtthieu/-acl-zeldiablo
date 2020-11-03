@@ -23,7 +23,7 @@ public class Player implements Entity {
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(20, 20);
+        bd.position.set(40, 40);
         body = world.createBody(bd);
 
         FixtureDef fixture = new FixtureDef();

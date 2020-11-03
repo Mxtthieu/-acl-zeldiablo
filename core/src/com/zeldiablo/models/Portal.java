@@ -16,7 +16,7 @@ public class Portal {
     private static float taille;
     private boolean actif;
 
-    public Portal(int num, Vector2 pos , World world){
+    public Portal(int num, Vector2 pos, World world){
 
         this.numMaze = num;
         this.actif = true;
