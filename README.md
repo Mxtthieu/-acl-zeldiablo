@@ -4,6 +4,10 @@ Le diagramme de classe est dans le dossier docs du projet, une capture d'écran 
 
 # Comment lancer le projet ?
 
+Avant de pouvoir lancer le projet, vous devez changer de version Java et prendre la version 1.8.
+
+Libgdx a des problèmes avec les versions plus récentes de Java.
+
 Pour lancer le projet il faut se placer à la racine de celui-ci et faire :
 
   - "gradle" puis "gradle run"
