@@ -71,56 +71,11 @@ package models {
         + void draw(SpriteBatch batch)
     }
 
-    abstract class Weapon {
+    class Weapon {
         - int damage
         - int scope
         - int speed
         - String name
-        - Body bodyWeapon
-
-        + void draw(SpriteBatch batch)
-    }
-
-    class Sword {
-        - int damage
-        - int scope
-        - int speed
-        - Body bodyWeapon
-
-        + void draw(SpriteBatch batch)
-    }
-
-    class Bow {
-        - int damage
-        - int scope
-        - int speed
-        - Body bodyWeapon
-
-        + void draw(SpriteBatch batch)
-    }
-
-    class Staff {
-        - int damage
-        - int scope
-        - int speed
-        - Body bodyWeapon
-
-        + void draw(SpriteBatch batch)
-    }
-
-    class Spear {
-        - int damage
-        - int scope
-        - int speed
-        - Body bodyWeapon
-
-        + void draw(SpriteBatch batch)
-    }
-
-    class Hammer {
-        - int damage
-        - int scope
-        - int speed
         - Body bodyWeapon
 
         + void draw(SpriteBatch batch)
@@ -150,26 +105,6 @@ package models {
         + int getExitPortalNumMaze()
         + boolean exitSameMaze()
         + boolean isActif()
-    }
-
-    abstract class Trap {
-        - int damage
-        + void draw(SpriteBatch batch)
-    }
-
-    class ArrowTrap {
-        - int damage
-        + void draw(SpriteBatch batch)
-    }
-
-    class TpTrap {
-        - int damage
-        + void draw(SpriteBatch batch)
-    }
-
-    class AmbushTrap {
-        - int damage
-        + void draw(SpriteBatch batch)
     }
 }
 
@@ -236,16 +171,6 @@ GameState --> "1" Etat: "- etat"
 Player ..|> Entity
 Player --> "1" Weapon: "- weapon"
 
-Weapon -- Sword
-Weapon -- Bow
-Weapon -- Staff
-Weapon -- Spear
-Weapon -- Hammer
-
-Trap -- ArrowTrap
-Trap -- TpTrap
-Trap -- AmbushTrap
-
 Portal --> "1" Portal
 
 GameScreen --> "1" GameWorld: "- game"
@@ -255,7 +180,6 @@ GameWorld --> "1" GameScreen: "- screen"
 GameWorld --> "1" Player: "- player"
 GameWorld --> "1" Maze
 GameWorld --> "*" Portal
-GameWorld --> "*" Trap
 
 KeyboardListener --> "1" Action: "- action"
 KeyboardListener --|> ControllerAdapter
