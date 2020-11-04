@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.zeldiablo.controllers.CollisionListener;
 import com.zeldiablo.controllers.KeyboardListener;
 import com.zeldiablo.controllers.MouseListener;
 import com.zeldiablo.factories.TextureFactory;
@@ -31,6 +32,7 @@ public class GameScreen extends ScreenAdapter {
     private GameState gameState;            // Instance de l'état du jeu
     private KeyboardListener keyboard;      // Controleur du clavier
     private MouseListener mouse;            // Controleur de la souris
+    private CollisionListener collision;    // Controleur de la collision
 
     private OrthographicCamera camera;      // La caméra du jeu
     private Viewport view;                  // Adapte le jeu a tous type d'écran
@@ -44,6 +46,7 @@ public class GameScreen extends ScreenAdapter {
         this.gameState = new GameState();
         this.keyboard = new KeyboardListener();
         this.mouse = new MouseListener();
+        this.collision = new CollisionListener(this.game.getPlayer());
 
         // --- Définition de la caméra du jeu --- //
         this.camera = new OrthographicCamera();
@@ -54,10 +57,11 @@ public class GameScreen extends ScreenAdapter {
         this.batch.setProjectionMatrix(camera.combined);
 
         // --- Ajout des controleurs au jeu --- //
-        InputMultiplexer multi = new InputMultiplexer();    // Permet d'ajouter plusieurs écouteurs au jeu
+        InputMultiplexer multi = new InputMultiplexer();        // Permet d'ajouter plusieurs écouteurs au jeu
         multi.addProcessor(this.keyboard);
         multi.addProcessor(this.mouse);
-        Gdx.input.setInputProcessor(multi);                 // Ajout de la liste d'écouteurs
+        Gdx.input.setInputProcessor(multi);                     // Ajout de la liste d'écouteurs
+        this.game.getWorld().setContactListener(this.collision);// Ajout des effects de collision au monde
     }
 
     @Override
@@ -89,6 +93,13 @@ public class GameScreen extends ScreenAdapter {
      */
     private void update() {
 
+        // --- Gestion des Pieges --- //
+
+
+
+
+        // --- Fin de Gestion --- //
+
         // --- Gestion du déplacement et de la rotation du personnage dans le jeu --- //
         Vector2 step = keyboard.getStep();
         Player p = this.game.getPlayer();
@@ -114,11 +125,11 @@ public class GameScreen extends ScreenAdapter {
         // --- Fin de la gestion --- //
 
         // --- Gestion de la téléportation ---//
-        if(game.isTp){
-            game.teleport(p,game.portal);
-            game.isTp = false;
+        if(this.collision.isTp()){
+            game.teleport(p,this.collision.getPortal());
+            this.collision.setTp(false);
         }
-
+        // --- Fin de Gestion ---//
         this.stepWorld();
 
     }
