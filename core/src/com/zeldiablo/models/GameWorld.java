@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class GameWorld {
 
     // --- Variables static qui définissent la taille du monde virtuel
-    public static final int WIDTH = 60;
+    public static final int WIDTH = 80;
     public static final int HEIGHT = 60;
 
     // --- Eléments du jeu

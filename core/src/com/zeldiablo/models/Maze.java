@@ -71,7 +71,7 @@ public class Maze {
 
         World world = gameWorld.getWorld();
 
-        Vector2 positionMur = new Vector2(j+1,i+1);
+        Vector2 positionMur = new Vector2(j+1,GameWorld.HEIGHT - (i+1));
 
         BodyDef bodyDef1 = new BodyDef();
         bodyDef1.type = BodyDef.BodyType.StaticBody;
@@ -80,7 +80,7 @@ public class Maze {
         Body body = world.createBody(bodyDef1);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius((1/60f)*GameWorld.WIDTH);
+        shape.setRadius(1/90f * GameWorld.WIDTH);
         shape.setPosition(new Vector2(0, 0));
 
         FixtureDef fixtureDef1 = new FixtureDef();
