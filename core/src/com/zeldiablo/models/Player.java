@@ -13,6 +13,7 @@ public class Player implements Entity {
     private int hp;
     private int att;
     private int def;
+    private int speed;
     private Body body;
 
     public Player(World world, String n) {
@@ -20,6 +21,7 @@ public class Player implements Entity {
         this.hp = 20;
         this.att = 0;
         this.def = 0;
+        this.speed = 20;
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
@@ -47,7 +49,7 @@ public class Player implements Entity {
      */
     public void move(float dx, float dy, float angle) {
         Vector2 pos = body.getPosition();
-        this.body.setTransform(pos.x + dx, pos.y + dy, angle);
+        this.body.setLinearVelocity(dx*this.speed, dy*this.speed);
     }
 
     public Vector2 getPosition() {
