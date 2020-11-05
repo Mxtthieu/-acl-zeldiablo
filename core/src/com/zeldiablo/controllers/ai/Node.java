@@ -13,11 +13,11 @@ public class Node {
     public double cost, heuristic;
     private List<Node> neighbours;
 
-    public Node(int x, int y, float cost, float heuristic) {
+    public Node(int x, int y, float cost) {
         this.x = x;
         this.y = y;
         this.cost = cost;
-        this.heuristic = heuristic;
+        this.heuristic = 0;
         this.neighbours = new ArrayList<>();
     }
 
