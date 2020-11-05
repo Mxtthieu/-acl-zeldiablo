@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.enums.MazeObjects;
+import com.zeldiablo.models.piege.Piege;
+import com.zeldiablo.models.piege.PiegeDegat;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,14 +18,19 @@ public class Maze {
     private File mazeFile;
 
     private ArrayList<Body> wallList;
+    private ArrayList<Piege> trapList;
 
     public Maze(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
         this.wallList = new ArrayList<>();
+        this.trapList = new ArrayList<>();
         loadMaze();
         readObjects();
     }
 
+    /**
+     * La fonction loadMaze permet de charger un labyrinthe avec un fichier
+     */
     public void loadMaze() {
 
         World world = gameWorld.getWorld();
@@ -36,6 +43,10 @@ public class Maze {
 
     }
 
+    /**
+     * La fonction readObjects lit et place les différents objets du fichier dans le monde
+     * (piege, mur, etc..)
+     */
     public void readObjects() {
         try {
             FileReader fr = new FileReader(this.mazeFile);
@@ -52,6 +63,9 @@ public class Maze {
                         case 'W':
                             addWall(line, column);
                             break;
+                        case 'T':
+                            addTrap(line,column);
+                            break;
                         default:
                             break;
                     }
@@ -67,6 +81,22 @@ public class Maze {
 
     }
 
+    /**
+     * Ajoute un piege au monde
+     * @param i la ligne dans le fichier
+     * @param j la colonne dans le fichier
+     */
+    private void addTrap(int i, int j) {
+        World world = gameWorld.getWorld();
+
+        this.trapList.add(new PiegeDegat(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
+    }
+
+    /**
+     * Ajoute un mur dans le monde
+     * @param i la ligne dans le fichier
+     * @param j la colonne dans le fichier
+     */
     public void addWall(int i, int j) {
 
         World world = gameWorld.getWorld();

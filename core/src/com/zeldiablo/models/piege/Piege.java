@@ -3,6 +3,7 @@ package com.zeldiablo.models.piege;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 
 public abstract class Piege {
@@ -17,8 +18,8 @@ public abstract class Piege {
 
         this.touch = true;
         this.pos = pos;
-        this.height = (1/80f)*1024;
-        this.width = (1/60f)*720;
+        this.height = (1/60f)* GameWorld.HEIGHT;
+        this.width = (1/80f)*GameWorld.WIDTH;
 
         BodyDef bodydef = new BodyDef();
         bodydef.type = BodyDef.BodyType.StaticBody;

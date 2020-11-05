@@ -33,20 +33,6 @@ public class GameWorld {
         this.portals = new ArrayList<>();
         this.pieges = new ArrayList<>();
         this.isTp = false;
-        this.portal = null;
-        Portal p1 = new Portal(1, new Vector2(600, 300),this.world);
-        Portal p2 = new Portal(1, new Vector2(300, 40),this.world);
-        Portal p3 = new Portal(1, new Vector2(500, 600),this.world);
-        Portal p4 = new Portal(1, new Vector2(200, 200),this.world);
-        p2.setExitPortal(p1);
-        p1.setExitPortal(p2);
-        p3.setExitPortal(p4);
-        p4.setExitPortal(p3);
-        this.portals.add(p1);
-        this.portals.add(p2);
-        this.portals.add(p3);
-        this.portals.add(p4);
-        createCollisionListener();
     }
 
     /**
