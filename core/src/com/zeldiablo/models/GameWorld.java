@@ -18,6 +18,8 @@ public class GameWorld {
     private World world;
     private Player player;
     private ArrayList<Portal>portals;
+    private Monster monster;
+
     // --- Données Téleportation
     public boolean isTp;
     public Portal portal;
@@ -42,6 +44,8 @@ public class GameWorld {
         this.portals.add(p3);
         this.portals.add(p4);
         createCollisionListener();
+
+        this.monster = new Skeleton(this.world, GameWorld.WIDTH - 20, GameWorld.HEIGHT - 20, this.player);
     }
 
     /**
@@ -50,6 +54,7 @@ public class GameWorld {
      */
     public void draw(SpriteBatch batch) {
         this.player.draw(batch);
+        this.monster.draw(batch);
         for(Portal p :portals){
             p.draw(batch);
         }
