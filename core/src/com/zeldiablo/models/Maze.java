@@ -19,6 +19,7 @@ public class Maze {
 
     private ArrayList<Body> wallList;
     private ArrayList<Piege> trapList;
+    private ArrayList<Portal> portalList;
 
     private int currentNumMaze;
 
@@ -26,6 +27,7 @@ public class Maze {
         this.gameWorld = gameWorld;
         this.wallList = new ArrayList<>();
         this.trapList = new ArrayList<>();
+        this.portalList = new ArrayList<>();
         this.currentNumMaze = 0;
         loadMaze();
         readObjects();
@@ -71,6 +73,9 @@ public class Maze {
                         case 'T':
                             addTrap(line,column);
                             break;
+                        case 'P':
+                            addPortal(line,column);
+                            break;
                         default:
                             break;
                     }
@@ -84,6 +89,17 @@ public class Maze {
         }
 
 
+    }
+
+    /**
+     * Ajoute un portail au monde
+     * @param i la ligne dans le fichier
+     * @param j la colonne dans le fichier
+     */
+    private void addPortal(int i, int j) {
+        World world = gameWorld.getWorld();
+
+        this.portalList.add(new Portal(this.portalList.size(),new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
     }
 
     /**

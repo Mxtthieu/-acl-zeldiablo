@@ -22,7 +22,7 @@ public class Portal {
         this.actif = true;
         this.posPortal = pos;
 
-        taille = (1/40f)* 720;
+        taille = (1/40f)* GameWorld.WIDTH;
         BodyDef bodydef = new BodyDef();
         bodydef.type = BodyDef.BodyType.StaticBody;
         bodydef.position.set(posPortal);
