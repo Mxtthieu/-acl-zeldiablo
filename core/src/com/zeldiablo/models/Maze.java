@@ -20,10 +20,13 @@ public class Maze {
     private ArrayList<Body> wallList;
     private ArrayList<Piege> trapList;
 
+    private int currentNumMaze;
+
     public Maze(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
         this.wallList = new ArrayList<>();
         this.trapList = new ArrayList<>();
+        this.currentNumMaze = 0;
         loadMaze();
         readObjects();
     }
@@ -39,7 +42,9 @@ public class Maze {
         }
         wallList.clear();
 
-        this.mazeFile = new File("./core/assets/maze/Maze0");
+        this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
+
+        this.currentNumMaze++;
 
     }
 

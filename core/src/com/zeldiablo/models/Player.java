@@ -17,9 +17,8 @@ public class Player implements Entity {
     private int att;
     private int def;
     private Body body;
-    private World world;
 
-    public Player(World world, String n) {
+    public Player(GameWorld gameWorld, String n) {
         this.name = n;
         this.hp = 20;
         this.att = 0;
@@ -28,7 +27,7 @@ public class Player implements Entity {
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(10, 10);
-        body = world.createBody(bd);
+        body = gameWorld.getWorld().createBody(bd);
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();

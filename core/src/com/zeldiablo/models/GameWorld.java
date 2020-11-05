@@ -29,7 +29,7 @@ public class GameWorld {
     public GameWorld(GameScreen s) {
         this.screen = s;
         this.world = new World(new Vector2(0, 0), true);
-        this.player = new Player(this.world, "Tester");
+        this.player = new Player(this, "Tester");
         this.portals = new ArrayList<>();
         this.pieges = new ArrayList<>();
         this.isTp = false;

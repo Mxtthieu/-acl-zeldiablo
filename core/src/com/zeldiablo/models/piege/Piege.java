@@ -36,9 +36,7 @@ public abstract class Piege {
         shape.dispose();
     }
 
-    public void effect(Player p) {
-
-    }
+    public abstract void effect(Player p);
 
     /**
      * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
