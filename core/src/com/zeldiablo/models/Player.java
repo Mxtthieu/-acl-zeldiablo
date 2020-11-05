@@ -118,7 +118,7 @@ public class Player implements Entity {
         batch.end();
     }
 
-    public void attack(float x, float y, float angle, MouseListener mouse){
-        shots.add(new Shot(world,x+20, y+20, this.weapon.getReach(), this.weapon.getWidth(), angle, mouse));
+    public void attack(float angle, MouseListener mouse){
+        shots.add(new Shot(world,this.body.getPosition().x,this.body.getPosition().y,this.weapon.getReach(), this.weapon.getWidth(), angle, mouse));
     }
 }

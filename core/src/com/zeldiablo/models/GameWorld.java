@@ -39,6 +39,6 @@ public class GameWorld {
     }
 
     public void atk(){
-        this.player.attack(this.player.getBody().getPosition().x, this.player.getBody().getPosition().y, screen.getAngle(), screen.getMouse());
+        this.player.attack(screen.getAngle(), screen.getMouse());
     }
 }
