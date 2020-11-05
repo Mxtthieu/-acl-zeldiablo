@@ -10,7 +10,7 @@ import java.util.List;
 public class Node {
 
     public int x, y;
-    public float cost, heuristic;
+    public double cost, heuristic;
     private List<Node> neighbours;
 
     public Node(int x, int y, float cost, float heuristic) {
@@ -51,5 +51,9 @@ public class Node {
      */
     public List<Node> getNeighbours() {
         return this.neighbours;
+    }
+
+    public double distanceWith(Node n) {
+        return Math.sqrt((x - n.x)*(x - n.x) + (y - n.y)*(y - n.y));
     }
 }
