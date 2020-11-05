@@ -48,8 +48,8 @@ public class Player implements Entity {
      * @param dy déplacement en Y
      */
     public void move(float dx, float dy, float angle) {
-        this.body.setLinearVelocity(dx*this.speed, dy*this.speed);
         this.body.setTransform(this.getPosition(), angle);
+        this.body.setLinearVelocity(dx*this.speed, dy*this.speed);
     }
 
     public Vector2 getPosition() {
