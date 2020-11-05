@@ -3,17 +3,21 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.controllers.MouseListener;
+
+import java.util.ArrayList;
 
 /**
  * @author Sousa Ribeiro Pedro
  */
 public class Player implements Entity {
 
-    private final String name;
+    private String name;
     private int hp;
     private int att;
     private int def;
     private Body body;
+    private World world;
 
     public Player(World world, String n) {
         this.name = n;
@@ -34,7 +38,6 @@ public class Player implements Entity {
         fixture.restitution = 0.25f;
         fixture.friction = 0f;
 
-        body.setUserData(this);
         body.createFixture(fixture);
         shape.dispose();
     }
