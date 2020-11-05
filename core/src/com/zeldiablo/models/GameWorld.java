@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.piege.Piege;
 import com.zeldiablo.models.piege.PiegeDegat;
+import com.zeldiablo.models.piege.PiegeRalentissant;
 import com.zeldiablo.views.GameScreen;
 
 import java.util.ArrayList;
@@ -36,11 +37,13 @@ public class GameWorld {
         Portal p1 = new Portal(1, new Vector2(600, 300),this.world);
         Portal p2 = new Portal(1, new Vector2(300, 40),this.world);
         Piege piege1 = new PiegeDegat(new Vector2(100,100),this.world);
+        Piege piege2 = new PiegeRalentissant(new Vector2(200,200),this.world);
         p2.setExitPortal(p1);
         p1.setExitPortal(p2);
         this.portals.add(p1);
         this.portals.add(p2);
         this.pieges.add(piege1);
+        this.pieges.add(piege2);
     }
 
     /**

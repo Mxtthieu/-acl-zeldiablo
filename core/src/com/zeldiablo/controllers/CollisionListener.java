@@ -32,21 +32,19 @@ public class CollisionListener implements ContactListener {
             obj = contact.getFixtureA().getBody().getUserData();
         }
 
-        if(obj != null){
+        if(obj != null) {
             // Si l'objet en contact avec le personnage est un portail alors je teleporte le personnage
-            if(obj.getClass().getSimpleName().equals("Portal")) {
+            if (obj.getClass().getSimpleName().equals("Portal")) {
                 Portal por = ((Portal) obj);
                 isTp = true;
                 portal = por;
             }
 
             // Si l'objet en contact avec le personnage est un piege
-            if(obj.getClass().getSimpleName().equals("PiegeDegat")) {
-                PiegeDegat piege = ((PiegeDegat) obj);
-                System.out.println("tu vien de perdre : " + piege.getAtt());
-
+            if (obj.getClass().getSuperclass().getSimpleName().equals("Piege")) {
+                Piege piege = ((Piege) obj);
+                piege.effect(player);
             }
-
         }
 
     }
