@@ -48,8 +48,6 @@ public class GameScreen extends ScreenAdapter {
         this.mouse = new MouseListener();
         this.collision = new CollisionListener(this.game.getPlayer());
 
-        new Maze(game);
-
         // --- Ajout des controleurs au jeu --- //
         InputMultiplexer multi = new InputMultiplexer();        // Permet d'ajouter plusieurs écouteurs au jeu
         multi.addProcessor(this.keyboard);

@@ -20,8 +20,7 @@ public class GameWorld {
     private GameScreen screen;
     private World world;
     private Player player;
-    private ArrayList<Portal>portals;
-    private ArrayList<Piege>pieges;
+    private Maze maze;
     // --- Données Téleportation
     public boolean isTp;
     public Portal portal;
@@ -30,8 +29,7 @@ public class GameWorld {
         this.screen = s;
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
-        this.portals = new ArrayList<>();
-        this.pieges = new ArrayList<>();
+        this.maze = new Maze(this);
         this.isTp = false;
     }
 
@@ -41,12 +39,7 @@ public class GameWorld {
      */
     public void draw(SpriteBatch batch) {
         this.player.draw(batch);
-        for(Portal p :portals){
-            p.draw(batch);
-        }
-        for(Piege p :pieges){
-            p.draw(batch);
-        }
+        this.maze.draw(batch);
     }
 
     public World getWorld() {
@@ -55,14 +48,6 @@ public class GameWorld {
 
     public Player getPlayer() {
         return this.player;
-    }
-
-    public ArrayList<Piege> getPieges() {
-        return pieges;
-    }
-
-    public ArrayList<Portal> getPortals() {
-        return portals;
     }
 
     /***

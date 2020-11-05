@@ -1,6 +1,7 @@
 package com.zeldiablo.models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.enums.MazeObjects;
@@ -144,5 +145,14 @@ public class Maze {
 
         this.wallList.add(body);
 
+    }
+
+    public void draw(SpriteBatch batch) {
+        for(Portal p :portalList){
+            p.draw(batch);
+        }
+        for(Piege p :trapList){
+            p.draw(batch);
+        }
     }
 }
