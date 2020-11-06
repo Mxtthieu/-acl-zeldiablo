@@ -2,55 +2,26 @@ package com.zeldiablo.models;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 
-public class Weapon {
-    private int damage;
-    private int range;
-    private int atkspeed;
-    private int width;
-    private int reach;
-    private String name;
-    private Body bodyWeapon;
+public interface Weapon {
+    public void draw(SpriteBatch sb);
 
-    public Weapon(){
-        this.damage = 1;
-        this.range = 1;
-        this.atkspeed = 1;
-        this.width = 20;
-        this.reach = 50;
-    }
+    public int getDamage();
 
-    public void draw(SpriteBatch sb){
-        sb.begin();
-        //TODO: Draw l'animation d'attaque selon l'arme en main
-        sb.end();
-    }
+    public int getRange();
 
-    public int getDamage() {
-        return damage;
-    }
+    public float getAtkspeed();
 
-    public int getRange() {
-        return range;
-    }
+    public int getWidth();
 
-    public int getAtkspeed() {
-        return atkspeed;
-    }
+    public String getName();
 
-    public int getWidth() {
-        return width;
-    }
+    public Body getBodyWeapon();
 
-    public String getName() {
-        return name;
-    }
+    public int getReach();
 
-    public Body getBodyWeapon() {
-        return bodyWeapon;
-    }
+    public void attack(float x, float y, float angle, World world);
 
-    public int getReach() {
-        return reach;
-    }
+
 }

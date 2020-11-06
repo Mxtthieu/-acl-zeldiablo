@@ -19,7 +19,6 @@ public class Player implements Entity {
     private Body body;
     private Weapon weapon;
     private World world;
-    private ArrayList<Shot> shots = new ArrayList<>();
 
     public Player(World world, String n) {
         this.world = world;
@@ -27,8 +26,7 @@ public class Player implements Entity {
         this.hp = 20;
         this.att = 0;
         this.def = 0;
-        this.weapon = new Weapon();
-
+        this.weapon = new Dagger();
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(50, 50);
@@ -118,7 +116,7 @@ public class Player implements Entity {
         batch.end();
     }
 
-    public void attack(float angle, MouseListener mouse){
-        shots.add(new Shot(world,this.body.getPosition().x,this.body.getPosition().y,this.weapon.getReach(), this.weapon.getWidth(), angle, mouse));
+    public void attack(float angle){
+        weapon.attack(this.body.getPosition().x,this.body.getPosition().y, angle, world);
     }
 }
