@@ -52,6 +52,10 @@ public class Player implements Entity {
         this.body.setLinearVelocity(dx*this.speed, dy*this.speed);
     }
 
+    /**
+     * Methode seravnt a récupérer la position de l'entité
+     * @return Vector2 de la position
+     */
     public Vector2 getPosition() {
         return this.body.getPosition();
     }
@@ -98,6 +102,26 @@ public class Player implements Entity {
     @Override
     public String getName() {
         return null;
+    }
+
+    /**
+     * Méthode servant a récupérer la position en X de l'entité
+     *
+     * @return int coordonée X
+     */
+    @Override
+    public float getX() {
+        return (int) this.getPosition().x;
+    }
+
+    /**
+     * Méthode servant a récupérer la position en Y de l'entité
+     *
+     * @return int coordonée Y
+     */
+    @Override
+    public float getY() {
+        return (int) this.getPosition().y;
     }
 
     /**

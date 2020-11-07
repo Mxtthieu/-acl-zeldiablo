@@ -1,6 +1,7 @@
 package com.zeldiablo.models;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author Sousa Ribeiro Pedro
@@ -26,10 +27,28 @@ public interface Entity {
     public int getDEF();
 
     /**
-     * Méthode servant a récupérer le nom (ou pseudo) du joueur
+     * Méthode servant a récupérer le nom (ou pseudo) de l'entité
      * @return String nom du joueur
      */
     public String getName();
+
+    /**
+     * Methode seravnt a récupérer la position de l'entité
+     * @return Vector2 de la position
+     */
+    public Vector2 getPosition();
+
+    /**
+     * Méthode servant a récupérer la position en X de l'entité
+     * @return int coordonée X
+     */
+    public float getX();
+
+    /**
+     * Méthode servant a récupérer la position en Y de l'entité
+     * @return int coordonée Y
+     */
+    public float getY();
 
     /**
      * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
