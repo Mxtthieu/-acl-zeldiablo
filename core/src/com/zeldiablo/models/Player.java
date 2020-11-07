@@ -3,9 +3,8 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.controllers.MouseListener;
-
-import java.util.ArrayList;
+import com.zeldiablo.models.weapons.weaponsCAC.Cac;
+import com.zeldiablo.models.weapons.weaponsCAC.Dagger;
 
 /**
  * @author Sousa Ribeiro Pedro
@@ -17,7 +16,7 @@ public class Player implements Entity {
     private int att;
     private int def;
     private Body body;
-    private Weapon weapon;
+    private Cac weapon;
     private World world;
 
     public Player(World world, String n) {
@@ -116,7 +115,13 @@ public class Player implements Entity {
         batch.end();
     }
 
+    @Override
+    public float getRadius() {
+        Fixture fixture = this.body.getFixtureList().get(0);
+        return fixture.getShape().getRadius();
+    }
+
     public void attack(float angle){
-        weapon.attack(this.body.getPosition().x,this.body.getPosition().y, angle, world);
+        weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, world);
     }
 }
