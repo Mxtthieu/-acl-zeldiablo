@@ -42,8 +42,7 @@ public class Node {
      * @param n Node à ajouter
      */
     public void addNeighbour(Node n) {
-        if (n != null)
-            this.neighbours.add(n);
+        this.neighbours.add(n);
     }
 
     /**
