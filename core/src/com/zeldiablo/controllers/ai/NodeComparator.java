@@ -13,9 +13,9 @@ public class NodeComparator implements Comparator<Node> {
      */
     @Override
     public int compare(Node n1, Node n2) {
-        if (n1.heuristic < n2.heuristic)
+        if (n1.f < n2.f)
             return 1;
-        else if (n1.heuristic == n2.heuristic)
+        else if (n1.f == n2.f)
             return 0;
         else
             return -1;
