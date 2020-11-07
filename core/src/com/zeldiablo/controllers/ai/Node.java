@@ -11,6 +11,7 @@ public class Node {
 
     public int x, y;
     public double cost, heuristic;
+    public Node previous;
     private List<Node> neighbours;
 
     public Node(int x, int y, float cost) {
@@ -19,22 +20,6 @@ public class Node {
         this.cost = cost;
         this.heuristic = 0;
         this.neighbours = new ArrayList<>();
-    }
-
-    /**
-     * Compare un noeud n au noeud courant.
-     * @param n Node à comparer
-     * @return  1 si l'heuristique du noeud n est inférieur
-     *          0 si les deux heuristiques sont égaux
-     *          -1 si il est supérieur
-     */
-    public int compareNode(Node n) {
-        if (this.heuristic < n.heuristic)
-            return 1;
-        else if (this.heuristic == n.heuristic)
-            return 0;
-        else
-            return -1;
     }
 
     /**
