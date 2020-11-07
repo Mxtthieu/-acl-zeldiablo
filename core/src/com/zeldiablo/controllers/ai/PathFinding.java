@@ -209,4 +209,12 @@ public class PathFinding {
         Collections.reverse(res);
         return res;
     }
+
+    @Override
+    public String toString() {
+        String str = "Chemin:";
+        for (Node n : this.path)
+            str += "\n(" + n.x + ", " + n.y + ")";
+        return str;
+    }
 }
