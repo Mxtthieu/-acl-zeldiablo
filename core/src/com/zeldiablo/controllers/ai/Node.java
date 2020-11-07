@@ -10,15 +10,16 @@ import java.util.List;
 public class Node {
 
     public int x, y;
-    public double cost, heuristic;
+    public double f, g, h;
     public Node previous;
     private List<Node> neighbours;
 
-    public Node(int x, int y, float cost) {
+    public Node(int x, int y) {
         this.x = x;
         this.y = y;
-        this.cost = cost;
-        this.heuristic = 0;
+        this.f = 0;
+        this.g = 1;
+        this.h = 0;
         this.neighbours = new ArrayList<>();
     }
 
