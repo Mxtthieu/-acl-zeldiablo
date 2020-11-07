@@ -42,13 +42,13 @@ public interface Entity {
      * Méthode servant a récupérer la position en X de l'entité
      * @return int coordonée X
      */
-    public float getX();
+    public int getX();
 
     /**
      * Méthode servant a récupérer la position en Y de l'entité
      * @return int coordonée Y
      */
-    public float getY();
+    public int getY();
 
     /**
      * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran

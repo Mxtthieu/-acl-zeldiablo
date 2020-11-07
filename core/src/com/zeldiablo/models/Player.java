@@ -110,7 +110,7 @@ public class Player implements Entity {
      * @return int coordonée X
      */
     @Override
-    public float getX() {
+    public int getX() {
         return (int) this.getPosition().x;
     }
 
@@ -120,7 +120,7 @@ public class Player implements Entity {
      * @return int coordonée Y
      */
     @Override
-    public float getY() {
+    public int getY() {
         return (int) this.getPosition().y;
     }
 
