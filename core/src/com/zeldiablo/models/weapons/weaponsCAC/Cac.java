@@ -18,8 +18,9 @@ public abstract class Cac {
     protected boolean canAtk;
 
     protected Timer timer;
+    protected Timer timer2;
     protected Timer.Task timertask;
-
+    protected Timer.Task destroytask;
     protected Body hitbox;
     
     public Cac(String name, float as, int w, int r, int d){
@@ -30,6 +31,7 @@ public abstract class Cac {
         this.damage = d;
         this.canAtk = true;
         this.timer = new Timer();
+        this.timer2 = new Timer();
         this.timertask = new Timer.Task() {
             @Override
             public void run() {
@@ -44,10 +46,18 @@ public abstract class Cac {
         }
     }
 
-    public void createHitbox(float radius, float x, float y, float angle, World world){
+    public void createHitbox(float radius, float x, float y, float angle, final World world){
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(x + (float)cos(angle) * (radius * 2), y + (float)sin(angle) * (radius * 2));
+        if (this.name == "Sword") {
+            bd.position.set(x + (float) cos(angle) * ((radius+6) * 2), y + (float) sin(angle) * ((radius+6) * 2));
+        } else if (this.name == "Hammer") {
+            bd.position.set(x + (float) cos(angle) * ((radius+1) * 2), y + (float) sin(angle) * ((radius+1) * 2));
+        } else if (this.name == "Spear") {
+            bd.position.set(x + (float) cos(angle) * ((radius+10) * 2), y + (float) sin(angle) * ((radius+10) * 2));
+        } else if (this.name == "Dagger") {
+            bd.position.set(x + (float) cos(angle) * (radius * 2), y + (float) sin(angle) * (radius * 2));
+        }
         this.hitbox = world.createBody(bd);
         FixtureDef fixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -60,6 +70,13 @@ public abstract class Cac {
         shape.dispose();
         canAtk = false;
         timer.scheduleTask(timertask, this.atkspeed);
+        this.destroytask = new Timer.Task() {
+            @Override
+            public void run() {
+                world.destroyBody(hitbox);
+            }
+        };
+        timer.scheduleTask(destroytask, 0.5f);
     }
 
     public abstract void draw(SpriteBatch sb);

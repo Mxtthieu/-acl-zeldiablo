@@ -3,8 +3,7 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.models.weapons.weaponsCAC.Cac;
-import com.zeldiablo.models.weapons.weaponsCAC.Dagger;
+import com.zeldiablo.models.weapons.weaponsCAC.*;
 
 /**
  * @author Sousa Ribeiro Pedro
@@ -25,7 +24,7 @@ public class Player implements Entity {
         this.hp = 20;
         this.att = 0;
         this.def = 0;
-        this.weapon = new Dagger();
+        this.weapon = new Sword();
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(50, 50);
