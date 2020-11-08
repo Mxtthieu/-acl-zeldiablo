@@ -49,15 +49,7 @@ public abstract class Cac {
     public void createHitbox(float radius, float x, float y, float angle, final World world){
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        if (this.name == "Sword") {
-            bd.position.set(x + (float) cos(angle) * ((radius+6) * 2), y + (float) sin(angle) * ((radius+6) * 2));
-        } else if (this.name == "Hammer") {
-            bd.position.set(x + (float) cos(angle) * ((radius+1) * 2), y + (float) sin(angle) * ((radius+1) * 2));
-        } else if (this.name == "Spear") {
-            bd.position.set(x + (float) cos(angle) * ((radius+10) * 2), y + (float) sin(angle) * ((radius+10) * 2));
-        } else if (this.name == "Dagger") {
-            bd.position.set(x + (float) cos(angle) * (radius * 2), y + (float) sin(angle) * (radius * 2));
-        }
+        this.setPositionBody(bd,x,y,angle,radius);
         this.hitbox = world.createBody(bd);
         FixtureDef fixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -78,6 +70,8 @@ public abstract class Cac {
         };
         timer.scheduleTask(destroytask, 0.5f);
     }
+
+    public abstract void setPositionBody(BodyDef bd, float x, float y, float angle, float radius);
 
     public abstract void draw(SpriteBatch sb);
 }

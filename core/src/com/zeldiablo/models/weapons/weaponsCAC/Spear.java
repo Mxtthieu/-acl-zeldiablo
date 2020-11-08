@@ -15,6 +15,11 @@ public class Spear extends Cac {
     }
 
     @Override
+    public void setPositionBody(BodyDef bd, float x, float y, float angle, float radius) {
+        bd.position.set(x + (float) cos(angle) * ((radius+10) * 2), y + (float) sin(angle) * ((radius+10) * 2));
+    }
+
+    @Override
     public void draw(SpriteBatch sb) {
         sb.begin();
         // TODO : Ajouter texture Spear

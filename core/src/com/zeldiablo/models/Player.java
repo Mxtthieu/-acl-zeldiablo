@@ -24,7 +24,7 @@ public class Player implements Entity {
         this.hp = 20;
         this.att = 0;
         this.def = 0;
-        this.weapon = new Sword();
+        this.weapon = new Hammer();
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(50, 50);
