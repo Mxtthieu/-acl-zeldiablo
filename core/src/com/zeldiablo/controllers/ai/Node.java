@@ -43,4 +43,12 @@ public class Node {
     public double distanceWith(Node n) {
         return Math.sqrt((x - n.x)*(x - n.x) + (y - n.y)*(y - n.y));
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

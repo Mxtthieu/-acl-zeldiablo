@@ -16,9 +16,9 @@ public class PathFinding {
     private final int MAX_HEIGHT;
 
     // --- Initialisation des listes permettant le calcule du chemin
-    private List<Node> closedList   = new Stack<>();
-    private List<Node> openList    = new Stack<>();
-    private List<Node> path         = new Stack<>();
+    private List<Node> closedList   = new ArrayList<>();
+    private List<Node> openList     = new ArrayList<>();
+    private List<Node> path         = new ArrayList<>();
 
     public PathFinding(boolean[][] g, int startX, int startY, int goalX, int goalY) {
         this.MAX_WIDTH = g[0].length;
@@ -61,35 +61,35 @@ public class PathFinding {
         int y = node.y;
 
         // Voisin droit
-        if (x < MAX_WIDTH-1)
+        if (x < MAX_WIDTH-1 && this.grid[y][x+1] != null)
             node.addNeighbour(this.grid[y][x+1]);
 
         // Voisin gauche
-        if (x > 0)
+        if (x > 0 && this.grid[y][x-1] != null)
             node.addNeighbour(this.grid[y][x-1]);
 
         // Voisin haut
-        if (y < MAX_HEIGHT - 1)
+        if (y < MAX_HEIGHT - 1 && this.grid[y+1][x] != null)
             node.addNeighbour(this.grid[y+1][x]);
 
         // Voisin bas
-        if (y > 0)
+        if (y > 0 && this.grid[y-1][x] != null)
             node.addNeighbour(this.grid[y-1][x]);
 
         // Diagonal bas-gauche
-        if (x > 0 && y > 0)
+        if (x > 0 && y > 0 && this.grid[y-1][x-1] != null)
             node.addNeighbour(this.grid[y-1][x-1]);
 
         // Diagonal bas-droite
-        if (x < MAX_WIDTH-1 && y > 0)
+        if (x < MAX_WIDTH-1 && y > 0 && this.grid[y-1][x+1] != null)
             node.addNeighbour(this.grid[y-1][x+1]);
 
         //Diagonal haut-gauche
-        if (x > 0 && y < MAX_HEIGHT-1)
+        if (x > 0 && y < MAX_HEIGHT-1 && this.grid[y+1][x-1] != null)
             node.addNeighbour(this.grid[y+1][x-1]);
 
         //Diagonal haut-droite
-        if (x < MAX_WIDTH-1 && y < MAX_HEIGHT-1)
+        if (x < MAX_WIDTH-1 && y < MAX_HEIGHT-1 && this.grid[y+1][x+1] != null)
             node.addNeighbour(this.grid[y+1][x+1]);
     }
 
@@ -101,6 +101,7 @@ public class PathFinding {
     public void setStart(int x, int y) {
         if (x < MAX_WIDTH && x >= 0 && y < MAX_HEIGHT && y >= 0)
             this.start = this.grid[y][x];
+        System.out.println("Start: " + this.start);
     }
 
     /**
@@ -111,6 +112,7 @@ public class PathFinding {
     public void setGoal(int x, int y) {
         if (x < MAX_WIDTH && x >= 0 && y < MAX_HEIGHT && y >= 0)
             this.goal = this.grid[y][x];
+        System.out.println("Goal: " + this.goal);
     }
 
     /**
@@ -157,9 +159,6 @@ public class PathFinding {
                     this.path.add(tmp);
                 }
                 stop = true;
-                this.path = buildPath();
-                // A partir d'ici, l'algo est terminé
-
             } else {
                 this.closeNode(current);
                 List<Node> neighbours = current.getNeighbours();
@@ -189,6 +188,10 @@ public class PathFinding {
                 }
             }
         }
+
+        this.path = buildPath();
+        this.openList.clear();
+        this.closedList.clear();
     }
 
     /**
@@ -204,8 +207,15 @@ public class PathFinding {
             n = n.previous;
         }
 
-        Collections.reverse(res);
         return res;
+    }
+
+    /**
+     * Retourne le chemin de coût minimal calculé
+     * @return Liste des noeuds du chemin
+     */
+    public List<Node> getPath() {
+        return this.path;
     }
 
     @Override
