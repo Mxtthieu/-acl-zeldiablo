@@ -95,7 +95,7 @@ public class Maze {
                                 addTrap(line, column);
                                 break;
                             case 'P':
-                                addPortal(line, column);
+                                //addPortal(line, column);
                                 break;
                             default:
                                 break;
@@ -118,8 +118,12 @@ public class Maze {
                         por2 = new Portal(this.currentNumMaze,Integer.valueOf(p2[2]),new Vector2(Integer.valueOf(p2[0]) +1,GameWorld.HEIGHT -Integer.valueOf(p2[1])), gameWorld.getWorld());
                         por1.setExitPortal(por2);
                         por2.setExitPortal(por1);
-                        this.portalList.add(por1);
-                        this.portalList.add(por2);
+                        if(por1.getNumMaze() == this.currentNumMaze) {
+                            this.portalList.add(por1);
+                        }
+                        if(por2.getNumMaze() == this.currentNumMaze) {
+                            this.portalList.add(por2);
+                        }
                     }
                 }
             }

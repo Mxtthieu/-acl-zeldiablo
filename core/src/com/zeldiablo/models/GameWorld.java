@@ -72,7 +72,7 @@ public class GameWorld {
 
     public void reset() {
         this.maze.resetMaze();
-        this.maze.loadMaze();
+        this.maze.loadMaze(0);
         this.world.destroyBody(this.player.getBody());
         this.player = new Player(this, "TESTER");
     }
