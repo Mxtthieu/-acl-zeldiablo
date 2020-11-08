@@ -9,10 +9,10 @@ import com.badlogic.gdx.physics.box2d.*;
  */
 public class Portal {
 
-    Vector2 posPortal;
-    Body bodyPortal;
-    int numMaze;
-    Portal exitPortal;
+    private Vector2 posPortal;
+    private Body bodyPortal;
+    private int numMaze;
+    private Portal exitPortal;
     private static float taille;
     private boolean actif;
 
@@ -121,6 +121,13 @@ public class Portal {
         batch.begin();
         //batch.draw(); Ajout Sprite
         batch.end();
+    }
+
+    /**
+     * @return le body du portail
+     */
+    public Body getBodyPortal() {
+        return bodyPortal;
     }
 
 

@@ -31,7 +31,6 @@ public class Maze {
         this.portalList = new ArrayList<>();
         this.currentNumMaze = 0;
         loadMaze();
-        readObjects();
     }
 
     /**
@@ -43,11 +42,21 @@ public class Maze {
         for (Body wall: wallList){
             world.destroyBody(wall);
         }
+        for (Piege piege: trapList){
+            world.destroyBody(piege.getBodyPiege());
+        }
+        for (Portal portal: portalList){
+            world.destroyBody(portal.getBodyPortal());
+        }
         wallList.clear();
+        trapList.clear();
+        portalList.clear();
 
         this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
 
         this.currentNumMaze++;
+
+        readObjects();
 
     }
 
@@ -154,5 +163,9 @@ public class Maze {
         for(Piege p :trapList){
             p.draw(batch);
         }
+    }
+
+    public void resetMaze() {
+        this.currentNumMaze = 0;
     }
 }

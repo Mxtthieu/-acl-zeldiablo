@@ -51,7 +51,7 @@ public class GameWorld {
     }
 
     /***
-     * Cette Fonction teleport le joueur au portail de sortie par rapport au portail selectionner
+     * Cette Fonction teleporte le joueur au portail de sortie par rapport au portail selectionner
      * @param p Player
      * @param por Portal
      */
@@ -73,5 +73,12 @@ public class GameWorld {
 
             }
         }
+    }
+
+    public void reset() {
+        this.maze.resetMaze();
+        this.maze.loadMaze();
+        this.world.destroyBody(this.player.getBody());
+        this.player = new Player(this, "TESTER");
     }
 }
