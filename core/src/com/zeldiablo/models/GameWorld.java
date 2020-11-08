@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class GameWorld {
 
     // --- Variables static qui définissent la taille du monde virtuel
-    public static final int WIDTH = 1024;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 60;
 
     // --- Eléments du jeu
     private GameScreen screen;
@@ -27,7 +27,7 @@ public class GameWorld {
     public GameWorld(GameScreen s) {
         this.screen = s;
         this.world = new World(new Vector2(0, 0), true);
-        this.player = new Player(this.world, "Tester");
+        this.player = new Player(this.world, Entity.SIZE, Entity.SIZE,"Tester");
         this.portals = new ArrayList<>();
         this.isTp = false;
         this.portal = null;
@@ -45,7 +45,7 @@ public class GameWorld {
         this.portals.add(p4);
         createCollisionListener();
 
-        this.monster = new Skeleton(this.world, GameWorld.WIDTH - 20, GameWorld.HEIGHT - 20, this.player);
+        this.monster = new Skeleton(this.world, GameWorld.WIDTH - Entity.SIZE, GameWorld.HEIGHT - Entity.SIZE, this.player);
     }
 
     /**

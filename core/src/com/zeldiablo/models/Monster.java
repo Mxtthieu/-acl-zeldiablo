@@ -26,7 +26,7 @@ public abstract class Monster implements Entity {
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();
-        shape.setRadius(20);
+        shape.setRadius(SIZE);
         fixture.shape = shape;
         fixture.density = 1f;
         fixture.restitution = 0.25f;
@@ -42,7 +42,7 @@ public abstract class Monster implements Entity {
                 grid[j][i] = true;
 
         this.finding = new PathFinding(grid, this.getX(), this.getY(), this.target.getX(), this.target.getY());
-        System.out.println(this.finding);
+
     }
 
     /**

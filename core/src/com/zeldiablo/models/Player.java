@@ -16,7 +16,7 @@ public class Player implements Entity {
     private int speed;
     private Body body;
 
-    public Player(World world, String n) {
+    public Player(World world, float x, float y, String n) {
         this.name = n;
         this.hp = 20;
         this.att = 0;
@@ -25,12 +25,12 @@ public class Player implements Entity {
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(50, 100);
+        bd.position.set(x, y);
         body = world.createBody(bd);
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();
-        shape.setRadius(20);
+        shape.setRadius(SIZE);
         fixture.shape = shape;
         fixture.density = 1f;
         fixture.restitution = 0.25f;

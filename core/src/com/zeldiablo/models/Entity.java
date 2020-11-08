@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public interface Entity {
 
+    public static float SIZE = GameWorld.WIDTH / 20;
+
     /**
      * Méthode servant a récupérer les points de vie du joueur
      * @return int hp du joueur

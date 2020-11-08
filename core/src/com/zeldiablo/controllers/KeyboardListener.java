@@ -2,6 +2,7 @@ package com.zeldiablo.controllers;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.zeldiablo.models.Entity;
 import com.zeldiablo.models.GameWorld;
 
 /**
@@ -9,7 +10,7 @@ import com.zeldiablo.models.GameWorld;
  */
 public class KeyboardListener extends ControllerAdapter {
 
-    private final int SPEED_STEP = GameWorld.WIDTH / 100;
+    private final int SPEED_STEP = (int) Entity.SIZE;
 
     private boolean pause;
     private boolean debug;

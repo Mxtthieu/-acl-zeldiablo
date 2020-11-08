@@ -17,7 +17,7 @@ public class PathFinding {
 
     // --- Initialisation des listes permettant le calcule du chemin
     private List<Node> closedList   = new Stack<>();
-    private Queue<Node> openList    = new PriorityQueue<>(new NodeComparator());
+    private List<Node> openList    = new Stack<>();
     private List<Node> path         = new Stack<>();
 
     public PathFinding(boolean[][] g, int startX, int startY, int goalX, int goalY) {
@@ -142,15 +142,13 @@ public class PathFinding {
         boolean stop = false;
 
         while (!this.openList.isEmpty() && !stop) {
-            /* Inutile si la PriorityQueue fonctionne correctement
             int min = 0;
             for (int i = 0; i < this.openList.size(); i++) {
                 if (this.openList.get(i).f < this.openList.get(min).f)
                     min = i;
             }
-             */
 
-            Node current = this.openList.peek();
+            Node current = this.openList.get(min);
             if (current.equals(this.goal)) {
                 Node tmp = current;
                 this.path.add(tmp);
