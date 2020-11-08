@@ -101,7 +101,7 @@ public class Player implements Entity {
     }
 
     /**
-     * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
+     * Permet de déssiner le joueur sur l'ensemble de sprites présent sur l'écran
      *
      * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
      */

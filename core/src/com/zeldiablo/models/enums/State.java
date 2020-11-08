@@ -6,6 +6,7 @@ public enum State {
     WINNED('W'),
     LOST('L'),
     PAUSED('P'),
+    RESET('R'),
     STOPPED('S');
 
     private char state;

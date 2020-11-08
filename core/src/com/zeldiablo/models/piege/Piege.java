@@ -48,5 +48,9 @@ public abstract class Piege {
         batch.end();
     }
 
+    public Body getBodyPiege() {
+        return this.bodyPiege;
+    }
+
 
 }

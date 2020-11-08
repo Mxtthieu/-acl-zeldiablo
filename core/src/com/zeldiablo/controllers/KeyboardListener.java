@@ -10,6 +10,7 @@ public class KeyboardListener extends ControllerAdapter {
 
     private boolean pause;
     private boolean debug;
+    private boolean reset;
 
     private Vector2 step;
     private float x;
@@ -48,6 +49,8 @@ public class KeyboardListener extends ControllerAdapter {
             case Input.Keys.O:
                 this.debug = !this.debug;
                 break;
+            case Input.Keys.R:
+                this.reset = true;
             default:
                 break;
         }
@@ -107,4 +110,12 @@ public class KeyboardListener extends ControllerAdapter {
     public boolean isPaused() {
         return this.pause;
     }
+
+    /**
+     * Indique si le joueur à reset le monde
+     * @return le boolean reset
+     */
+    public boolean isReset() { return this.reset;}
+
+    public void setReset(boolean reset) { this.reset = reset; }
 }

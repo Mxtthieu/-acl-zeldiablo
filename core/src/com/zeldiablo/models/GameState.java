@@ -14,5 +14,7 @@ public class GameState {
 
     public boolean isPaused() { return state == State.PAUSED; }
 
+    public boolean isReset() { return state == State.RESET; }
+
     public void setState(State state) { this.state = state; }
 }
