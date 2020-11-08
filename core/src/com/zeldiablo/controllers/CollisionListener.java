@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.Portal;
+import com.zeldiablo.models.Projectil;
 import com.zeldiablo.models.piege.Piege;
 import com.zeldiablo.models.piege.PiegeDegat;
 
@@ -24,17 +25,18 @@ public class CollisionListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
 
-        Object obj;
+        Object obj = null;
         // je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
         if(contact.getFixtureA().getBody() == player.getBody()){
             obj = contact.getFixtureB().getBody().getUserData();
-        }else{
+        }else if(contact.getFixtureB().getBody() == player.getBody()){
             obj = contact.getFixtureA().getBody().getUserData();
         }
 
         if(obj != null) {
             // Si l'objet en contact avec le personnage est un portail alors je teleporte le personnage
             if (obj.getClass().getSimpleName().equals("Portal")) {
+                System.out.println(contact.getFixtureB().getBody().getUserData());
                 Portal por = ((Portal) obj);
                 isTp = true;
                 portal = por;
@@ -45,13 +47,18 @@ public class CollisionListener implements ContactListener {
                 Piege piege = ((Piege) obj);
                 piege.effect(player);
             }
+
+            if (obj.getClass().getSimpleName().equals("Projectil")) {
+                Projectil pro = ((Projectil) obj);
+                System.out.println("Joueur : " + player.getName() + " à subit : " +pro.getAtt());
+                pro.setTouch(true);
+            }
         }
 
     }
 
     @Override
     public void endContact(Contact contact) {
-
 
         Object obj;
         // je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage

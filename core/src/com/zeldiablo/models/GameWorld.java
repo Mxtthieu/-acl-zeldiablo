@@ -31,6 +31,7 @@ public class GameWorld {
         this.player = new Player(this, "Tester");
         this.maze = new Maze(this);
         this.isTp = false;
+        Piege p = new PiegeDegat(new Vector2(30,30),world);
     }
 
     /**
@@ -64,6 +65,7 @@ public class GameWorld {
             p.getBody().setTransform(por.getPosPortalExit().x ,por.getPosPortalExit().y ,0f);
             // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
             if (!por.exitSameMaze()) {
+                p.getBody().setTransform(por.getPosPortalExit().x +3 ,por.getPosPortalExit().y ,0f);
                 maze.loadMaze(por.getExitPortalNumMaze());
             }
         }
@@ -71,8 +73,9 @@ public class GameWorld {
 
     public void reset() {
         this.maze.resetMaze();
-        this.maze.loadMaze(0);
+        this.maze.loadMaze(1);
         this.world.destroyBody(this.player.getBody());
         this.player = new Player(this, "TESTER");
     }
+
 }

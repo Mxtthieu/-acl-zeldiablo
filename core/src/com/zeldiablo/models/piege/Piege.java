@@ -30,7 +30,7 @@ public abstract class Piege {
         ChainShape shape = new ChainShape();
         shape.createChain(vertice);
         fixtureDef.shape = shape;
-        //fixtureDef.isSensor = true;
+        fixtureDef.isSensor = true;
         bodyPiege.setUserData(this);
         bodyPiege.createFixture(fixtureDef);
         shape.dispose();
