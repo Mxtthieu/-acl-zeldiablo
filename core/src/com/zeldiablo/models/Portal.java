@@ -15,27 +15,31 @@ public class Portal {
     Portal exitPortal;
     private static float taille;
     private boolean actif;
+    private int numPortal;
 
-    public Portal(int num, Vector2 pos, World world){
+    public Portal(int n, int num, Vector2 pos, World world){
 
+        this.numPortal = n;
         this.numMaze = num;
         this.actif = true;
         this.posPortal = pos;
 
-        taille = (1/40f)* GameWorld.WIDTH;
-        BodyDef bodydef = new BodyDef();
-        bodydef.type = BodyDef.BodyType.StaticBody;
-        bodydef.position.set(posPortal);
-        bodyPortal = world.createBody(bodydef);
+        if(n == num) {
+            taille = (1/80f) * GameWorld.WIDTH;
+            BodyDef bodydef = new BodyDef();
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(posPortal);
+            bodyPortal = world.createBody(bodydef);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(taille);
-        fixtureDef.shape = shape;
-        //fixtureDef.isSensor = true;
-        bodyPortal.setUserData(this);
-        bodyPortal.createFixture(fixtureDef);
-        shape.dispose();
+            FixtureDef fixtureDef = new FixtureDef();
+            CircleShape shape = new CircleShape();
+            shape.setRadius(taille);
+            fixtureDef.shape = shape;
+            fixtureDef.isSensor = true;
+            bodyPortal.setUserData(this);
+            bodyPortal.createFixture(fixtureDef);
+            shape.dispose();
+        }
 
     }
 
@@ -53,6 +57,7 @@ public class Portal {
      */
     public void setExitPortalActif(boolean actif){
         this.exitPortal.setActif(actif);
+
     }
 
     /**
@@ -122,6 +127,5 @@ public class Portal {
         //batch.draw(); Ajout Sprite
         batch.end();
     }
-
 
 }

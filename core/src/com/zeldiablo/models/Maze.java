@@ -30,24 +30,22 @@ public class Maze {
         this.trapList = new ArrayList<>();
         this.portalList = new ArrayList<>();
         this.currentNumMaze = 0;
-        loadMaze();
-        readObjects();
+        loadMaze(1);
     }
 
     /**
      * La fonction loadMaze permet de charger un labyrinthe avec un fichier
      */
-    public void loadMaze() {
+    public void loadMaze(int num) {
 
         World world = gameWorld.getWorld();
         for (Body wall: wallList){
             world.destroyBody(wall);
         }
         wallList.clear();
-
+        this.currentNumMaze = num;
         this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
-
-        this.currentNumMaze++;
+        readObjects();
 
     }
 
@@ -63,25 +61,58 @@ public class Maze {
 
             String c;
             int line = 0;
+            boolean normalRead = true;
+            boolean portalRead = false;
 
-            while ((c = bufferedReader.readLine()) != null)
-            {
-                for(int column = 0; column < c.length(); column++){
-                    switch (c.charAt(column)){
-                        case 'W':
-                            addWall(line, column);
-                            break;
-                        case 'T':
-                            addTrap(line,column);
-                            break;
-                        case 'P':
-                            addPortal(line,column);
-                            break;
-                        default:
-                            break;
+            while ((c = bufferedReader.readLine()) != null) {
+
+                if(c.equals("Portals Links:")){
+                    normalRead = false;
+                    portalRead = true;
+                }
+                if(c.equals("FIN")){
+                    normalRead = true;
+                    portalRead = false;
+                }
+
+                if (normalRead){
+
+                    for (int column = 0; column < c.length(); column++) {
+                        switch (c.charAt(column)) {
+                            case 'W':
+                                addWall(line, column);
+                                break;
+                            case 'T':
+                                addTrap(line, column);
+                                break;
+                            case 'P':
+                                addPortal(line, column);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    line++;
+                }
+
+                if(portalRead){
+                    String[] a;
+                    String[] p1;
+                    String[] p2;
+                    Portal por1;
+                    Portal por2;
+                    if(!c.equals("Portals Links:") && !c.equals("Fin")) {
+                        a = c.split("\\|");
+                        p1 = a[1].split(",");
+                        p2 = a[2].split(",");
+                        por1 = new Portal(this.currentNumMaze,Integer.valueOf(p1[2]),new Vector2(Integer.valueOf(p1[0]) +1,GameWorld.HEIGHT -Integer.valueOf(p1[1])), gameWorld.getWorld());
+                        por2 = new Portal(this.currentNumMaze,Integer.valueOf(p2[2]),new Vector2(Integer.valueOf(p2[0]) +1,GameWorld.HEIGHT -Integer.valueOf(p2[1])), gameWorld.getWorld());
+                        por1.setExitPortal(por2);
+                        por2.setExitPortal(por1);
+                        this.portalList.add(por1);
+                        this.portalList.add(por2);
                     }
                 }
-                line++;
             }
             bufferedReader.close();
 
@@ -99,8 +130,8 @@ public class Maze {
      */
     private void addPortal(int i, int j) {
         World world = gameWorld.getWorld();
+        this.portalList.add(new Portal(this.currentNumMaze,this.currentNumMaze,new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
 
-        this.portalList.add(new Portal(this.portalList.size(),new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
     }
 
     /**
@@ -110,7 +141,6 @@ public class Maze {
      */
     private void addTrap(int i, int j) {
         World world = gameWorld.getWorld();
-
         this.trapList.add(new PiegeDegat(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
     }
 
@@ -149,10 +179,13 @@ public class Maze {
 
     public void draw(SpriteBatch batch) {
         for(Portal p :portalList){
-            p.draw(batch);
+            if(p.getNumMaze() == this.currentNumMaze) {
+                p.draw(batch);
+            }
         }
         for(Piege p :trapList){
             p.draw(batch);
         }
+
     }
 }

@@ -66,9 +66,7 @@ public class CollisionListener implements ContactListener {
             if(obj.getClass().getSimpleName().equals("Portal")) {
                 Portal por = ((Portal) obj);
                 por.setActif(true);
-
             }
-
         }
     }
 

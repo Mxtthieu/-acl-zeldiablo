@@ -57,20 +57,15 @@ public class GameWorld {
      */
     public void teleport(Player p, Portal por){
         //Si le portail est actif je peux teleporter
-        if(por.isActif()) {
-            // Si le portail de sortie est dans le meme labyrinthe on teleporte le joueur
-            if (por.exitSameMaze()) {
-				/*
-				A remplir ....
-				*/
-                // Temporaire
-                // Je rend le portail de sortie inactif pour eviter de teleporter en boucle
-                por.setExitPortalActif(false);
-                // Je teleporte le joueur a la position du portail de sortie.
-                p.getBody().setTransform(por.getPosPortalExit().x,por.getPosPortalExit().y,0f);
-            } else {
-                // Si le portail de sortie n'est pas situer dans le meme labirynthe on charge le nouveau labirynthe et on teleporte le joueur
+        // Je rend le portail de sortie inactif pour eviter de teleporter en boucle
+        por.setExitPortalActif(false);
+        // Je teleporte le joueur a la position du portail de sortie.
+        p.getBody().setTransform(por.getPosPortalExit().x + 3,por.getPosPortalExit().y ,0f);
 
+        if(por.isActif()) {
+            // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
+            if (!por.exitSameMaze()) {
+                maze.loadMaze(por.getExitPortalNumMaze());
             }
         }
     }
