@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.controllers.ai.Node;
 import com.zeldiablo.controllers.ai.PathFinding;
+import com.zeldiablo.controllers.ai.PathFindingException;
 
 import java.awt.*;
 import java.util.List;
@@ -55,7 +56,11 @@ public abstract class Monster implements Entity {
                 //Todo: Vérification à faire ici
                 grid[j][i] = true;
 
-        this.finding = new PathFinding(grid, this.getX(), this.getY(), this.target.getX(), this.target.getY());
+        try {
+            this.finding = new PathFinding(grid, this.getX(), this.getY(), this.target.getX(), this.target.getY());
+        } catch (PathFindingException e) {
+            e.printStackTrace();
+        }
 
         // Création de la tâche qui s'occupe de déplacer le monstre
         this.step = new Timer.Task() {
@@ -69,7 +74,11 @@ public abstract class Monster implements Entity {
         this.recalculate = new Timer.Task() {
             @Override
             public void run() {
-                finding = new PathFinding(grid, getX(), getY(), target.getX(), target.getY());
+                try {
+                    finding = new PathFinding(grid, getX(), getY(), target.getX(), target.getY());
+                } catch (PathFindingException e) {
+                    e.printStackTrace();
+                }
             }
         };
 

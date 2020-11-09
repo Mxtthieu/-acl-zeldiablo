@@ -20,7 +20,7 @@ public class PathFinding {
     private List<Node> openList     = new ArrayList<>();
     private List<Node> path         = new ArrayList<>();
 
-    public PathFinding(boolean[][] g, int startX, int startY, int goalX, int goalY) {
+    public PathFinding(boolean[][] g, int startX, int startY, int goalX, int goalY) throws PathFindingException {
         this.MAX_WIDTH = g[0].length;
         this.MAX_HEIGHT = g.length;
 
@@ -37,8 +37,13 @@ public class PathFinding {
             }
         }
 
-        this.start = this.grid[startY][startX];
-        this.goal = this.grid[goalY][goalX];
+        try {
+            this.start = this.grid[startY][startX];
+            this.goal = this.grid[goalY][goalX];
+        } catch (ArrayIndexOutOfBoundsException a) {
+            throw new PathFindingException(String.format("Start (%d, %d) or goal (%d, %d) node out of array [%d][%d].",
+                    startX, startY, goalX, goalY, MAX_HEIGHT, MAX_WIDTH));
+        }
 
         // --- Ajout des voisins à chaque case
         for (Node[] line : this.grid) {
