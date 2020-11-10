@@ -27,7 +27,7 @@ public abstract class Monster implements Entity {
 
     public Monster(World world, float x, float y, Entity tar) {
         this.target = tar;
-        this.speed = 0.1f;
+        this.speed = 0.1f;  // Plus c'est grand moins il va vite
 
         // --- Création du body --- //
         BodyDef bd = new BodyDef();
@@ -42,11 +42,11 @@ public abstract class Monster implements Entity {
         fixture.density = 1f;
         fixture.restitution = 0.25f;
         fixture.friction = 0f;
-        fixture.isSensor = true;
 
         body.setUserData(this);
         body.createFixture(fixture);
         shape.dispose();
+
 
         // Tout ce joue la dessus. Il faut faire une vérification afin de mettre false si la case est occupé par un obstacle.
         // Je pense que la partie la sera faite dans GameWorld et sera donné au monstre dans le constructeur
@@ -97,6 +97,9 @@ public abstract class Monster implements Entity {
         else
             node = new Node(getX(), getY());
 
+        float dx = node.x - getX();
+        float dy = node.y - getY();
+
         // Calcule de la distance entre les deux
         float x = this.target.getX() - this.getX();
         float y = this.target.getY() - this.getY();
@@ -106,11 +109,13 @@ public abstract class Monster implements Entity {
         if (x < 0)
             angle += Math.PI;
 
-        this.body.setTransform(node.x, node.y, angle);
+        // Application du mouvement
+        this.body.setTransform(body.getPosition(), angle);
+        this.body.setLinearVelocity(dx, dy);
     }
 
     /**
-     * Methode seravnt a récupérer la position de l'entité
+     * Methode servant a récupérer la position de l'entité
      * @return Vector2 de la position
      */
     public Vector2 getPosition() {
