@@ -81,4 +81,7 @@ public class GameWorld {
         this.player = new Player(this, "TESTER");
     }
 
+    public void atk(){
+        this.player.attack(screen.getAngle());
+    }
 }

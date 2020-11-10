@@ -3,6 +3,7 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.models.weapons.weaponsCAC.*;
 
 /**
  * @author Sousa Ribeiro Pedro
@@ -14,6 +15,7 @@ public class Player implements Entity {
     private int att;
     private int def;
     private int speed;
+    private Cac weapon;
     private Body body;
 
     public Player(GameWorld gameWorld, String n) {
@@ -22,6 +24,7 @@ public class Player implements Entity {
         this.att = 0;
         this.def = 0;
         this.speed = 20;
+        this.weapon = new Sword();
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
@@ -38,6 +41,7 @@ public class Player implements Entity {
 
         body.createFixture(fixture);
         shape.dispose();
+
     }
 
     /**
@@ -133,5 +137,15 @@ public class Player implements Entity {
         batch.begin();
         //TODO: Ajouter ici la texture du personnage
         batch.end();
+    }
+
+    @Override
+    public float getRadius() {
+        Fixture fixture = this.body.getFixtureList().get(0);
+        return fixture.getShape().getRadius();
+    }
+
+    public void attack(float angle){
+        weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, world);
     }
 }

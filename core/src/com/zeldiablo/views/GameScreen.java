@@ -82,6 +82,9 @@ public class GameScreen extends ScreenAdapter {
             this.keyboard.setReset(false);
         }
 
+        if (this.keyboard.isAttack()){
+            this.game.atk();
+        }
         if (this.keyboard.isDebug()) {
             batch.begin();
             debug.render(this.game.getWorld(), camera.combined);
@@ -180,4 +183,11 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
+    public float getAngle() {
+        return angle;
+    }
+
+    public MouseListener getMouse() {
+        return mouse;
+    }
 }
