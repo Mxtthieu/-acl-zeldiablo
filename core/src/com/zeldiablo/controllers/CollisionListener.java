@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.zeldiablo.models.Player;
-import com.zeldiablo.models.Portal;
+import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
 

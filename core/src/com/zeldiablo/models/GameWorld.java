@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.monsters.Skeleton;
+import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.views.GameScreen;
