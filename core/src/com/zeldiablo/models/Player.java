@@ -3,9 +3,6 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.controllers.MouseListener;
-
-import java.util.ArrayList;
 
 /**
  * @author Sousa Ribeiro Pedro
@@ -16,6 +13,7 @@ public class Player implements Entity {
     private int hp;
     private int att;
     private int def;
+    private int speed;
     private Body body;
 
     public Player(GameWorld gameWorld, String n) {
@@ -23,6 +21,7 @@ public class Player implements Entity {
         this.hp = 20;
         this.att = 0;
         this.def = 0;
+        this.speed = 20;
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
@@ -48,10 +47,14 @@ public class Player implements Entity {
      * @param dy déplacement en Y
      */
     public void move(float dx, float dy, float angle) {
-        Vector2 pos = body.getPosition();
-        this.body.setLinearVelocity(dx, dy);
+        this.body.setTransform(this.getPosition(), angle);
+        this.body.setLinearVelocity(dx*this.speed, dy*this.speed);
     }
 
+    /**
+     * Methode seravnt a récupérer la position de l'entité
+     * @return Vector2 de la position
+     */
     public Vector2 getPosition() {
         return this.body.getPosition();
     }
@@ -98,6 +101,26 @@ public class Player implements Entity {
     @Override
     public String getName() {
         return null;
+    }
+
+    /**
+     * Méthode servant a récupérer la position en X de l'entité
+     *
+     * @return int coordonée X
+     */
+    @Override
+    public int getX() {
+        return (int) this.getPosition().x;
+    }
+
+    /**
+     * Méthode servant a récupérer la position en Y de l'entité
+     *
+     * @return int coordonée Y
+     */
+    @Override
+    public int getY() {
+        return (int) this.getPosition().y;
     }
 
     /**

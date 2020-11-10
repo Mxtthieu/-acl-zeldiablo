@@ -2,11 +2,15 @@ package com.zeldiablo.controllers;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.zeldiablo.models.Entity;
+import com.zeldiablo.models.GameWorld;
 
 /**
  * @author Sousa Ribeiro Pedro
  */
 public class KeyboardListener extends ControllerAdapter {
+
+    private final int SPEED_STEP = (int) Entity.SIZE;
 
     private boolean pause;
     private boolean debug;
@@ -32,16 +36,16 @@ public class KeyboardListener extends ControllerAdapter {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.Z:
-                this.y += 10;
+                this.y += SPEED_STEP;
                 break;
             case Input.Keys.D:
-                this.x += 10;
+                this.x += SPEED_STEP;
                 break;
             case Input.Keys.S:
-                this.y -= 10;
+                this.y -= SPEED_STEP;
                 break;
             case Input.Keys.Q:
-                this.x -= 10;
+                this.x -= SPEED_STEP;
                 break;
             case Input.Keys.P:
                 this.pause = !this.pause;
@@ -68,16 +72,16 @@ public class KeyboardListener extends ControllerAdapter {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.Z:
-                this.y -= 10;
+                this.y -= SPEED_STEP;
                 break;
             case Input.Keys.D:
-                this.x -= 10;
+                this.x -= SPEED_STEP;
                 break;
             case Input.Keys.S:
-                this.y += 10;
+                this.y += SPEED_STEP;
                 break;
             case Input.Keys.Q:
-                this.x += 10;
+                this.x += SPEED_STEP;
                 break;
             default:
                 break;

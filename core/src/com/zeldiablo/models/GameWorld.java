@@ -21,6 +21,8 @@ public class GameWorld {
     private World world;
     private Player player;
     private Maze maze;
+    private Monster monster;
+
     // --- Données Téleportation
     public boolean isTp;
     public Portal portal;

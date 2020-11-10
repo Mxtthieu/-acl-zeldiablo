@@ -114,8 +114,8 @@ public class GameScreen extends ScreenAdapter {
         float yP = p.getPosition().y;
 
             // Récupération des coordonées de la souris
-        float xM = this.mouse.getX();
-        float yM = this.mouse.getY();
+        float xM = GameWorld.WIDTH * this.mouse.getX() / Gdx.graphics.getWidth();
+        float yM = GameWorld.HEIGHT * this.mouse.getY() / Gdx.graphics.getHeight();
 
             // Calcule de la distance entre les deux
         float x = xM - xP;
