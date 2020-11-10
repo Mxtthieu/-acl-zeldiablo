@@ -1,15 +1,15 @@
-package com.zeldiablo.models.piege;
+package com.zeldiablo.models.traps;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.zeldiablo.models.Player;
 
-public class PiegeRalentissant extends Piege{
+public class TrapSlow extends Trap {
 
     private int ralentissement;
 
-    public PiegeRalentissant(Vector2 pos, World world) {
+    public TrapSlow(Vector2 pos, World world) {
         super(pos, world);
         this.ralentissement = 5;
     }

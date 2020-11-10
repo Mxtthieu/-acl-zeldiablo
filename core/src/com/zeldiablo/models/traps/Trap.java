@@ -1,4 +1,4 @@
-package com.zeldiablo.models.piege;
+package com.zeldiablo.models.traps;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 
-public abstract class Piege {
+public abstract class Trap {
 
     private boolean touch;
     private Vector2 pos;
@@ -14,7 +14,7 @@ public abstract class Piege {
     private float height;
     private float width;
 
-    public Piege(Vector2 pos, World world){
+    public Trap(Vector2 pos, World world){
 
         this.touch = true;
         this.pos = pos;

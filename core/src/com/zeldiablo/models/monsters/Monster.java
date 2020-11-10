@@ -1,4 +1,4 @@
-package com.zeldiablo.models;
+package com.zeldiablo.models.monsters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.controllers.ai.Node;
 import com.zeldiablo.controllers.ai.PathFinding;
 import com.zeldiablo.controllers.ai.PathFindingException;
+import com.zeldiablo.models.Entity;
+import com.zeldiablo.models.GameWorld;
 
 import java.awt.*;
 import java.util.List;
@@ -25,7 +27,7 @@ public abstract class Monster implements Entity {
 
     private PathFinding finding;
 
-    public Monster(World world, float x, float y, Entity tar) {
+    public Monster(GameWorld gameWorld, float x, float y, Entity tar) {
         this.target = tar;
         this.speed = 0.1f;  // Plus c'est grand moins il va vite
 
@@ -33,7 +35,7 @@ public abstract class Monster implements Entity {
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(x, y);
-        body = world.createBody(bd);
+        body = gameWorld.getWorld().createBody(bd);
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();

@@ -1,16 +1,13 @@
 package com.zeldiablo.models;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.models.enums.MazeObjects;
-import com.zeldiablo.models.piege.Piege;
-import com.zeldiablo.models.piege.PiegeDegat;
+import com.zeldiablo.models.traps.Trap;
+import com.zeldiablo.models.traps.TrapDamage;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Maze {
 
@@ -19,7 +16,7 @@ public class Maze {
     private File mazeFile;
 
     private ArrayList<Body> wallList;
-    private ArrayList<Piege> trapList;
+    private ArrayList<Trap> trapList;
     private ArrayList<Portal> portalList;
 
     private int currentNumMaze;
@@ -42,8 +39,8 @@ public class Maze {
         for (Body wall: wallList){
             world.destroyBody(wall);
         }
-        for (Piege piege: trapList){
-            world.destroyBody(piege.getBodyPiege());
+        for (Trap trap : trapList){
+            world.destroyBody(trap.getBodyPiege());
         }
         for (Portal portal: portalList){
             world.destroyBody(portal.getBodyPortal());
@@ -154,7 +151,7 @@ public class Maze {
      */
     private void addTrap(int i, int j) {
         World world = gameWorld.getWorld();
-        this.trapList.add(new PiegeDegat(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
+        this.trapList.add(new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
     }
 
     /**
@@ -196,7 +193,7 @@ public class Maze {
                 p.draw(batch);
             }
         }
-        for(Piege p :trapList){
+        for(Trap p :trapList){
             p.draw(batch);
         }
 

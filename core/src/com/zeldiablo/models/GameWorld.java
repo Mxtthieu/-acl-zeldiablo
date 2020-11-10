@@ -3,12 +3,11 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.models.piege.Piege;
-import com.zeldiablo.models.piege.PiegeDegat;
-import com.zeldiablo.models.piege.PiegeRalentissant;
+import com.zeldiablo.models.monsters.Monster;
+import com.zeldiablo.models.monsters.Skeleton;
+import com.zeldiablo.models.traps.Trap;
+import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.views.GameScreen;
-
-import java.util.ArrayList;
 
 public class GameWorld {
 
@@ -31,9 +30,10 @@ public class GameWorld {
         this.screen = s;
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
+        this.monster = new Skeleton(this, 50, 50, this.player);
         this.maze = new Maze(this);
         this.isTp = false;
-        Piege p = new PiegeDegat(new Vector2(30,30),world);
+        Trap p = new TrapDamage(new Vector2(30,30),world);
     }
 
     /**

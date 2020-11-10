@@ -6,9 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.Portal;
-import com.zeldiablo.models.Projectil;
-import com.zeldiablo.models.piege.Piege;
-import com.zeldiablo.models.piege.PiegeDegat;
+import com.zeldiablo.models.traps.Projectile;
+import com.zeldiablo.models.traps.Trap;
 
 public class CollisionListener implements ContactListener {
 
@@ -44,12 +43,12 @@ public class CollisionListener implements ContactListener {
 
             // Si l'objet en contact avec le personnage est un piege
             if (obj.getClass().getSuperclass().getSimpleName().equals("Piege")) {
-                Piege piege = ((Piege) obj);
-                piege.effect(player);
+                Trap trap = ((Trap) obj);
+                trap.effect(player);
             }
 
             if (obj.getClass().getSimpleName().equals("Projectil")) {
-                Projectil pro = ((Projectil) obj);
+                Projectile pro = ((Projectile) obj);
                 System.out.println("Joueur : " + player.getName() + " à subit : " +pro.getAtt());
                 pro.setTouch(true);
             }

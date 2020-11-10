@@ -1,9 +1,10 @@
-package com.zeldiablo.models;
+package com.zeldiablo.models.traps;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.models.GameWorld;
 
-public class Projectil {
+public class Projectile {
 
     private int att;
     private Vector2 posProjectil;
@@ -11,7 +12,7 @@ public class Projectil {
     private Body bodyProjectil;
     private boolean touch;
 
-    public Projectil(Vector2 pos, World world){
+    public Projectile(Vector2 pos, World world){
 
         this.posProjectil = pos;
         this.touch = false;

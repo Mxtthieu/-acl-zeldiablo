@@ -1,12 +1,15 @@
-package com.zeldiablo.models;
+package com.zeldiablo.models.monsters;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
+import com.zeldiablo.models.GameWorld;
+import com.zeldiablo.models.Player;
+import com.zeldiablo.models.monsters.Monster;
 
 public class Skeleton extends Monster {
 
-    public Skeleton(World world, float x, float y, Player target) {
-        super(world, x, y, target);
+    public Skeleton(GameWorld gameWorld, float x, float y, Player target) {
+        super(gameWorld, x, y, target);
     }
 
     /**

@@ -1,47 +1,46 @@
-package com.zeldiablo.models.piege;
+package com.zeldiablo.models.traps;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.models.Player;
-import com.zeldiablo.models.Projectil;
 
 import java.util.ArrayList;
 
-public class PiegeDegat extends Piege{
+public class TrapDamage extends Trap {
 
     private int att;
     protected Timer timer;
     protected Timer.Task shotTask;
-    private ArrayList<Projectil>projectils;
-    private ArrayList<Projectil>projectilsSup;
+    private ArrayList<Projectile> projectiles;
+    private ArrayList<Projectile>projectilsSup;
 
-    public PiegeDegat(final Vector2 pos, final World world) {
+    public TrapDamage(final Vector2 pos, final World world) {
 
         super(pos, world);
         this.att = 10;
-        projectils = new ArrayList<>();
+        projectiles = new ArrayList<>();
         projectilsSup = new ArrayList<>();
         this.timer = new Timer();
         this.shotTask = new Timer.Task() {
             @Override
             public void run() {
-                Projectil p = new Projectil(new Vector2(pos.x + 1.5f,pos.y + 0.5f), world);
+                Projectile p = new Projectile(new Vector2(pos.x + 1.5f,pos.y + 0.5f), world);
                 p.setDirection();
-                projectils.add(p);
+                projectiles.add(p);
 
             }
         };
         timer.scheduleTask(shotTask, 0.5f, 1.5f);
 
-        for (Projectil p : projectils){
+        for (Projectile p : projectiles){
             if(p.isTouch()){
                 projectilsSup.add(p);
                 world.destroyBody(p.getBodyProjectil());
             }
         }
-        projectils.removeAll(projectilsSup);
+        projectiles.removeAll(projectilsSup);
 
     }
 
@@ -65,7 +64,7 @@ public class PiegeDegat extends Piege{
 
     }
 
-    public ArrayList<Projectil> getProjectils() {
-        return projectils;
+    public ArrayList<Projectile> getProjectils() {
+        return projectiles;
     }
 }
