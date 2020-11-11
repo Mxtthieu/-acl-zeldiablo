@@ -3,6 +3,7 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.models.enums.MazeObjects;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
@@ -86,13 +87,13 @@ public class Maze {
 
                     for (int column = 0; column < c.length(); column++) {
                         switch (c.charAt(column)) {
-                            case 'W':
+                            case MazeObjects.WALL:
                                 addWall(line, column);
                                 break;
-                            case 'T':
+                            case MazeObjects.TRAP:
                                 addTrap(line, column);
                                 break;
-                            case 'P':
+                            case MazeObjects.PORTAL:
                                 //addPortal(line, column);
                                 break;
                             default:

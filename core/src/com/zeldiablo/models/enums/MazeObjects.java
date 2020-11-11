@@ -1,13 +1,9 @@
 package com.zeldiablo.models.enums;
 
-public enum MazeObjects {
+public enum MazeObjects {;
 
-    WALL('W');
-
-    private final char element;
-
-    MazeObjects(char c) { this.element = c; }
-
-    public char getElement() { return this.element; }
+    public static final char WALL = 'W';
+    public static final char TRAP = 'T';
+    public static final char PORTAL = 'P';
 
 }

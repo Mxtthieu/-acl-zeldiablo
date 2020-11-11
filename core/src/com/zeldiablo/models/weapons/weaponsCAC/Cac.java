@@ -18,7 +18,6 @@ public abstract class Cac {
     protected boolean canAtk;
 
     protected Timer timer;
-    protected Timer timer2;
     protected Timer.Task timertask;
     protected Timer.Task destroytask;
     protected Body hitbox;
@@ -31,7 +30,6 @@ public abstract class Cac {
         this.damage = d;
         this.canAtk = true;
         this.timer = new Timer();
-        this.timer2 = new Timer();
         this.timertask = new Timer.Task() {
             @Override
             public void run() {
@@ -48,7 +46,7 @@ public abstract class Cac {
 
     public void createHitbox(float radius, float x, float y, float angle, final World world){
         BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.type = BodyDef.BodyType.StaticBody;
         this.setPositionBody(bd,x,y,angle,radius);
         this.hitbox = world.createBody(bd);
         FixtureDef fixture = new FixtureDef();

@@ -17,6 +17,7 @@ public class Player implements Entity {
     private int speed;
     private Cac weapon;
     private Body body;
+    private GameWorld gameWorld;
 
     public Player(GameWorld gameWorld, String n) {
         this.name = n;
@@ -25,11 +26,12 @@ public class Player implements Entity {
         this.def = 0;
         this.speed = 20;
         this.weapon = new Sword();
+        this.gameWorld = gameWorld;
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(10, 10);
-        body = gameWorld.getWorld().createBody(bd);
+        body = this.gameWorld.getWorld().createBody(bd);
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();
@@ -146,6 +148,6 @@ public class Player implements Entity {
     }
 
     public void attack(float angle){
-        weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, world);
+        weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, gameWorld.getWorld());
     }
 }

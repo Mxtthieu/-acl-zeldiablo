@@ -61,4 +61,9 @@ public class Skeleton extends Monster {
     public void draw(SpriteBatch batch) {
 
     }
+
+    @Override
+    public float getRadius() {
+        return 0;
+    }
 }

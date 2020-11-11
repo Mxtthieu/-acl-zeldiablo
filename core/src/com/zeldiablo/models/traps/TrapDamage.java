@@ -14,7 +14,7 @@ public class TrapDamage extends Trap {
     protected Timer timer;
     protected Timer.Task shotTask;
     private ArrayList<Projectile> projectiles;
-    private ArrayList<Projectile>projectilsSup;
+    private ArrayList<Projectile> projectilsSup;
 
     public TrapDamage(final Vector2 pos, final World world) {
 

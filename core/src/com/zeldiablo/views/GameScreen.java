@@ -25,6 +25,7 @@ public class GameScreen extends ScreenAdapter {
     // Ces deux attributs permettent de déterminer la vitesse du jeu
     static final float STEP_TIME = 1f/45f;
     private float accumulator = 0;
+    private float angle;
 
     private SpriteBatch batch;              // Ensemble de sprites contenu par le jeu
     private Box2DDebugRenderer debug;       // Rendu de debug pour vérifier le placement des corps du jeu
@@ -125,7 +126,7 @@ public class GameScreen extends ScreenAdapter {
         float y = yM - yP;
 
         // Un peu de magie (et de la trigo) et on obtient l'angle
-        float angle = (float) Math.atan(y/x);
+        this.angle = (float) Math.atan(y/x);
         if (x < 0)
             angle += Math.PI;
 
