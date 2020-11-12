@@ -1,10 +1,7 @@
 package com.zeldiablo.models.monsters;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.controllers.ai.Node;
 import com.zeldiablo.controllers.ai.PathFinding;
@@ -12,9 +9,7 @@ import com.zeldiablo.controllers.ai.PathFindingException;
 import com.zeldiablo.models.Entity;
 import com.zeldiablo.models.GameWorld;
 
-import java.awt.*;
 import java.util.List;
-import java.util.Stack;
 
 public abstract class Monster implements Entity {
 
@@ -88,7 +83,7 @@ public abstract class Monster implements Entity {
         };
 
         Timer.schedule(this.step, 0, this.speed);
-        Timer.schedule(this.recalculate, 3, 3);
+        Timer.schedule(this.recalculate, 0, 1f);
     }
 
     /**
