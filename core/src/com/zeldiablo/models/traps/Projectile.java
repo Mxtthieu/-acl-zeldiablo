@@ -5,11 +5,14 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 
+import java.util.ArrayList;
+
 public class Projectile {
 
     private int att;
     private Vector2 posProjectil;
     private static float taille;
+
     private Trap trapParent;
     private Body bodyProjectil;
 
@@ -31,12 +34,9 @@ public class Projectile {
         fixtureDef.isSensor = true;
         bodyProjectil.setUserData(this);
         bodyProjectil.createFixture(fixtureDef);
+        bodyProjectil.setLinearVelocity(5f,0f);
         shape.dispose();
 
-    }
-
-    public void setDirection(){
-        bodyProjectil.setLinearVelocity(5f,0f);
     }
 
     public int getAtt() {
@@ -47,5 +47,13 @@ public class Projectile {
         if(b.getUserData() instanceof Player){
             trapParent.applyEffectToPlayer();
         }
+    }
+
+    public Body getBodyProjectil() {
+        return bodyProjectil;
+    }
+
+    public Trap getTrapParent() {
+        return trapParent;
     }
 }

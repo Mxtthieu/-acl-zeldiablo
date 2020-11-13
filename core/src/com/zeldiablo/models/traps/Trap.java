@@ -49,10 +49,7 @@ public abstract class Trap {
         batch.end();
     }
 
-    public Body getBodyPiege() {
-        return this.bodyPiege;
-    }
-
-
     public abstract void applyEffectToPlayer();
+
+    public abstract void clearTimer();
 }

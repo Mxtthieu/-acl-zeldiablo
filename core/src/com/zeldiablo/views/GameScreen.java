@@ -94,7 +94,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void reset() {
-        this.game.reset();
+        this.game.loadMaze(1);
     }
 
     /**
@@ -182,9 +182,9 @@ public class GameScreen extends ScreenAdapter {
 
 
     private void drawPause() {
-        batch.begin();
-        batch.draw(TextureFactory.INSTANCE.getPause(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
+            batch.begin();
+            batch.draw(TextureFactory.INSTANCE.getPause(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.end();
     }
 
 

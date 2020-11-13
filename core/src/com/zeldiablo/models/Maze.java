@@ -3,7 +3,10 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.zeldiablo.models.enums.MazeObjects;
+import com.zeldiablo.models.monsters.Monster;
+import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
@@ -20,6 +23,7 @@ public class Maze {
     private ArrayList<Body> wallList;
     private ArrayList<Trap> trapList;
     private ArrayList<Portal> portalList;
+    private ArrayList<Monster> monsterList;
 
     private int currentNumMaze;
 
@@ -28,6 +32,7 @@ public class Maze {
         this.wallList = new ArrayList<>();
         this.trapList = new ArrayList<>();
         this.portalList = new ArrayList<>();
+        this.monsterList = new ArrayList<>();
         this.currentNumMaze = 0;
         loadMaze(1);
     }
@@ -36,25 +41,9 @@ public class Maze {
      * La fonction loadMaze permet de charger un labyrinthe avec un fichier
      */
     public void loadMaze(int num) {
-
-        World world = gameWorld.getWorld();
-        for (Body wall: wallList){
-            world.destroyBody(wall);
-        }
-        for (Trap trap : trapList){
-            world.destroyBody(trap.getBodyPiege());
-        }
-        for (Portal portal: portalList){
-            world.destroyBody(portal.getBodyPortal());
-        }
-        wallList.clear();
-        trapList.clear();
-        portalList.clear();
-
         this.currentNumMaze = num;
         this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
         readObjects();
-
     }
 
     /**
@@ -87,6 +76,9 @@ public class Maze {
 
                     for (int column = 0; column < c.length(); column++) {
                         switch (c.charAt(column)) {
+                            case MazeObjects.MONSTER:
+                                addMonster(line, column);
+                                break;
                             case MazeObjects.WALL:
                                 addWall(line, column);
                                 break;
@@ -133,6 +125,16 @@ public class Maze {
     }
 
     /**
+     * Ajoute un monstre au monde
+     * @param i la ligne dans le fichier
+     * @param j la colonne dans le fichier
+     */
+    private void addMonster(int i, int j) {
+        World world = gameWorld.getWorld();
+        this.monsterList.add(new Skeleton(gameWorld,j+1,GameWorld.HEIGHT - (i+1), gameWorld.getPlayer()));
+    }
+
+    /**
      * Ajoute un portail au monde
      * @param i la ligne dans le fichier
      * @param j la colonne dans le fichier
@@ -149,7 +151,6 @@ public class Maze {
      * @param j la colonne dans le fichier
      */
     private void addTrap(int i, int j) {
-        System.out.println("J'ajoute un piège");
         Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld);
         this.trapList.add(trap);
     }
@@ -200,6 +201,15 @@ public class Maze {
     }
 
     public void resetMaze() {
+        World world = gameWorld.getWorld();
+        Array<Body> bodies = new Array<>();
+        world.getBodies(bodies);
+        for (Body body : bodies){
+            world.destroyBody(body);
+        }
+        for (Trap trap: trapList){
+            trap.clearTimer();
+        }
         this.currentNumMaze = 0;
     }
 }

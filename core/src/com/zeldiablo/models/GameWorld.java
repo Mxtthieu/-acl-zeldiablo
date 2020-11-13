@@ -3,6 +3,7 @@ package com.zeldiablo.models;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
@@ -25,7 +26,6 @@ public class GameWorld {
     private World world;
     private Player player;
     private Maze maze;
-    private Monster monster;
 
     // --- Données Téleportation
     public boolean isTp;
@@ -36,7 +36,6 @@ public class GameWorld {
         this.bodiesToDelet = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
-        this.monster = new Skeleton(this, 50, 50, this.player);
         this.maze = new Maze(this);
         this.isTp = false;
     }
@@ -72,17 +71,16 @@ public class GameWorld {
             p.getBody().setTransform(por.getPosPortalExit().x ,por.getPosPortalExit().y ,0f);
             // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
             if (!por.exitSameMaze()) {
-                p.getBody().setTransform(por.getPosPortalExit().x +3 ,por.getPosPortalExit().y ,0f);
-                maze.loadMaze(por.getExitPortalNumMaze());
+                p.getBody().setTransform(por.getPosPortalExit().x + 3 ,por.getPosPortalExit().y ,0f);
+                loadMaze(por.getExitPortalNumMaze());
             }
         }
     }
 
-    public void reset() {
+    public void loadMaze(int num) {
         this.maze.resetMaze();
-        this.maze.loadMaze(1);
-        this.world.destroyBody(this.player.getBody());
         this.player = new Player(this, "TESTER");
+        this.maze.loadMaze(num);
     }
 
     public void atk(){
@@ -90,11 +88,10 @@ public class GameWorld {
     }
 
     public void deleteBodies() {
-        for (Body body : bodiesToDelet)
-        {
-            world.destroyBody(body);
+        if(bodiesToDelet.size() > 0){
+            world.destroyBody(bodiesToDelet.get(0));
+            bodiesToDelet.clear();
         }
-        bodiesToDelet.clear();
     }
 
     public void addBodyToDelete(Body body) {

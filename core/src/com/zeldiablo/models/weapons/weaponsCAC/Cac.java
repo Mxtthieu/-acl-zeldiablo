@@ -56,6 +56,7 @@ public abstract class Cac {
         fixture.density = 1f;
         fixture.restitution = 0f;
         fixture.friction = 0f;
+        fixture.isSensor = true;
         hitbox.createFixture(fixture);
         shape.dispose();
         canAtk = false;

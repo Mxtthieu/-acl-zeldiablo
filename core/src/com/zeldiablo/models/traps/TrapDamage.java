@@ -15,12 +15,10 @@ public class TrapDamage extends Trap {
     private int att;
     protected Timer timer;
     protected Timer.Task shotTask;
-    private ArrayList<Projectile> projectiles;
 
     public TrapDamage(final Vector2 pos, GameWorld gameworld) {
         super(pos, gameworld);
         this.att = 10;
-        projectiles = new ArrayList<>();
         this.timer = new Timer();
         this.shotTask = new Timer.Task() {
             @Override
@@ -33,8 +31,6 @@ public class TrapDamage extends Trap {
 
     private void addProjectile() {
         Projectile p = new Projectile(this, new Vector2(this.pos.x + 1.5f,pos.y + 0.5f), this.gameWorld);
-        p.setDirection();
-        projectiles.add(p);
     }
 
     /**
@@ -53,6 +49,12 @@ public class TrapDamage extends Trap {
         Player p = this.gameWorld.getPlayer();
         p.setHp(p.getHP() - 10);
     }
+
+    @Override
+    public void clearTimer() {
+        timer.clear();
+    }
+
 
     public int getAtt() {
         return att;
