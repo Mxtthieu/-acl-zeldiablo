@@ -21,7 +21,7 @@ public class Player implements Entity {
 
     public Player(GameWorld gameWorld, String n) {
         this.name = n;
-        this.hp = 20;
+        this.hp = 100;
         this.att = 0;
         this.def = 0;
         this.speed = 20;
@@ -32,6 +32,7 @@ public class Player implements Entity {
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(10, 10);
         body = this.gameWorld.getWorld().createBody(bd);
+        body.setUserData(this);
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();
@@ -76,7 +77,7 @@ public class Player implements Entity {
      */
     @Override
     public int getHP() {
-        return 0;
+        return this.hp;
     }
 
     /**
@@ -106,7 +107,7 @@ public class Player implements Entity {
      */
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     /**
@@ -149,5 +150,9 @@ public class Player implements Entity {
 
     public void attack(float angle){
         weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, gameWorld.getWorld());
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

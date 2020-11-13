@@ -93,9 +93,6 @@ public class Maze {
                             case MazeObjects.TRAP:
                                 addTrap(line, column);
                                 break;
-                            case MazeObjects.PORTAL:
-                                //addPortal(line, column);
-                                break;
                             default:
                                 break;
                         }
@@ -113,8 +110,8 @@ public class Maze {
                         a = c.split("\\|");
                         p1 = a[1].split(",");
                         p2 = a[2].split(",");
-                        por1 = new Portal(this.currentNumMaze,Integer.valueOf(p1[2]),new Vector2(Integer.valueOf(p1[0]) +1,GameWorld.HEIGHT -Integer.valueOf(p1[1])), gameWorld.getWorld());
-                        por2 = new Portal(this.currentNumMaze,Integer.valueOf(p2[2]),new Vector2(Integer.valueOf(p2[0]) +1,GameWorld.HEIGHT -Integer.valueOf(p2[1])), gameWorld.getWorld());
+                        por1 = new Portal(this.currentNumMaze,Integer.parseInt(p1[2]),new Vector2(Integer.parseInt(p1[0]) +1,GameWorld.HEIGHT -Integer.parseInt(p1[1])), gameWorld.getWorld());
+                        por2 = new Portal(this.currentNumMaze,Integer.parseInt(p2[2]),new Vector2(Integer.parseInt(p2[0]) +1,GameWorld.HEIGHT -Integer.parseInt(p2[1])), gameWorld.getWorld());
                         por1.setExitPortal(por2);
                         por2.setExitPortal(por1);
                         if(por1.getNumMaze() == this.currentNumMaze) {
@@ -152,8 +149,9 @@ public class Maze {
      * @param j la colonne dans le fichier
      */
     private void addTrap(int i, int j) {
-        World world = gameWorld.getWorld();
-        this.trapList.add(new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
+        System.out.println("J'ajoute un piège");
+        Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld);
+        this.trapList.add(trap);
     }
 
     /**
@@ -183,7 +181,7 @@ public class Maze {
         fixtureDef1.restitution = 0f; //Elasticité
         fixtureDef1.friction = 1f; //Friction
         body.createFixture(fixtureDef1);
-        body.setUserData("W");
+        body.setUserData("Wall");
 
         this.wallList.add(body);
 

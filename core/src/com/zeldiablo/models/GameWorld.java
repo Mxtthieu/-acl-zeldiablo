@@ -6,9 +6,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
+import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.views.GameScreen;
+
+import java.util.ArrayList;
 
 public class GameWorld {
 
@@ -18,6 +21,7 @@ public class GameWorld {
 
     // --- Eléments du jeu
     private GameScreen screen;
+    private ArrayList<Body> bodiesToDelet;
     private World world;
     private Player player;
     private Maze maze;
@@ -29,12 +33,12 @@ public class GameWorld {
 
     public GameWorld(GameScreen s) {
         this.screen = s;
+        this.bodiesToDelet = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
         this.monster = new Skeleton(this, 50, 50, this.player);
         this.maze = new Maze(this);
         this.isTp = false;
-        Trap p = new TrapDamage(new Vector2(30,30),world);
     }
 
     /**
@@ -83,5 +87,17 @@ public class GameWorld {
 
     public void atk(){
         this.player.attack(screen.getAngle());
+    }
+
+    public void deleteBodies() {
+        for (Body body : bodiesToDelet)
+        {
+            world.destroyBody(body);
+        }
+        bodiesToDelet.clear();
+    }
+
+    public void addBodyToDelete(Body body) {
+        this.bodiesToDelet.add(body);
     }
 }

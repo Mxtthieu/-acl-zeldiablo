@@ -9,22 +9,25 @@ import com.zeldiablo.models.Player;
 public abstract class Trap {
 
     private boolean touch;
-    private Vector2 pos;
+    protected Vector2 pos;
     private Body bodyPiege;
     private float height;
     private float width;
+    protected GameWorld gameWorld;
 
-    public Trap(Vector2 pos, World world){
+    public Trap(Vector2 pos, GameWorld gameWorld){
 
         this.touch = true;
         this.pos = pos;
         this.height = (1/60f)* GameWorld.HEIGHT;
         this.width = (1/80f)*GameWorld.WIDTH;
 
+        this.gameWorld = gameWorld;
+
         BodyDef bodydef = new BodyDef();
         bodydef.type = BodyDef.BodyType.StaticBody;
         bodydef.position.set(this.pos);
-        bodyPiege = world.createBody(bodydef);
+        bodyPiege = gameWorld.getWorld().createBody(bodydef);
         float[] vertice = {0f, 0f, 0f,this.height, this.width, this.height, this.width, 0f, 0f, 0f};
         FixtureDef fixtureDef = new FixtureDef();
         ChainShape shape = new ChainShape();
@@ -35,8 +38,6 @@ public abstract class Trap {
         bodyPiege.createFixture(fixtureDef);
         shape.dispose();
     }
-
-    public abstract void effect(Player p);
 
     /**
      * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
@@ -53,4 +54,5 @@ public abstract class Trap {
     }
 
 
+    public abstract void applyEffectToPlayer();
 }

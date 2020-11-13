@@ -1,9 +1,7 @@
 package com.zeldiablo.controllers;
 
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Projectile;
@@ -14,15 +12,22 @@ public class CollisionListener implements ContactListener {
     private boolean isTp;
     private Portal portal;
     private Player player;
+    private GameWorld gameWorld;
 
-    public CollisionListener(Player p){
+    public CollisionListener(GameWorld gameWorld){
         this.isTp = false;
         this.portal = null;
-        this.player = p;
+        this.player = gameWorld.getPlayer();
+        this.gameWorld = gameWorld;
 
     }
     @Override
     public void beginContact(Contact contact) {
+
+        Body a = contact.getFixtureA().getBody();
+        Body b = contact.getFixtureB().getBody();
+
+        checkProjectileCollision(a,b);
 
         Object obj = null;
         // je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
@@ -41,17 +46,6 @@ public class CollisionListener implements ContactListener {
                 portal = por;
             }
 
-            // Si l'objet en contact avec le personnage est un piege
-            if (obj.getClass().getSuperclass().getSimpleName().equals("Piege")) {
-                Trap trap = ((Trap) obj);
-                trap.effect(player);
-            }
-
-            if (obj.getClass().getSimpleName().equals("Projectil")) {
-                Projectile pro = ((Projectile) obj);
-                System.out.println("Joueur : " + player.getName() + " à subit : " +pro.getAtt());
-                pro.setTouch(true);
-            }
         }
 
     }
@@ -94,6 +88,18 @@ public class CollisionListener implements ContactListener {
 
     public void setTp(boolean tp) {
         isTp = tp;
+    }
+
+    private void checkProjectileCollision(Body a, Body b){
+        if(a.getUserData() instanceof Projectile && !(b.getUserData() instanceof Trap)){
+            this.gameWorld.addBodyToDelete(a);
+            Projectile pro = (Projectile)a.getUserData();
+            pro.effect(b);
+        } else if (b.getUserData() instanceof Projectile && !(a.getUserData() instanceof Trap)){
+            this.gameWorld.addBodyToDelete(b);
+            Projectile pro = (Projectile)b.getUserData();
+            pro.effect(a);
+        }
     }
 }
 
