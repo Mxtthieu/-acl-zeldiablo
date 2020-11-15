@@ -46,7 +46,7 @@ public abstract class Cac {
 
     public void createHitbox(float radius, float x, float y, float angle, final World world){
         BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.StaticBody;
+        bd.type = BodyDef.BodyType.DynamicBody;
         this.setPositionBody(bd,x,y,angle,radius);
         this.hitbox = world.createBody(bd);
         this.hitbox.setUserData(this);
