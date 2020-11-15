@@ -9,7 +9,7 @@ import com.zeldiablo.models.monsters.Monster;
 public class Skeleton extends Monster {
 
     public Skeleton(GameWorld gameWorld, float x, float y, Player target) {
-        super(gameWorld, x, y, target);
+        super(gameWorld, x, y, target, 100);
     }
 
     /**
@@ -19,7 +19,7 @@ public class Skeleton extends Monster {
      */
     @Override
     public int getHP() {
-        return 0;
+        return this.hp;
     }
 
     /**

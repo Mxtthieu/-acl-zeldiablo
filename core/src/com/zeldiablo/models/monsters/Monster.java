@@ -22,14 +22,17 @@ public abstract class Monster implements Entity {
     private Body body;
     private float speed;
 
+    protected int hp;
+
     private Timer.Task step;
     private Timer.Task recalculate;
 
     private PathFinding finding;
 
-    public Monster(GameWorld gameWorld, float x, float y, Entity tar) {
+    public Monster(GameWorld gameWorld, float x, float y, Entity tar, int hp) {
         this.target = tar;
         this.speed = 0.1f;  // Plus c'est grand moins il va vite
+        this.hp = hp;
 
         // --- Création du body --- //
         BodyDef bd = new BodyDef();
@@ -142,5 +145,13 @@ public abstract class Monster implements Entity {
     @Override
     public int getY() {
         return (int) this.getPosition().y;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getHp() {
+        return hp;
     }
 }

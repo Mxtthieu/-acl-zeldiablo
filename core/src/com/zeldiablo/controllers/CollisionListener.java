@@ -3,9 +3,12 @@ package com.zeldiablo.controllers;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
+import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
+import com.zeldiablo.models.weapons.weaponsCAC.Cac;
+import com.zeldiablo.models.weapons.weaponsCAC.Sword;
 
 public class CollisionListener implements ContactListener {
 
@@ -29,6 +32,7 @@ public class CollisionListener implements ContactListener {
 
         checkProjectileCollision(a,b);
         checkPortalCollision(a,b);
+        checkAttackCollision(a,b);
 
     }
 
@@ -93,6 +97,16 @@ public class CollisionListener implements ContactListener {
             Portal por = (Portal)b.getUserData();
             isTp = true;
             portal = por;
+        }
+    }
+
+    private void checkAttackCollision(Body a, Body b) {
+        if(a.getUserData() instanceof Cac && b.getUserData() instanceof Monster){
+            Cac weapon = player.getWeapon();
+            weapon.effect(b);
+        } else if (b.getUserData() instanceof Cac && a.getUserData() instanceof Monster){
+            Cac weapon = player.getWeapon();
+            weapon.effect(a);
         }
     }
 }

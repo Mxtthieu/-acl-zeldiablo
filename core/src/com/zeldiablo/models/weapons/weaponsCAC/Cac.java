@@ -49,6 +49,7 @@ public abstract class Cac {
         bd.type = BodyDef.BodyType.StaticBody;
         this.setPositionBody(bd,x,y,angle,radius);
         this.hitbox = world.createBody(bd);
+        this.hitbox.setUserData(this);
         FixtureDef fixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(reach / 2f, width / 2f, new Vector2(0, 0), angle);
@@ -73,4 +74,6 @@ public abstract class Cac {
     public abstract void setPositionBody(BodyDef bd, float x, float y, float angle, float radius);
 
     public abstract void draw(SpriteBatch sb);
+
+    public abstract void effect(Body b);
 }

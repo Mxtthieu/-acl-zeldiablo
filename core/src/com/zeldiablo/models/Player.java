@@ -155,4 +155,8 @@ public class Player implements Entity {
     public void setHp(int hp) {
         this.hp = hp;
     }
+
+    public Cac getWeapon() {
+        return weapon;
+    }
 }
