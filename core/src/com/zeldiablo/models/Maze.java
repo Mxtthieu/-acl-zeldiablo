@@ -212,13 +212,4 @@ public class Maze {
         }
         this.currentNumMaze = 0;
     }
-
-    public void setPause(boolean pause) {
-        for (Monster monster : this.monsterList) {
-            if (pause)
-                monster.pause();
-            else
-                monster.resume();
-        }
-    }
 }

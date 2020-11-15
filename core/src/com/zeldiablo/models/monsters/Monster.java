@@ -82,7 +82,8 @@ public abstract class Monster implements Entity {
             }
         };
 
-        this.resume();
+        Timer.schedule(this.step, 0, this.speed);
+        Timer.schedule(this.recalculate, 0, 1f);
     }
 
     /**
@@ -147,21 +148,5 @@ public abstract class Monster implements Entity {
 
     public int getHp() {
         return hp;
-    }
-
-    /**
-     * Met en pause le mouvements des monstres et le calcule de chemin
-     */
-    public void pause() {
-        this.step.cancel();
-        this.recalculate.cancel();
-    }
-
-    /**
-     * Démarre le mouvements des monstres et le calcule de chemin
-     */
-    public void resume() {
-        Timer.schedule(this.step, 0, this.speed);
-        Timer.schedule(this.recalculate, 0, 1f);
     }
 }
