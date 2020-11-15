@@ -26,6 +26,7 @@ public class GameWorld {
     private World world;
     private Player player;
     private Maze maze;
+    private boolean pause;
 
     // --- Données Téleportation
     public boolean isTp;
@@ -38,6 +39,7 @@ public class GameWorld {
         this.player = new Player(this, "Tester");
         this.maze = new Maze(this);
         this.isTp = false;
+        this.pause = false;
     }
 
     /**
@@ -96,5 +98,14 @@ public class GameWorld {
 
     public void addBodyToDelete(Body body) {
         this.bodiesToDelet.add(body);
+    }
+
+    /**
+     * Permet d'activer ou désactiver la pause des éléments de GameWorld
+     */
+    public void switchPause() {
+        if (this.pause) {
+            this.maze.setPause(true);
+        }
     }
 }
