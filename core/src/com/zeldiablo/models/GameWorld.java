@@ -45,8 +45,8 @@ public class GameWorld {
      * @param batch ensemble de sprite
      */
     public void draw(SpriteBatch batch) {
-        this.player.draw(batch);
         this.maze.draw(batch);
+        this.player.draw(batch);
     }
 
     public World getWorld() {

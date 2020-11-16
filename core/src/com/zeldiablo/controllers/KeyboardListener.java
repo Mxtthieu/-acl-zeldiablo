@@ -25,7 +25,7 @@ public class KeyboardListener extends ControllerAdapter {
 
     public KeyboardListener() {
         this.pause = false;
-        this.debug = true;
+        this.debug = false;
         this.attack = false;
         this.step = new Vector2();
     }

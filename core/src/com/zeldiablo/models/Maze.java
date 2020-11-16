@@ -1,9 +1,13 @@
 package com.zeldiablo.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.enums.MazeObjects;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.monsters.Skeleton;
@@ -26,6 +30,7 @@ public class Maze {
     private ArrayList<Monster> monsterList;
 
     private int currentNumMaze;
+    private float tmpAnim;
 
     public Maze(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
@@ -34,6 +39,7 @@ public class Maze {
         this.portalList = new ArrayList<>();
         this.monsterList = new ArrayList<>();
         this.currentNumMaze = 0;
+        this.tmpAnim = Gdx.graphics.getDeltaTime();
         loadMaze(1);
     }
 
@@ -189,15 +195,41 @@ public class Maze {
     }
 
     public void draw(SpriteBatch batch) {
-        for(Portal p :portalList){
+        this.tmpAnim += Gdx.graphics.getDeltaTime();
+
+        // Textures du sol
+        Texture grass = TextureFactory.INSTANCE.getGrass();
+        grass.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        TextureRegion grassRegion = new TextureRegion(grass);
+        grassRegion.setRegion(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        batch.begin();
+        batch.draw(grassRegion, 0, 0, grass.getWidth(), grass.getHeight());
+        batch.end();
+
+        // Texture portail
+        for (Portal p :portalList){
             if(p.getNumMaze() == this.currentNumMaze) {
                 p.draw(batch);
             }
         }
-        for(Trap p :trapList){
+
+        // Texture piège
+        for (Trap p :trapList){
             p.draw(batch);
         }
 
+        // Texture des murs
+        batch.begin();
+        float x, y, radius;
+        for (Body wall: wallList) {
+            radius = wall.getFixtureList().get(0).getShape().getRadius();
+            x = wall.getPosition().x - radius;
+            y = wall.getPosition().y - radius;
+            batch.draw((TextureRegion) TextureFactory.INSTANCE.getAnimatedTree().getKeyFrame(this.tmpAnim),
+                    x, y, radius *2, radius *2);
+        }
+        batch.end();
     }
 
     public void resetMaze() {
