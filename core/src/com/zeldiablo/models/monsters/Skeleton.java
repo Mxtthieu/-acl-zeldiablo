@@ -59,7 +59,9 @@ public class Skeleton extends Monster {
      */
     @Override
     public void draw(SpriteBatch batch) {
+        batch.begin();
 
+        batch.end();
     }
 
     @Override

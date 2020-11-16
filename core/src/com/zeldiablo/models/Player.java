@@ -1,9 +1,17 @@
 package com.zeldiablo.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.models.weapons.weaponsCAC.*;
+import com.zeldiablo.controllers.Direction;
+import com.zeldiablo.factories.TextureFactory;
+import com.zeldiablo.models.weapons.weaponsCAC.Cac;
+import com.zeldiablo.models.weapons.weaponsCAC.Sword;
+
+import java.util.HashMap;
 
 /**
  * @author Sousa Ribeiro Pedro
@@ -19,14 +27,28 @@ public class Player implements Entity {
     private Body body;
     private GameWorld gameWorld;
 
+    private HashMap<Direction, Animation> animations;
+    private Direction direction;
+    private float tmpAnim;
+    private int walking;
+
     public Player(GameWorld gameWorld, String n) {
         this.name = n;
         this.hp = 100;
         this.att = 0;
         this.def = 0;
-        this.speed = 20;
+        this.speed = 10;
         this.weapon = new Sword();
         this.gameWorld = gameWorld;
+
+        this.animations = new HashMap<>();
+        this.animations.put(Direction.Up, TextureFactory.INSTANCE.getAnimatedPlayerUp());
+        this.animations.put(Direction.Down, TextureFactory.INSTANCE.getAnimatedPlayerDown());
+        this.animations.put(Direction.Left, TextureFactory.INSTANCE.getAnimatedPlayerLeft());
+        this.animations.put(Direction.Right, TextureFactory.INSTANCE.getAnimatedPlayerRight());
+        this.tmpAnim = Gdx.graphics.getDeltaTime();
+        this.direction = Direction.Left;
+        this.walking = 0;
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
@@ -56,6 +78,20 @@ public class Player implements Entity {
     public void move(float dx, float dy, float angle) {
         this.body.setTransform(this.getPosition(), angle);
         this.body.setLinearVelocity(dx*this.speed, dy*this.speed);
+
+        if (dx > 0)
+            this.direction = Direction.Left;
+        if (dx < 0)
+            this.direction = Direction.Right;
+        if (dy > 0)
+            this.direction = Direction.Up;
+        if (dy < 0)
+            this.direction = Direction.Down;
+
+        if (dx == 0 && dy == 0)
+            this.walking = 0;
+        else
+            this.walking = 1;
     }
 
     /**
@@ -137,8 +173,10 @@ public class Player implements Entity {
      */
     @Override
     public void draw(SpriteBatch batch) {
+        this.tmpAnim += Gdx.graphics.getDeltaTime()*this.walking;
+        TextureRegion region = (TextureRegion) this.animations.get(this.direction).getKeyFrame(this.tmpAnim);
         batch.begin();
-        //TODO: Ajouter ici la texture du personnage
+        batch.draw(region, getX()-SIZE/2, getY()-SIZE/2, SIZE, SIZE);
         batch.end();
     }
 

@@ -90,6 +90,8 @@ public class GameScreen extends ScreenAdapter {
             batch.begin();
             debug.render(this.game.getWorld(), camera.combined);
             batch.end();
+        } else {
+            this.game.draw(this.batch);
         }
     }
 
