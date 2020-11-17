@@ -34,6 +34,10 @@ public enum TextureFactory {
     private TextureAtlas skeleton_up;
     private TextureAtlas skeleton_down;
 
+    // Trap
+    private Texture cannon;
+    private Texture cannonball;
+
     TextureFactory() {
         this.pause = new Texture(Gdx.files.internal("images/Pause.png"));
         this.grass = new Texture("images/grass.jpg");
@@ -54,12 +58,24 @@ public enum TextureFactory {
         this.skeleton_left = new TextureAtlas("images/monster/skeleton/walk_left.atlas");
         this.skeleton_up = new TextureAtlas("images/monster/skeleton/walk_up.atlas");
         this.skeleton_down = new TextureAtlas("images/monster/skeleton/walk_down.atlas");
+
+        // Trap
+        this.cannon = new Texture("images/trap/cannon.png");
+        this.cannonball = new Texture("images/trap/cannonball.png");
     }
 
     public Texture getPause() { return pause; }
 
     public Texture getGrass() {
         return this.grass;
+    }
+
+    public Texture getCannon() {
+        return this.cannon;
+    }
+
+    public Texture getCannonball() {
+        return this.cannonball;
     }
 
     public Animation getAnimatedTree() {

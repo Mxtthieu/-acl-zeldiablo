@@ -1,7 +1,10 @@
 package com.zeldiablo.models.traps;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 
@@ -47,6 +50,18 @@ public class Projectile {
         if(b.getUserData() instanceof Player){
             trapParent.applyEffectToPlayer();
         }
+
+        this.trapParent.removeProjectile(this);
+    }
+
+    public void draw(SpriteBatch batch) {
+        Texture tex = TextureFactory.INSTANCE.getCannonball();
+        float x = this.bodyProjectil.getPosition().x;
+        float y = this.bodyProjectil.getPosition().y;
+
+        batch.begin();
+        batch.draw(tex, x-taille, y-taille, taille*2, taille*2);
+        batch.end();
     }
 
     public Body getBodyProjectil() {

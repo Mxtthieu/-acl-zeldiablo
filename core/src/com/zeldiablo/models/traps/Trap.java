@@ -10,7 +10,7 @@ public abstract class Trap {
 
     private boolean touch;
     protected Vector2 pos;
-    private Body bodyPiege;
+    protected Body bodyPiege;
     private float height;
     private float width;
     protected GameWorld gameWorld;
@@ -43,13 +43,15 @@ public abstract class Trap {
      * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
      * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
      */
-    public void draw(SpriteBatch batch){
-        batch.begin();
-        //batch.draw(); Ajout Sprite
-        batch.end();
-    }
+    public abstract void draw(SpriteBatch batch);
 
     public abstract void applyEffectToPlayer();
 
     public abstract void clearTimer();
+
+    public float getWidth() {
+        return this.width;
+    }
+
+    public abstract void removeProjectile(Projectile p);
 }
