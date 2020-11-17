@@ -1,7 +1,10 @@
 package com.zeldiablo.models.monsters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
+import com.zeldiablo.controllers.Direction;
+import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.monsters.Monster;
@@ -10,6 +13,10 @@ public class Skeleton extends Monster {
 
     public Skeleton(GameWorld gameWorld, float x, float y, Player target) {
         super(gameWorld, x, y, target, 100);
+        this.animations.put(Direction.Down, TextureFactory.INSTANCE.getAnimatedSkeletonDown());
+        this.animations.put(Direction.Left, TextureFactory.INSTANCE.getAnimatedSkeletonLeft());
+        this.animations.put(Direction.Right, TextureFactory.INSTANCE.getAnimatedSkeletonRight());
+        this.animations.put(Direction.Up, TextureFactory.INSTANCE.getAnimatedSkeletonUp());
     }
 
     /**
@@ -50,18 +57,6 @@ public class Skeleton extends Monster {
     @Override
     public String getName() {
         return null;
-    }
-
-    /**
-     * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
-     *
-     * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
-     */
-    @Override
-    public void draw(SpriteBatch batch) {
-        batch.begin();
-
-        batch.end();
     }
 
     @Override

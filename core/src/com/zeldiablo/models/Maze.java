@@ -219,6 +219,10 @@ public class Maze {
             p.draw(batch);
         }
 
+        // Texture des monstres
+        for (Monster m : monsterList)
+            m.draw(batch);
+
         // Texture des murs
         batch.begin();
         float x, y, radius;
