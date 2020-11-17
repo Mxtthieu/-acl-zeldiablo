@@ -58,7 +58,7 @@ public class Player implements Entity {
 
         FixtureDef fixture = new FixtureDef();
         Shape shape = new CircleShape();
-        shape.setRadius(1f/50f*GameWorld.WIDTH);
+        shape.setRadius(SIZE/2);
         fixture.shape = shape;
         fixture.density = 1f;
         fixture.restitution = 0.25f;
