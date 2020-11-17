@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import jdk.internal.util.ArraysSupport;
 
 public enum TextureFactory {
     INSTANCE;
@@ -15,7 +16,11 @@ public enum TextureFactory {
     private Texture grass;
 
     private static final float FRAMERATE = 1/4f;
+
+    // Decor
     private TextureAtlas animeTree;
+    private TextureAtlas animGreenPortal;
+    private TextureAtlas animPurplePortal;
 
     // Player
     private TextureAtlas player_right;
@@ -33,7 +38,10 @@ public enum TextureFactory {
         this.pause = new Texture(Gdx.files.internal("images/Pause.png"));
         this.grass = new Texture("images/grass.jpg");
 
+        // Decor
         this.animeTree = new TextureAtlas("images/tree/pack.atlas");
+        this.animGreenPortal = new TextureAtlas("images/portal/green_portal.atlas");
+        this.animPurplePortal = new TextureAtlas("images/portal/purple_portal.atlas");
 
         // Texture Player
         this.player_right = new TextureAtlas("images/player/walk_right.atlas");
@@ -56,6 +64,16 @@ public enum TextureFactory {
 
     public Animation getAnimatedTree() {
         Array<Sprite> img = this.animeTree.createSprites();
+        return new Animation(FRAMERATE, img, Animation.PlayMode.LOOP);
+    }
+
+    public Animation getAnimatedGreenPortal() {
+        Array<Sprite> img = this.animGreenPortal.createSprites();
+        return new Animation(FRAMERATE, img, Animation.PlayMode.LOOP);
+    }
+
+    public Animation getAnimatedPurplePortal() {
+        Array<Sprite> img = this.animPurplePortal.createSprites();
         return new Animation(FRAMERATE, img, Animation.PlayMode.LOOP);
     }
 

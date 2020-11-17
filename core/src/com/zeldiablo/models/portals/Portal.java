@@ -1,8 +1,12 @@
 package com.zeldiablo.models.portals;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
 
 /**
@@ -18,7 +22,13 @@ public class Portal {
     private boolean actif;
     private int numPortal;
 
+    private float tmpAnim;
+    private Animation animation;
+
     public Portal(int n, int num, Vector2 pos, World world){
+
+        this.tmpAnim = Gdx.graphics.getDeltaTime();
+        this.animation = TextureFactory.INSTANCE.getAnimatedPurplePortal();
 
         this.numPortal = n;
         this.numMaze = num;
@@ -26,7 +36,7 @@ public class Portal {
         this.posPortal = pos;
 
         if(n == num) {
-            taille = (1/80f) * GameWorld.WIDTH;
+            taille = (1/60f) * GameWorld.WIDTH;
             BodyDef bodydef = new BodyDef();
             bodydef.type = BodyDef.BodyType.StaticBody;
             bodydef.position.set(posPortal);
@@ -123,8 +133,16 @@ public class Portal {
      * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
      */
     public void draw(SpriteBatch batch){
+        this.tmpAnim += Gdx.graphics.getDeltaTime();
+        TextureRegion region = (TextureRegion) this.animation.getKeyFrame(this.tmpAnim);
+
+        float x = this.bodyPortal.getPosition().x;
+        float y = this.bodyPortal.getPosition().y;
+
+        float size = taille*4;
+
         batch.begin();
-        //batch.draw(); Ajout Sprite
+        batch.draw(region, x-size/2, y-size/2, size, size);
         batch.end();
     }
 
