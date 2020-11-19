@@ -62,14 +62,8 @@ public abstract class Monster implements Entity {
         body.createFixture(fixture);
         shape.dispose();
 
-
-        // Tout ce joue la dessus. Il faut faire une vérification afin de mettre false si la case est occupé par un obstacle.
-        // Je pense que la partie la sera faite dans GameWorld et sera donné au monstre dans le constructeur
-        final boolean[][] grid = new boolean[GameWorld.HEIGHT][GameWorld.WIDTH];
-        for (int j = 0; j < GameWorld.HEIGHT; j++)
-            for (int i = 0; i < GameWorld.WIDTH; i++)
-                //Todo: Vérification à faire ici
-                grid[j][i] = true;
+        // Récupération d'une grille de booléen sur laquelle faire les calcules
+        final boolean[][] grid = gameWorld.generateGrid();
 
         try {
             this.finding = new PathFinding(grid, this.getX(), this.getY(), this.target.getX(), this.target.getY());

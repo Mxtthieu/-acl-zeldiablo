@@ -37,6 +37,7 @@ public class GameWorld {
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
         this.maze = new Maze(this);
+        this.maze.initMonster();
         this.isTp = false;
     }
 
@@ -96,5 +97,25 @@ public class GameWorld {
 
     public void addBodyToDelete(Body body) {
         this.bodiesToDelet.add(body);
+    }
+
+    /**
+     * Retourne une grille de booléen indiquant, pour chaque case, si elle est libre ou non.
+     * @return grille de booléen
+     */
+    public boolean[][] generateGrid() {
+        boolean[][] grid = new boolean[GameWorld.HEIGHT][GameWorld.WIDTH];
+        for (int j = 0; j < GameWorld.HEIGHT; j++)
+            for (int i = 0; i < GameWorld.WIDTH; i++)
+                grid[j][i] = true;
+
+        int x, y;
+        ArrayList<Vector2> tmp = this.maze.getWallsCoord();
+        for (Vector2 vec : tmp) {
+            x = (int) vec.x;
+            y = (int) vec.y;
+            grid[y][x] = false;
+        }
+        return grid;
     }
 }
