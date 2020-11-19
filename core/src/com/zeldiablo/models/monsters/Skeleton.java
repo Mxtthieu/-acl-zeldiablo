@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.zeldiablo.controllers.Direction;
 import com.zeldiablo.factories.TextureFactory;
+import com.zeldiablo.models.Effectable;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.monsters.Monster;
 
-public class Skeleton extends Monster {
+public class Skeleton extends Monster implements Effectable {
 
     public Skeleton(GameWorld gameWorld, float x, float y, Player target) {
         super(gameWorld, x, y, target, 100);
@@ -62,5 +63,36 @@ public class Skeleton extends Monster {
     @Override
     public float getRadius() {
         return 0;
+    }
+
+    /**
+     * Diminue les points de vie de l'objet par un nombre hp de points.
+     *
+     * @param hp Points de vie à retirer
+     * @return int - hp après execution de la méthode
+     */
+    @Override
+    public int decreaseHP(int hp) {
+        if (hp > 0) {
+            if (this.hp >= hp)
+                this.hp -= hp;
+            else
+                this.hp = 0;
+        }
+        return this.hp;
+    }
+
+    /**
+     * Augmente les points de vie de l'objet par un nombre hp de points.
+     *
+     * @param hp Points de vie à ajouter
+     * @return int - hp après execution de la méthode
+     */
+    @Override
+    public int increaseHP(int hp) {
+        if (hp > 0) {
+            this.hp += hp;
+        }
+        return this.hp;
     }
 }

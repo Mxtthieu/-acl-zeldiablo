@@ -16,7 +16,7 @@ import java.util.HashMap;
 /**
  * @author Sousa Ribeiro Pedro
  */
-public class Player implements Entity {
+public class Player implements Entity, Effectable {
 
     private String name;
     private int hp;
@@ -196,5 +196,36 @@ public class Player implements Entity {
 
     public Cac getWeapon() {
         return weapon;
+    }
+
+    /**
+     * Diminue les points de vie de l'objet par un nombre hp de points.
+     *
+     * @param hp Points de vie à retirer
+     * @return int - hp après execution de la méthode
+     */
+    @Override
+    public int decreaseHP(int hp) {
+        if (hp > 0) {
+            if (this.hp >= hp)
+                this.hp -= hp;
+            else
+                this.hp = 0;
+        }
+        return this.hp;
+    }
+
+    /**
+     * Augmente les points de vie de l'objet par un nombre hp de points.
+     *
+     * @param hp Points de vie à ajouter
+     * @return int - hp après execution de la méthode
+     */
+    @Override
+    public int increaseHP(int hp) {
+        if (hp > 0) {
+            this.hp += hp;
+        }
+        return this.hp;
     }
 }
