@@ -27,3 +27,7 @@ https://docs.google.com/document/d/13t5UO-YXhVdZHQi3hLloMJbUa_Pkx4I7yqCDf4McuZA/
 Lien vers le document qui décrit le déroulement de notre Sprint 2 :
 
 https://docs.google.com/document/d/1c-QqIp6g--KTkimu69hkha2MXkiM_1MiSqSOMicLLng/edit?usp=sharing
+
+Lien vers le document du sprint review et du sprint retrospective de notre Sprint 2 :
+
+https://docs.google.com/document/d/1gCXaweQ6ZDnBxnNlrl-D2YFLPIRejfrOMYdIIqyUTFI/edit?usp=sharing
