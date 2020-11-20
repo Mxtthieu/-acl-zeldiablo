@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
+import com.badlogic.gdx.utils.Timer;
+
 
 /**
  * @author Vasaune Christian
@@ -21,6 +23,8 @@ public class Portal {
     private static float taille;
     private boolean actif;
     private int numPortal;
+    private Timer timer;
+    protected Timer.Task actifTask;
 
     private float tmpAnim;
     private Animation animation;
@@ -34,6 +38,13 @@ public class Portal {
         this.numMaze = num;
         this.actif = true;
         this.posPortal = pos;
+        this.timer = new Timer();
+        this.actifTask = new Timer.Task() {
+            @Override
+            public void run() {
+                setActif(true);
+            }
+        };
 
         if(n == num) {
             taille = (1/60f) * GameWorld.WIDTH;
@@ -51,7 +62,7 @@ public class Portal {
             bodyPortal.createFixture(fixtureDef);
             shape.dispose();
         }
-
+        delai();
     }
 
     /**
@@ -153,5 +164,20 @@ public class Portal {
         return bodyPortal;
     }
 
+    /***
+     * Cette procedure permet de rajouter un delai d'inactivité de 3s sur le portail
+     ***/
+    public void delai(){
+        setActif(false);
+        timer.scheduleTask(actifTask, 3f);
+
+    }
+
+    /***
+     * Cette procedure permet de rajouter un delai d'inactivité de 3s sur le portail de sortie
+     ***/
+    public void exitPortalDelai(){
+        exitPortal.delai();
+    }
 
 }

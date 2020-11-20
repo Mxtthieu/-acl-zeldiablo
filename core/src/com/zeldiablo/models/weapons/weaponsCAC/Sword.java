@@ -19,6 +19,7 @@ public class Sword extends Cac {
     @Override
     public void setPositionBody(BodyDef bd, float x, float y, float angle, float radius) {
         bd.position.set(x + (float) cos(angle) * ((radius*2) + 1), y + (float) sin(angle) * ((radius*2) + 1));
+        System.out.println(angle);
     }
 
     @Override

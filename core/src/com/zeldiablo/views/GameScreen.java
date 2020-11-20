@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,6 +20,9 @@ import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Maze;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.enums.State;
+import com.zeldiablo.models.traps.Projectile;
+import com.zeldiablo.models.traps.Trap;
+import com.zeldiablo.models.traps.TrapDamage;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -68,11 +72,24 @@ public class GameScreen extends ScreenAdapter {
         }
 
         // --- Gestion de la pause --- //
+        Trap t;
         if(this.keyboard.isPaused()){
             this.gameState.setState(State.PAUSED);
             this.drawPause();
+            for(Body b :this.game.getBodies()){
+                if(b.getUserData() instanceof Trap){
+                    t = (Trap)b.getUserData();
+                    t.pause();
+                }
+            }
         } else {
             this.gameState.setState(State.IN_PROGRESS);
+            for(Body b :this.game.getBodies()){
+                if(b.getUserData() instanceof Trap){
+                    t = (Trap)b.getUserData();
+                    t.play();
+                }
+            }
         }
 
         if (this.keyboard.isReset()) {

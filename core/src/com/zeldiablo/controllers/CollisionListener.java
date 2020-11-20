@@ -39,21 +39,6 @@ public class CollisionListener implements ContactListener {
     @Override
     public void endContact(Contact contact) {
 
-        Object obj;
-        // je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
-        if(contact.getFixtureA().getBody() == player.getBody()){
-            obj = contact.getFixtureB().getBody().getUserData();
-        }else{
-            obj = contact.getFixtureA().getBody().getUserData();
-        }
-
-        if(obj != null){
-            // Si l'objet en contact avec le personnage est un portail alors je met le portail en actif
-            if(obj.getClass().getSimpleName().equals("Portal")) {
-                Portal por = ((Portal) obj);
-                por.setActif(true);
-            }
-        }
     }
 
     @Override

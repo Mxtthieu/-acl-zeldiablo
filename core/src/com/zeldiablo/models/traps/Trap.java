@@ -9,13 +9,14 @@ import com.zeldiablo.models.Player;
 public abstract class Trap {
 
     private boolean touch;
+    private boolean actif;
     protected Vector2 pos;
-    protected Body bodyPiege;
-    private float height;
-    private float width;
+    private Body bodyPiege;
+    protected float height;
+    protected float width;
     protected GameWorld gameWorld;
 
-    public Trap(Vector2 pos, GameWorld gameWorld){
+    public Trap(Vector2 pos, float angle, GameWorld gameWorld){
 
         this.touch = true;
         this.pos = pos;
@@ -28,12 +29,11 @@ public abstract class Trap {
         bodydef.type = BodyDef.BodyType.StaticBody;
         bodydef.position.set(this.pos);
         bodyPiege = gameWorld.getWorld().createBody(bodydef);
-        float[] vertice = {0f, 0f, 0f,this.height, this.width, this.height, this.width, 0f, 0f, 0f};
         FixtureDef fixtureDef = new FixtureDef();
-        ChainShape shape = new ChainShape();
-        shape.createChain(vertice);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(height/2f,width/2f,new Vector2(0,0), angle);
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+        fixtureDef.isSensor = false;
         bodyPiege.setUserData(this);
         bodyPiege.createFixture(fixtureDef);
         shape.dispose();
@@ -45,9 +45,33 @@ public abstract class Trap {
      */
     public abstract void draw(SpriteBatch batch);
 
+    /**
+     * Cette procedure permet d'appliquer l'effect du piege sur le joueur
+     */
     public abstract void applyEffectToPlayer();
 
+    /**
+     * Cette procedure permet de reset les timer si le piege en utilise un
+     */
     public abstract void clearTimer();
+
+    /**
+     * Cette procedure permet de mettre en pause les timers si le piege en utilise un
+     */
+    public abstract void pause();
+
+    /**
+     * Cette fonction permet de retourner le body du piege
+     * @return Body
+     */
+    public Body getBody() {
+        return bodyPiege;
+    }
+
+    /**
+     * Cette procedure permet de mettre en marche les timers si le piege en utilise un
+     */
+    public abstract void play();
 
     public float getWidth() {
         return this.width;

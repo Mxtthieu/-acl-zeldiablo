@@ -16,13 +16,15 @@ import java.util.List;
 public class TrapDamage extends Trap {
 
     private int att;
+    private float angle;
     protected Timer timer;
     protected Timer.Task shotTask;
     private List<Projectile> projectileList;
 
-    public TrapDamage(final Vector2 pos, GameWorld gameworld) {
-        super(pos, gameworld);
+    public TrapDamage(final Vector2 pos, GameWorld gameworld, float angle) {
+        super(pos, angle, gameworld);
         this.att = 10;
+        this.angle = angle;
         this.timer = new Timer();
         this.shotTask = new Timer.Task() {
             @Override
@@ -30,13 +32,11 @@ public class TrapDamage extends Trap {
                 addProjectile();
             }
         };
-        timer.scheduleTask(shotTask, 0.5f, 1.5f);
-
-        this.projectileList = new ArrayList<>();
+        timer.scheduleTask(shotTask, 0f, 2f);
     }
 
     private void addProjectile() {
-        Projectile p = new Projectile(this, new Vector2(this.pos.x + 1.5f,pos.y + 0.5f), this.gameWorld);
+        Projectile p = new Projectile(this, new Vector2(this.pos.x + (float)Math.cos(angle) ,pos.y + (float)Math.sin(angle) ), angle, this.gameWorld);
         this.projectileList.add(p);
     }
 
@@ -71,9 +71,14 @@ public class TrapDamage extends Trap {
         timer.clear();
     }
 
+    @Override
+    public void pause() {
+        timer.stop();
+    }
 
-    public int getAtt() {
-        return att;
+    @Override
+    public void play() {
+        timer.start();
     }
 
     @Override

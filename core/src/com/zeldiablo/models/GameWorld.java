@@ -26,6 +26,7 @@ public class GameWorld {
     private GameScreen screen;
     private GameState gameState;
     private ArrayList<Body> bodiesToDelet;
+    private ArrayList<Body> bodies;
     private World world;
     private Player player;
     private Maze maze;
@@ -38,6 +39,7 @@ public class GameWorld {
         this.screen = s;
         this.gameState = gameState;
         this.bodiesToDelet = new ArrayList<>();
+        this.bodies = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
         this.maze = new Maze(this);
@@ -70,7 +72,8 @@ public class GameWorld {
         //Si le portail est actif je peux teleporter
         if(por.isActif()) {
             // Je rend le portail de sortie inactif pour eviter de teleporter en boucle
-            por.setExitPortalActif(false);
+            por.exitPortalDelai();
+            por.delai();
             // Je teleporte le joueur a la position du portail de sortie.
             p.getBody().setTransform(por.getPosPortalExit().x ,por.getPosPortalExit().y ,0f);
             // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
@@ -102,5 +105,13 @@ public class GameWorld {
 
     public void addBodyToDelete(Body body) {
         this.bodiesToDelet.add(body);
+    }
+
+    public void addBody(Body body) {
+        this.bodies.add(body);
+    }
+
+    public ArrayList<Body> getBodies(){
+        return bodies;
     }
 }
