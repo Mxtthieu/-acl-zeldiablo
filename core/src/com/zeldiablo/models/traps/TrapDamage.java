@@ -26,6 +26,7 @@ public class TrapDamage extends Trap {
         this.att = 10;
         this.angle = angle;
         this.timer = new Timer();
+        this.projectileList = new ArrayList<>();
         this.shotTask = new Timer.Task() {
             @Override
             public void run() {

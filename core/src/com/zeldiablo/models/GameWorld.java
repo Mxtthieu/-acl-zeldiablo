@@ -86,6 +86,7 @@ public class GameWorld {
     public void loadMaze(int num, float playerX, float playerY) {
         this.gameState.setState(State.LOADING);
         this.maze.resetMaze();
+        this.world.destroyBody(this.player.getBody());
         this.player = new Player(this, "TESTER");
         this.player.setPosition(playerX, playerY);
         this.maze.loadMaze(num);

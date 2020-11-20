@@ -11,7 +11,7 @@ public abstract class Trap {
     private boolean touch;
     private boolean actif;
     protected Vector2 pos;
-    private Body bodyPiege;
+    protected Body bodyPiege;
     protected float height;
     protected float width;
     protected GameWorld gameWorld;
