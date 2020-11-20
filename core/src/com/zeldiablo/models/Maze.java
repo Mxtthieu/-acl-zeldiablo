@@ -151,7 +151,7 @@ public class Maze {
      * @param j la colonne dans le fichier
      */
     private void addTrap(int i, int j) {
-        Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld, (float) (270*Math.PI/180));
+        Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld, (float) (0*Math.PI/180));
         this.gameWorld.addBody(trap.getBody());
         this.trapList.add(trap);
     }

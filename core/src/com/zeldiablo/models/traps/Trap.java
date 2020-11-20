@@ -49,15 +49,31 @@ public abstract class Trap {
         batch.end();
     }
 
+    /**
+     * Cette procedure permet d'appliquer l'effect du piege sur le joueur
+     */
     public abstract void applyEffectToPlayer();
 
+    /**
+     * Cette procedure permet de reset les timer si le piege en utilise un
+     */
     public abstract void clearTimer();
 
+    /**
+     * Cette procedure permet de mettre en pause les timers si le piege en utilise un
+     */
     public abstract void pause();
 
+    /**
+     * Cette fonction permet de retourner le body du piege
+     * @return Body
+     */
     public Body getBody() {
         return bodyPiege;
     }
 
+    /**
+     * Cette procedure permet de mettre en marche les timers si le piege en utilise un
+     */
     public abstract void play();
 }

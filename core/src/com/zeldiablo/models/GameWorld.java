@@ -74,7 +74,6 @@ public class GameWorld {
             p.getBody().setTransform(por.getPosPortalExit().x ,por.getPosPortalExit().y ,0f);
             // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
             if (!por.exitSameMaze()) {
-                p.getBody().setTransform(por.getPosPortalExit().x + 3 ,por.getPosPortalExit().y ,0f);
                 loadMaze(por.getExitPortalNumMaze());
 
             }

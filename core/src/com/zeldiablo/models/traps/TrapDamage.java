@@ -28,7 +28,7 @@ public class TrapDamage extends Trap {
                 addProjectile();
             }
         };
-        timer.scheduleTask(shotTask, 0.5f, 3f);
+        timer.scheduleTask(shotTask, 0f, 2f);
     }
 
     private void addProjectile() {
@@ -67,8 +67,5 @@ public class TrapDamage extends Trap {
         timer.start();
     }
 
-    public int getAtt() {
-        return att;
-    }
 
 }

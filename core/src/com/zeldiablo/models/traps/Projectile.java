@@ -39,17 +39,28 @@ public class Projectile {
         shape.dispose();
 
     }
-
+    /**
+     * Cette fonction permet la valeur de l'attaque du projectil
+     * @return int : la valeure de l'attaque
+     */
     public int getAtt() {
         return att;
     }
 
+    /**
+     * Cette procedure d'appliquer l'effet du projectils sur un body
+     * @param b Body sur lequel l'effect va etre appliquer
+     */
     public void effect(Body b){
         if(b.getUserData() instanceof Player){
             trapParent.applyEffectToPlayer();
         }
     }
 
+    /**
+     * Cette fonction permet de retourner le body du projectil
+     * @return Body
+     */
     public Body getBodyProjectil() {
         return bodyProjectil;
     }

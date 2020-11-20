@@ -146,12 +146,18 @@ public class Portal {
         return bodyPortal;
     }
 
+    /***
+     * Cette procedure permet de rajouter un delai d'inactivité de 3s sur le portail
+     ***/
     public void delai(){
         setActif(false);
         timer.scheduleTask(actifTask, 3f);
 
     }
 
+    /***
+     * Cette procedure permet de rajouter un delai d'inactivité de 3s sur le portail de sortie
+     ***/
     public void exitPortalDelai(){
         exitPortal.delai();
     }
