@@ -102,8 +102,6 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if (this.keyboard.isDebug()) {
-
-            this.game.draw(this.batch);
             batch.begin();
             debug.render(this.game.getWorld(), camera.combined);
             batch.end();
@@ -116,6 +114,7 @@ public class GameScreen extends ScreenAdapter {
         if(!this.gameState.isPaused()){
             this.update();
         }
+
     }
 
     private void reset() {

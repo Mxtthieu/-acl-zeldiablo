@@ -49,10 +49,13 @@ public class Maze {
      * La fonction loadMaze permet de charger un labyrinthe avec un fichier
      */
     public void loadMaze(int num) {
+        for (Monster monster : monsterList){
+            monster.stopTimer();
+        }
+        this.monsterList.clear();
         this.wallList.clear();
         this.trapList.clear();
         this.portalList.clear();
-        this.monsterList.clear();
         this.currentNumMaze = num;
         this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
         readObjects();
