@@ -206,12 +206,8 @@ public class Player implements Entity, Effectable {
      */
     @Override
     public int decreaseHP(int hp) {
-        if (hp > 0) {
-            if (this.hp >= hp)
-                this.hp -= hp;
-            else
-                this.hp = 0;
-        }
+        this.hp -= hp;
+        this.hp = Math.max(0, this.hp);
         return this.hp;
     }
 
@@ -227,5 +223,9 @@ public class Player implements Entity, Effectable {
             this.hp += hp;
         }
         return this.hp;
+    }
+
+    public void setPosition(float playerX, float playerY) {
+        this.body.setTransform(playerX, playerY, 0f);
     }
 }

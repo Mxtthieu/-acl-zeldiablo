@@ -63,7 +63,7 @@ public class TrapDamage extends Trap {
     @Override
     public void applyEffectToPlayer() {
         Player p = this.gameWorld.getPlayer();
-        p.setHp(p.getHP() - 10);
+        p.decreaseHP(10);
     }
 
     @Override

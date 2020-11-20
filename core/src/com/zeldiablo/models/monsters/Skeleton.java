@@ -10,7 +10,7 @@ import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.monsters.Monster;
 
-public class Skeleton extends Monster implements Effectable {
+public class Skeleton extends Monster {
 
     public Skeleton(GameWorld gameWorld, float x, float y, Player target) {
         super(gameWorld, x, y, target, 100);
@@ -73,12 +73,8 @@ public class Skeleton extends Monster implements Effectable {
      */
     @Override
     public int decreaseHP(int hp) {
-        if (hp > 0) {
-            if (this.hp >= hp)
-                this.hp -= hp;
-            else
-                this.hp = 0;
-        }
+        this.hp -= hp;
+        this.hp = Math.max(0, this.hp);
         return this.hp;
     }
 

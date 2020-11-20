@@ -31,7 +31,7 @@ public class Sword extends Cac {
     @Override
     public void effect(Body b) {
         Monster monster = (Monster)b.getUserData();
-        monster.setHp(monster.getHP() - this.damage);
+        monster.decreaseHP(this.damage);
         System.out.println(monster.getHp());
     }
 

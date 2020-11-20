@@ -7,6 +7,7 @@ public enum State {
     LOST('L'),
     PAUSED('P'),
     RESET('R'),
+    LOADING('L'),
     STOPPED('S');
 
     private char state;

@@ -43,8 +43,8 @@ public class GameScreen extends ScreenAdapter {
         this.debug = new Box2DDebugRenderer();
 
         // --- Instanciation des modèles --- //
-        this.game = new GameWorld(this);
         this.gameState = new GameState();
+        this.game = new GameWorld(this, this.gameState);
         this.keyboard = new KeyboardListener();
         this.mouse = new MouseListener();
         this.collision = new CollisionListener(this.game);
@@ -66,9 +66,6 @@ public class GameScreen extends ScreenAdapter {
             this.reset();
             this.gameState.setState(State.IN_PROGRESS);
         }
-        if(!this.gameState.isPaused()){
-            this.update();
-        }
 
         // --- Gestion de la pause --- //
         if(this.keyboard.isPaused()){
@@ -86,28 +83,30 @@ public class GameScreen extends ScreenAdapter {
         if (this.keyboard.isAttack()){
             this.game.atk();
         }
+
         if (this.keyboard.isDebug()) {
             batch.begin();
             debug.render(this.game.getWorld(), camera.combined);
             batch.end();
         } else {
-            this.game.draw(this.batch);
+            if(!this.gameState.isLoading()){
+                this.game.draw(this.batch);
+            }
+        }
+
+        if(!this.gameState.isPaused()){
+            this.update();
         }
     }
 
     private void reset() {
-        this.game.loadMaze(1);
+        this.game.loadMaze(1, 10,10);
     }
 
     /**
      * Méthode privée. Permet de mettre à jour tous les modèles selon les actions des controleurs.
      */
     private void update() {
-
-        // --- Gestion des Pieges --- //
-
-
-
 
         // --- Fin de Gestion --- //
 

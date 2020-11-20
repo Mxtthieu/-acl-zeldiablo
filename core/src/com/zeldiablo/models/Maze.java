@@ -47,6 +47,10 @@ public class Maze {
      * La fonction loadMaze permet de charger un labyrinthe avec un fichier
      */
     public void loadMaze(int num) {
+        this.wallList.clear();
+        this.trapList.clear();
+        this.portalList.clear();
+        this.monsterList.clear();
         this.currentNumMaze = num;
         this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
         readObjects();
@@ -136,7 +140,6 @@ public class Maze {
      * @param j la colonne dans le fichier
      */
     private void addMonster(int i, int j) {
-        World world = gameWorld.getWorld();
         this.monsterList.add(new Skeleton(gameWorld,j+1,GameWorld.HEIGHT - (i+1), gameWorld.getPlayer()));
     }
 

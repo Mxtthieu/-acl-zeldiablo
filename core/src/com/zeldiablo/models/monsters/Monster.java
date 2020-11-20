@@ -11,13 +11,14 @@ import com.zeldiablo.controllers.Direction;
 import com.zeldiablo.controllers.ai.Node;
 import com.zeldiablo.controllers.ai.PathFinding;
 import com.zeldiablo.controllers.ai.PathFindingException;
+import com.zeldiablo.models.Effectable;
 import com.zeldiablo.models.Entity;
 import com.zeldiablo.models.GameWorld;
 
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class Monster implements Entity {
+public abstract class Monster implements Entity, Effectable {
 
     private Entity target;
     private Body body;
@@ -187,4 +188,6 @@ public abstract class Monster implements Entity {
         batch.draw(region, getX()-SIZE/2, getY()-SIZE/2, SIZE, SIZE);
         batch.end();
     }
+
+
 }

@@ -1,9 +1,11 @@
 package com.zeldiablo.models;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
@@ -22,6 +24,7 @@ public class GameWorld {
 
     // --- Eléments du jeu
     private GameScreen screen;
+    private GameState gameState;
     private ArrayList<Body> bodiesToDelet;
     private World world;
     private Player player;
@@ -31,8 +34,9 @@ public class GameWorld {
     public boolean isTp;
     public Portal portal;
 
-    public GameWorld(GameScreen s) {
+    public GameWorld(GameScreen s, GameState gameState) {
         this.screen = s;
+        this.gameState = gameState;
         this.bodiesToDelet = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
         this.player = new Player(this, "Tester");
@@ -71,16 +75,18 @@ public class GameWorld {
             p.getBody().setTransform(por.getPosPortalExit().x ,por.getPosPortalExit().y ,0f);
             // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
             if (!por.exitSameMaze()) {
-                p.getBody().setTransform(por.getPosPortalExit().x + 3 ,por.getPosPortalExit().y ,0f);
-                loadMaze(por.getExitPortalNumMaze());
+                loadMaze(por.getExitPortalNumMaze(),por.getPosPortalExit().x + ((p.getBody().getAngle()) * p.getRadius()*2),por.getPosPortalExit().y);
             }
         }
     }
 
-    public void loadMaze(int num) {
+    public void loadMaze(int num, float playerX, float playerY) {
+        this.gameState.setState(State.LOADING);
         this.maze.resetMaze();
         this.player = new Player(this, "TESTER");
+        this.player.setPosition(playerX, playerY);
         this.maze.loadMaze(num);
+        this.gameState.setState(State.IN_PROGRESS);
     }
 
     public void atk(){
