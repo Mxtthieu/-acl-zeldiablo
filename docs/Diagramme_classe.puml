@@ -16,6 +16,9 @@ class Zeldiablo {
 package views {
     class GameScreen {
         - SpriteBatch sprite
+        - Box2DDebugRenderer debug
+        - OrthographicCamera camera
+        - Viewport view
         + void render(float delta)
         - void update()
         + void dispose()
@@ -31,6 +34,8 @@ package models {
         + void changeMaze(Portal p)
         + int getWidthWorld()
         + int getHeightWorld()
+        + void teleport(Player player, Portal portal)
+        + void createCollisionListener()
     }
 
     class GameState {
@@ -47,20 +52,20 @@ package models {
         PAUSED
         STOPPED
     }
-    
+
     interface Entity {
         + int getHP()
         + String getName()
         + void draw(SpriteBatch batch)
     }
-    
+
     class Player {
         - int hp
         - int att
         - int def
         - Body body
         - GameWorld gs
-    
+
         + int getHP()
         + void attack()
         + void draw(SpriteBatch batch)
@@ -88,34 +93,64 @@ package models {
         - Vector2 posPortal
         - Body bodyPortal
         - int numMaze
+        - boolean actif
 
         + void draw(SpriteBatch batch)
         + int getNumMaze()
         + Vector2 getPosPortal()
         + Vector2 getPosPortalExit()
+        + void setActif(boolean actif)
+        + void setExitPortalActif(boolean actif)
+        + void set ExitPortal(Portal exitPortal)
+        + int getExitPortalNumMaze()
+        + boolean exitSameMaze()
+        + boolean isActif()
     }
 }
 
+package factories {
+
+    enum TextureFactory {
+        + getPause()
+    }
+
+}
+
 package controllers {
+    class MouseListener {
+        - float x
+        - float y
+
+        + mouseMoved(int screenX, int screenY)
+        + public float getX()
+        + public float getY()
+    }
+
+    class ControllerAdapter {
+        + public boolean keyDown(int keycode)
+        + public boolean keyUp(int keycode)
+        + public boolean keyTyped(char character)
+        + public boolean touchDown(int screenX, int screenY, int pointer, int button)
+        + public boolean touchUp(int screenX, int screenY, int pointer, int button)
+        + public boolean touchDragged(int screenX, int screenY, int pointer)
+        + public boolean mouseMoved(int screenX, int screenY)
+        + public boolean scrolled(int amount)
+    }
+
     interface InputProcessor
-    
+
     class KeyboardListener {
-        + String getCMD()
+        - boolean pause
+        - boolean debug
+        - Vector2 step
+        - float x
+        - float y
+
         + boolean keyDown(int keycode)
         + boolean keyUp(int keycode)
-        + boolean keyTyped(char character)
-        + boolean touchDown(int screenX, int screenY, int pointer, int button)
-        + boolean touchUp(int screenX, int screenY, int pointer, int button)
-        + boolean touchDragged(int screenX, int screenY, int pointer)
-        + boolean mouseMoved(int screenX, int screenY)
-        + boolean scrolled(int amount)
-    }
-    
-    enum Direction {
-        UP
-        RIGHT
-        DOWN
-        LEFT
+        + Vector2 getStep()
+        + boolean isDebug()
+        + boolean isPaused()
     }
 
     enum Action {
@@ -146,9 +181,11 @@ GameWorld --> "1" Player: "- player"
 GameWorld --> "1" Maze
 GameWorld --> "*" Portal
 
-KeyboardListener --> "1" Direction: "- direction"
 KeyboardListener --> "1" Action: "- action"
-KeyboardListener ..|> InputProcessor
+KeyboardListener --|> ControllerAdapter
+MouseListener --|> ControllerAdapter
+ControllerAdapter ..|> InputProcessor
 GameScreen --> "1" KeyboardListener: "- keyboard"
+GameScreen --> "1" MouseListener: "- mouse"
 
 @enduml

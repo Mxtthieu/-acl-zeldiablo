@@ -1,2 +1,0 @@
-com/zeldiablo/Zeldiablo.java
- com.zeldiablo.Zeldiablo
