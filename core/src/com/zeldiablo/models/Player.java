@@ -152,8 +152,8 @@ public class Player implements Entity, Effectable {
      * @return int coordonée X
      */
     @Override
-    public int getX() {
-        return (int) this.getPosition().x;
+    public float getX() {
+        return this.getPosition().x;
     }
 
     /**
@@ -162,8 +162,8 @@ public class Player implements Entity, Effectable {
      * @return int coordonée Y
      */
     @Override
-    public int getY() {
-        return (int) this.getPosition().y;
+    public float getY() {
+        return this.getPosition().y;
     }
 
     /**

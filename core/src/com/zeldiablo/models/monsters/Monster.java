@@ -63,17 +63,11 @@ public abstract class Monster implements Entity, Effectable {
         body.createFixture(fixture);
         shape.dispose();
 
-
-        // Tout ce joue la dessus. Il faut faire une vérification afin de mettre false si la case est occupé par un obstacle.
-        // Je pense que la partie la sera faite dans GameWorld et sera donné au monstre dans le constructeur
-        final boolean[][] grid = new boolean[GameWorld.HEIGHT][GameWorld.WIDTH];
-        for (int j = 0; j < GameWorld.HEIGHT; j++)
-            for (int i = 0; i < GameWorld.WIDTH; i++)
-                //Todo: Vérification à faire ici
-                grid[j][i] = true;
+        // Récupération d'une grille de booléen sur laquelle faire les calcules
+        final boolean[][] grid = gameWorld.generateGrid();
 
         try {
-            this.finding = new PathFinding(grid, this.getX(), this.getY(), this.target.getX(), this.target.getY());
+            this.finding = new PathFinding(grid, (int) this.getX(), (int) this.getY(), (int) this.target.getX(), (int) this.target.getY());
         } catch (PathFindingException e) {
             e.printStackTrace();
         }
@@ -91,7 +85,7 @@ public abstract class Monster implements Entity, Effectable {
             @Override
             public void run() {
                 try {
-                    finding = new PathFinding(grid, getX(), getY(), target.getX(), target.getY());
+                    finding = new PathFinding(grid, (int) getX(), (int) getY(), (int) target.getX(), (int) target.getY());
                 } catch (PathFindingException e) {
                     e.printStackTrace();
                 }
@@ -111,7 +105,7 @@ public abstract class Monster implements Entity, Effectable {
         if (!path.isEmpty())
             node = path.remove(path.size()-1);
         else
-            node = new Node(getX(), getY());
+            node = new Node((int) getX(), (int) getY());
 
         float dx = node.x - getX();
         float dy = node.y - getY();
@@ -158,7 +152,7 @@ public abstract class Monster implements Entity, Effectable {
      * @return int coordonée X
      */
     @Override
-    public int getX() {
+    public float getX() {
         return (int) this.getPosition().x;
     }
 
@@ -168,7 +162,7 @@ public abstract class Monster implements Entity, Effectable {
      * @return int coordonée Y
      */
     @Override
-    public int getY() {
+    public float getY() {
         return (int) this.getPosition().y;
     }
 

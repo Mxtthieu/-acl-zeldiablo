@@ -28,6 +28,7 @@ public class Maze {
     private ArrayList<Trap> trapList;
     private ArrayList<Portal> portalList;
     private ArrayList<Monster> monsterList;
+    private ArrayList<Vector2> monsterToInit;
 
     private int currentNumMaze;
     private float tmpAnim;
@@ -38,6 +39,7 @@ public class Maze {
         this.trapList = new ArrayList<>();
         this.portalList = new ArrayList<>();
         this.monsterList = new ArrayList<>();
+        this.monsterToInit = new ArrayList<>();
         this.currentNumMaze = 0;
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         loadMaze(1);
@@ -83,11 +85,10 @@ public class Maze {
                 }
 
                 if (normalRead){
-
                     for (int column = 0; column < c.length(); column++) {
                         switch (c.charAt(column)) {
                             case MazeObjects.MONSTER:
-                                addMonster(line, column);
+                                this.monsterToInit.add(new Vector2(line, column));
                                 break;
                             case MazeObjects.WALL:
                                 addWall(line, column);
@@ -132,6 +133,16 @@ public class Maze {
         }
 
 
+    }
+
+    /**
+     * Initialise les monstres à partir de la liste des monstres à initialiser.
+     * A la création du labyrinthe, les monstres ne sont pas encore initialisé. Il faut donc appeler cette méthode.
+     */
+    public void initMonster() {
+        for (Vector2 vec : this.monsterToInit)
+            addMonster((int) vec.x, (int) vec.y);
+        this.monsterToInit.clear();
     }
 
     /**
@@ -253,5 +264,16 @@ public class Maze {
             trap.clearTimer();
         }
         this.currentNumMaze = 0;
+    }
+
+    /**
+     * Retourne une liste des coordonées des murs présent dans le labyrinthe
+     * @return liste des murs
+     */
+    public ArrayList<Vector2> getWallsCoord() {
+        ArrayList<Vector2> walls = new ArrayList<>();
+        for (Body body : this.wallList)
+            walls.add(body.getPosition());
+        return walls;
     }
 }

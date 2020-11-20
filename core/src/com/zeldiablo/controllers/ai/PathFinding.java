@@ -28,12 +28,17 @@ public class PathFinding {
 
         // --- Construction de la grille de noeuds
         // Pour cela, on utilise le tableau de booléen pour déterminer si un noeud doit être construit ou non
+        int trueCount = 0, falseCount = 0;
         for (int j = 0; j < this.MAX_HEIGHT; j++) {
             for (int i = 0; i < this.MAX_WIDTH; i++) {
-                if (g[j][i])
+                if (g[j][i]) {
                     this.grid[j][i] = new Node(i, j);
-                else
+                    trueCount++;
+                }
+                else {
                     this.grid[j][i] = null;
+                    falseCount++;
+                }
             }
         }
 
@@ -106,7 +111,6 @@ public class PathFinding {
     public void setStart(int x, int y) {
         if (x < MAX_WIDTH && x >= 0 && y < MAX_HEIGHT && y >= 0)
             this.start = this.grid[y][x];
-        System.out.println("Start: " + this.start);
     }
 
     /**
@@ -117,7 +121,6 @@ public class PathFinding {
     public void setGoal(int x, int y) {
         if (x < MAX_WIDTH && x >= 0 && y < MAX_HEIGHT && y >= 0)
             this.goal = this.grid[y][x];
-        System.out.println("Goal: " + this.goal);
     }
 
     /**
