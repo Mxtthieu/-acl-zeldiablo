@@ -9,13 +9,14 @@ import com.zeldiablo.models.Player;
 public abstract class Trap {
 
     private boolean touch;
+    private boolean actif;
     protected Vector2 pos;
     private Body bodyPiege;
-    private float height;
-    private float width;
+    protected float height;
+    protected float width;
     protected GameWorld gameWorld;
 
-    public Trap(Vector2 pos, GameWorld gameWorld){
+    public Trap(Vector2 pos, float angle, GameWorld gameWorld){
 
         this.touch = true;
         this.pos = pos;
@@ -28,12 +29,11 @@ public abstract class Trap {
         bodydef.type = BodyDef.BodyType.StaticBody;
         bodydef.position.set(this.pos);
         bodyPiege = gameWorld.getWorld().createBody(bodydef);
-        float[] vertice = {0f, 0f, 0f,this.height, this.width, this.height, this.width, 0f, 0f, 0f};
         FixtureDef fixtureDef = new FixtureDef();
-        ChainShape shape = new ChainShape();
-        shape.createChain(vertice);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(height/2f,width/2f,new Vector2(0,0), angle);
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+        fixtureDef.isSensor = false;
         bodyPiege.setUserData(this);
         bodyPiege.createFixture(fixtureDef);
         shape.dispose();
@@ -52,4 +52,12 @@ public abstract class Trap {
     public abstract void applyEffectToPlayer();
 
     public abstract void clearTimer();
+
+    public abstract void pause();
+
+    public Body getBody() {
+        return bodyPiege;
+    }
+
+    public abstract void play();
 }

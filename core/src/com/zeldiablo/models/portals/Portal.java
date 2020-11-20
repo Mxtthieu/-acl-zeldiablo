@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.GameWorld;
+import com.badlogic.gdx.utils.Timer;
+
 
 /**
  * @author Vasaune Christian
@@ -17,6 +19,8 @@ public class Portal {
     private static float taille;
     private boolean actif;
     private int numPortal;
+    private Timer timer;
+    protected Timer.Task actifTask;
 
     public Portal(int n, int num, Vector2 pos, World world){
 
@@ -24,6 +28,13 @@ public class Portal {
         this.numMaze = num;
         this.actif = true;
         this.posPortal = pos;
+        this.timer = new Timer();
+        this.actifTask = new Timer.Task() {
+            @Override
+            public void run() {
+                setActif(true);
+            }
+        };
 
         if(n == num) {
             taille = (1/80f) * GameWorld.WIDTH;
@@ -41,7 +52,7 @@ public class Portal {
             bodyPortal.createFixture(fixtureDef);
             shape.dispose();
         }
-
+        delai();
     }
 
     /**
@@ -135,5 +146,14 @@ public class Portal {
         return bodyPortal;
     }
 
+    public void delai(){
+        setActif(false);
+        timer.scheduleTask(actifTask, 3f);
+
+    }
+
+    public void exitPortalDelai(){
+        exitPortal.delai();
+    }
 
 }

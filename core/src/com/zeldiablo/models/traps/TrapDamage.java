@@ -13,12 +13,14 @@ import java.util.ArrayList;
 public class TrapDamage extends Trap {
 
     private int att;
+    private float angle;
     protected Timer timer;
     protected Timer.Task shotTask;
 
-    public TrapDamage(final Vector2 pos, GameWorld gameworld) {
-        super(pos, gameworld);
+    public TrapDamage(final Vector2 pos, GameWorld gameworld, float angle) {
+        super(pos, angle, gameworld);
         this.att = 10;
+        this.angle = angle;
         this.timer = new Timer();
         this.shotTask = new Timer.Task() {
             @Override
@@ -26,11 +28,11 @@ public class TrapDamage extends Trap {
                 addProjectile();
             }
         };
-        timer.scheduleTask(shotTask, 0.5f, 1.5f);
+        timer.scheduleTask(shotTask, 0.5f, 3f);
     }
 
     private void addProjectile() {
-        Projectile p = new Projectile(this, new Vector2(this.pos.x + 1.5f,pos.y + 0.5f), this.gameWorld);
+        Projectile p = new Projectile(this, new Vector2(this.pos.x + (float)Math.cos(angle) ,pos.y + (float)Math.sin(angle) ), angle, this.gameWorld);
     }
 
     /**
@@ -55,6 +57,15 @@ public class TrapDamage extends Trap {
         timer.clear();
     }
 
+    @Override
+    public void pause() {
+        timer.stop();
+    }
+
+    @Override
+    public void play() {
+        timer.start();
+    }
 
     public int getAtt() {
         return att;

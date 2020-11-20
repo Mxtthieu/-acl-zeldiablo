@@ -4,8 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
-
-import java.util.ArrayList;
+import static java.lang.Math.*;
 
 public class Projectile {
 
@@ -15,11 +14,13 @@ public class Projectile {
 
     private Trap trapParent;
     private Body bodyProjectil;
+    private float angle;
 
-    public Projectile(Trap trapParent, Vector2 pos, GameWorld gameWorld){
+    public Projectile(Trap trapParent, Vector2 pos, float angle, GameWorld gameWorld){
 
         this.posProjectil = pos;
         this.trapParent = trapParent;
+        this.angle = angle;
 
         taille = (1/160f) * GameWorld.WIDTH;
         BodyDef bodydef = new BodyDef();
@@ -31,10 +32,10 @@ public class Projectile {
         CircleShape shape = new CircleShape();
         shape.setRadius(taille);
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+        fixtureDef.isSensor = false;
         bodyProjectil.setUserData(this);
         bodyProjectil.createFixture(fixtureDef);
-        bodyProjectil.setLinearVelocity(5f,0f);
+        bodyProjectil.setLinearVelocity((float)cos(angle)*5f,(float)sin(angle)*5f);
         shape.dispose();
 
     }
