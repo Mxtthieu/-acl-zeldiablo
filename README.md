@@ -8,9 +8,17 @@ Avant de pouvoir lancer le projet, vous devez changer de version Java et prendre
 
 Libgdx a des problèmes avec les versions plus récentes de Java.
 
-Pour lancer le projet il faut se placer à la racine de celui-ci et faire :
+Ensuite pour lancer le projet il faut se placer à la racine de celui-ci et faire :
 
   - "gradle" puis "gradle run"
+  
+  
+# Touches principales
+
+Z Q S D - Touches de mouvements.
+O - Touche d'activation du mode debug.
+P - Touche d'activation et de désactivation de la pause.
+R - Touche de reset du jeu.
 
 # Sprint 1
 
