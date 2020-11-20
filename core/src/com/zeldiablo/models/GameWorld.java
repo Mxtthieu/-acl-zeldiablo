@@ -91,6 +91,7 @@ public class GameWorld {
         this.player = new Player(this, "TESTER");
         this.player.setPosition(playerX, playerY);
         this.maze.loadMaze(num);
+        this.maze.initMonster();
         this.gameState.setState(State.IN_PROGRESS);
     }
 
