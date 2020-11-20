@@ -66,7 +66,7 @@ public abstract class Monster implements Entity {
         final boolean[][] grid = gameWorld.generateGrid();
 
         try {
-            this.finding = new PathFinding(grid, this.getX(), this.getY(), this.target.getX(), this.target.getY());
+            this.finding = new PathFinding(grid, (int) this.getX(), (int) this.getY(), (int) this.target.getX(), (int) this.target.getY());
         } catch (PathFindingException e) {
             e.printStackTrace();
         }
@@ -84,7 +84,7 @@ public abstract class Monster implements Entity {
             @Override
             public void run() {
                 try {
-                    finding = new PathFinding(grid, getX(), getY(), target.getX(), target.getY());
+                    finding = new PathFinding(grid, (int) getX(), (int) getY(), (int) target.getX(), (int) target.getY());
                 } catch (PathFindingException e) {
                     e.printStackTrace();
                 }
@@ -104,7 +104,7 @@ public abstract class Monster implements Entity {
         if (!path.isEmpty())
             node = path.remove(path.size()-1);
         else
-            node = new Node(getX(), getY());
+            node = new Node((int) getX(), (int) getY());
 
         float dx = node.x - getX();
         float dy = node.y - getY();
@@ -151,7 +151,7 @@ public abstract class Monster implements Entity {
      * @return int coordonée X
      */
     @Override
-    public int getX() {
+    public float getX() {
         return (int) this.getPosition().x;
     }
 
@@ -161,7 +161,7 @@ public abstract class Monster implements Entity {
      * @return int coordonée Y
      */
     @Override
-    public int getY() {
+    public float getY() {
         return (int) this.getPosition().y;
     }
 

@@ -87,6 +87,8 @@ public class GameScreen extends ScreenAdapter {
             this.game.atk();
         }
         if (this.keyboard.isDebug()) {
+
+            this.game.draw(this.batch);
             batch.begin();
             debug.render(this.game.getWorld(), camera.combined);
             batch.end();

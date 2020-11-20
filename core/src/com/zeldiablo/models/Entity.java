@@ -56,12 +56,12 @@ public interface Entity {
      * Méthode servant a récupérer la position en X de l'entité
      * @return int coordonée X
      */
-    int getX();
+    float getX();
 
     /**
      * Méthode servant a récupérer la position en Y de l'entité
      * @return int coordonée Y
      */
-    int getY();
+    float getY();
 
 }
