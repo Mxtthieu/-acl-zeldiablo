@@ -15,10 +15,10 @@ Ensuite pour lancer le projet il faut se placer à la racine de celui-ci et fair
   
 # Touches principales
 
-Z Q S D - Touches de mouvements.
-O - Touche d'activation du mode debug.
-P - Touche d'activation et de désactivation de la pause.
-R - Touche de reset du jeu.
+- Z Q S D - Touches de mouvements.
+- O - Touche d'activation du mode debug.
+- P - Touche d'activation et de désactivation de la pause.
+- R - Touche de reset du jeu.
 
 # Sprint 1
 
