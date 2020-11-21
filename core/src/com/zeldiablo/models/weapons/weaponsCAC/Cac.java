@@ -1,5 +1,7 @@
 package com.zeldiablo.models.weapons.weaponsCAC;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -16,6 +18,11 @@ public abstract class Cac {
     protected int damage;
     protected String name;
     protected boolean canAtk;
+    protected float angle;
+
+    protected float tmpAnim;
+    protected Animation animation;
+    protected boolean attacking;
 
     protected Timer timer;
     protected Timer.Task timertask;
@@ -29,6 +36,7 @@ public abstract class Cac {
         this.reach = r;
         this.damage = d;
         this.canAtk = true;
+        this.angle = 0f;
         this.timer = new Timer();
         this.timertask = new Timer.Task() {
             @Override
@@ -36,11 +44,15 @@ public abstract class Cac {
                 canAtk = true;
             }
         };
+
+        this.tmpAnim = Gdx.graphics.getDeltaTime();
+        this.attacking = false;
     }
 
     public void attack(float radius, float x, float y, float angle, World world){
         if (canAtk){
             createHitbox(radius, x, y, angle, world);
+            this.attacking = true;
         }
     }
 
@@ -66,9 +78,10 @@ public abstract class Cac {
             @Override
             public void run() {
                 world.destroyBody(hitbox);
+                attacking = false;
             }
         };
-        timer.scheduleTask(destroytask, 0.5f);
+        timer.scheduleTask(destroytask, 0.2f);
     }
 
     public abstract void setPositionBody(BodyDef bd, float x, float y, float angle, float radius);

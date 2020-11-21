@@ -38,6 +38,9 @@ public enum TextureFactory {
     private Texture cannon;
     private Texture cannonball;
 
+    // Attack
+    private TextureAtlas slash_attack;
+
     TextureFactory() {
         this.pause = new Texture(Gdx.files.internal("images/Pause.png"));
         this.grass = new Texture("images/grass.jpg");
@@ -62,6 +65,9 @@ public enum TextureFactory {
         // Trap
         this.cannon = new Texture("images/trap/cannon.png");
         this.cannonball = new Texture("images/trap/cannonball.png");
+
+        // Attack
+        this.slash_attack = new TextureAtlas("images/attack/slash_attack.atlas");
     }
 
     public Texture getPause() { return pause; }
@@ -131,5 +137,10 @@ public enum TextureFactory {
     public Animation getAnimatedSkeletonDown() {
         Array<Sprite> img = this.skeleton_down.createSprites();
         return new Animation(FRAMERATE, img, Animation.PlayMode.LOOP);
+    }
+
+    public Animation getAnimatedSlashAttack() {
+        Array<Sprite> img = this.slash_attack.createSprites();
+        return new Animation(1/20f, img, Animation.PlayMode.NORMAL);
     }
 }

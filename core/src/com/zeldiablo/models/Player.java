@@ -26,6 +26,7 @@ public class Player implements Entity, Effectable {
     private Cac weapon;
     private Body body;
     private GameWorld gameWorld;
+    private boolean attacking;
 
     private HashMap<Direction, Animation> animations;
     private Direction direction;
@@ -40,6 +41,7 @@ public class Player implements Entity, Effectable {
         this.speed = 10;
         this.weapon = new Sword();
         this.gameWorld = gameWorld;
+        this.attacking = false;
 
         this.animations = new HashMap<>();
         this.animations.put(Direction.Up, TextureFactory.INSTANCE.getAnimatedPlayerUp());
@@ -178,6 +180,8 @@ public class Player implements Entity, Effectable {
         batch.begin();
         batch.draw(region, getX()-SIZE/2, getY()-SIZE/2, SIZE, SIZE);
         batch.end();
+
+        this.weapon.draw(batch);
     }
 
     @Override
@@ -187,6 +191,7 @@ public class Player implements Entity, Effectable {
     }
 
     public void attack(float angle){
+        this.attacking = true;
         weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, gameWorld.getWorld());
     }
 

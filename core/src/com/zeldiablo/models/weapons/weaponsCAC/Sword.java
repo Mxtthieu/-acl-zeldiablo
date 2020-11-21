@@ -1,9 +1,12 @@
 package com.zeldiablo.models.weapons.weaponsCAC;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
+import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.monsters.Monster;
 
@@ -14,19 +17,29 @@ public class Sword extends Cac {
 
     public Sword(){
         super("Sword", 1, 2, 4, 10);
+        this.animation = TextureFactory.INSTANCE.getAnimatedSlashAttack();
     }
 
     @Override
     public void setPositionBody(BodyDef bd, float x, float y, float angle, float radius) {
+        this.angle = (float) Math.toDegrees((double) angle);
         bd.position.set(x + (float) cos(angle) * ((radius*2) + 1), y + (float) sin(angle) * ((radius*2) + 1));
         System.out.println(angle);
     }
 
     @Override
     public void draw(SpriteBatch sb) {
-        sb.begin();
-        // TODO : Ajouter texture Sword
-        sb.end();
+        if (this.attacking) {
+            this.tmpAnim += Gdx.graphics.getDeltaTime();
+            TextureRegion region = (TextureRegion) this.animation.getKeyFrame(this.tmpAnim);
+            float x = hitbox.getPosition().x;
+            float y = hitbox.getPosition().y;
+            sb.begin();
+            sb.draw(region, x-reach/2, y-width/2, 0, 0, reach, width, 1, 1, this.angle);
+            sb.end();
+        } else {
+            this.tmpAnim = Gdx.graphics.getDeltaTime();
+        }
     }
 
     @Override
