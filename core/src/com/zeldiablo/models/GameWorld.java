@@ -1,8 +1,17 @@
 package com.zeldiablo.models;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.zeldiablo.models.enums.State;
+import com.zeldiablo.models.monsters.Monster;
+import com.zeldiablo.models.monsters.Skeleton;
+import com.zeldiablo.models.portals.Portal;
+import com.zeldiablo.models.traps.Projectile;
+import com.zeldiablo.models.traps.Trap;
+import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.views.GameScreen;
 
 import java.util.ArrayList;
@@ -10,38 +19,32 @@ import java.util.ArrayList;
 public class GameWorld {
 
     // --- Variables static qui définissent la taille du monde virtuel
-    public static final int WIDTH = 1024;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 60;
 
     // --- Eléments du jeu
     private GameScreen screen;
+    private GameState gameState;
+    private ArrayList<Body> bodiesToDelet;
+    private ArrayList<Body> bodies;
     private World world;
     private Player player;
-    private ArrayList<Portal>portals;
+    private Maze maze;
+
     // --- Données Téleportation
     public boolean isTp;
     public Portal portal;
 
-    public GameWorld(GameScreen s) {
+    public GameWorld(GameScreen s, GameState gameState) {
         this.screen = s;
+        this.gameState = gameState;
+        this.bodiesToDelet = new ArrayList<>();
+        this.bodies = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
-        this.player = new Player(this.world, "Tester");
-        this.portals = new ArrayList<>();
+        this.player = new Player(this, "Tester");
+        this.maze = new Maze(this);
+        this.maze.initMonster();
         this.isTp = false;
-        this.portal = null;
-        Portal p1 = new Portal(1, new Vector2(600, 300),this.world);
-        Portal p2 = new Portal(1, new Vector2(300, 40),this.world);
-        Portal p3 = new Portal(1, new Vector2(500, 600),this.world);
-        Portal p4 = new Portal(1, new Vector2(200, 200),this.world);
-        p2.setExitPortal(p1);
-        p1.setExitPortal(p2);
-        p3.setExitPortal(p4);
-        p4.setExitPortal(p3);
-        this.portals.add(p1);
-        this.portals.add(p2);
-        this.portals.add(p3);
-        this.portals.add(p4);
-        createCollisionListener();
     }
 
     /**
@@ -49,10 +52,8 @@ public class GameWorld {
      * @param batch ensemble de sprite
      */
     public void draw(SpriteBatch batch) {
+        this.maze.draw(batch);
         this.player.draw(batch);
-        for(Portal p :portals){
-            p.draw(batch);
-        }
     }
 
     public World getWorld() {
@@ -64,91 +65,76 @@ public class GameWorld {
     }
 
     /***
-     * Fonction pour mettre en place une gestion de collision
-     ***/
-    private void createCollisionListener() {
-
-        world.setContactListener(new ContactListener() {
-
-            @Override
-            public void beginContact(Contact contact) {
-
-                Object obj;
-                // je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
-                if(contact.getFixtureA().getBody() == getPlayer().getBody()){
-                    obj = contact.getFixtureB().getBody().getUserData();
-                }else{
-                    obj = contact.getFixtureA().getBody().getUserData();
-                }
-
-                if(obj != null){
-                    // Si l'objet en contact avec le personnage est un portail alors je teleporte le personnage
-                    if(obj.getClass().getSimpleName().equals("Portal")) {
-                        Portal por = ((Portal) obj);
-                        isTp = true;
-                        portal = por;
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-
-
-                Object obj;
-                // je regarde ici si l'hors d'un contact entre 2 bodys si l'un des deux est le personnage
-                if(contact.getFixtureA().getBody() == getPlayer().getBody()){
-                    obj = contact.getFixtureB().getBody().getUserData();
-                }else{
-                    obj = contact.getFixtureA().getBody().getUserData();
-                }
-
-                if(obj != null){
-                    // Si l'objet en contact avec le personnage est un portail alors je met le portail en actif
-                    if(obj.getClass().getSimpleName().equals("Portal")) {
-                        Portal por = ((Portal) obj);
-                        por.setActif(true);
-
-                    }
-
-                }
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-
-            }
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-            }
-
-        });
-    }
-
-    /***
-     * Cette Fonction teleport le joueur au portail de sortie par rapport au portail selectionner
+     * Cette Fonction teleporte le joueur au portail de sortie par rapport au portail selectionner
      * @param p Player
      * @param por Portal
      */
     public void teleport(Player p, Portal por){
         //Si le portail est actif je peux teleporter
         if(por.isActif()) {
-            // Si le portail de sortie est dans le meme labyrinthe on teleporte le joueur
-            if (por.exitSameMaze()) {
-				/*
-				A remplir ....
-				*/
-                // Temporaire
-                // Je rend le portail de sortie inactif pour eviter de teleporter en boucle
-                por.setExitPortalActif(false);
-                // Je teleporte le joueur a la position du portail de sortie.
-                p.getBody().setTransform(por.getPosPortalExit().x,por.getPosPortalExit().y,0f);
-            } else {
-                // Si le portail de sortie n'est pas situer dans le meme labirynthe on charge le nouveau labirynthe et on teleporte le joueur
-
+            // Je rend le portail de sortie inactif pour eviter de teleporter en boucle
+            por.exitPortalDelai();
+            por.delai();
+            // Je teleporte le joueur a la position du portail de sortie.
+            p.getBody().setTransform(por.getPosPortalExit().x ,por.getPosPortalExit().y ,0f);
+            // Si le portail de sortie n'est pas dans le meme labyrinthe on teleporte le joueur dans l'autre
+            if (!por.exitSameMaze()) {
+                loadMaze(por.getExitPortalNumMaze(),por.getPosPortalExit().x + ((p.getBody().getAngle()) * p.getRadius()*2),por.getPosPortalExit().y);
             }
         }
+    }
+
+    public void loadMaze(int num, float playerX, float playerY) {
+        this.gameState.setState(State.LOADING);
+        this.maze.resetMaze();
+        this.world.destroyBody(this.player.getBody());
+        this.player = new Player(this, "TESTER");
+        this.player.setPosition(playerX, playerY);
+        this.maze.loadMaze(num);
+        this.maze.initMonster();
+        this.gameState.setState(State.IN_PROGRESS);
+    }
+
+    public void atk(){
+        this.player.attack(screen.getAngle());
+    }
+
+    public void deleteBodies() {
+        if(bodiesToDelet.size() > 0){
+            world.destroyBody(bodiesToDelet.get(0));
+            bodiesToDelet.clear();
+        }
+    }
+
+    public void addBodyToDelete(Body body) {
+        this.bodiesToDelet.add(body);
+    }
+
+    public void addBody(Body body) {
+        this.bodies.add(body);
+    }
+
+    public ArrayList<Body> getBodies(){
+        return bodies;
+    }
+
+    /**
+     * Retourne une grille de booléen indiquant, pour chaque case, si elle est libre ou non.
+     * @return grille de booléen
+     */
+    public boolean[][] generateGrid() {
+        boolean[][] grid = new boolean[GameWorld.HEIGHT][GameWorld.WIDTH];
+        for (int j = 0; j < GameWorld.HEIGHT; j++)
+            for (int i = 0; i < GameWorld.WIDTH; i++)
+                grid[j][i] = true;
+
+        int x, y;
+        ArrayList<Vector2> tmp = this.maze.getWallsCoord();
+        for (Vector2 vec : tmp) {
+            x = (int) vec.x;
+            y = (int) vec.y;
+            grid[y][x] = false;
+        }
+        return grid;
     }
 }

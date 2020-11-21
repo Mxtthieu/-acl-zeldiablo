@@ -1,42 +1,68 @@
-package com.zeldiablo.models;
+package com.zeldiablo.models.portals;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.factories.TextureFactory;
+import com.zeldiablo.models.GameWorld;
+import com.badlogic.gdx.utils.Timer;
+
 
 /**
  * @author Vasaune Christian
  */
 public class Portal {
 
-    Vector2 posPortal;
-    Body bodyPortal;
-    int numMaze;
-    Portal exitPortal;
+    private Vector2 posPortal;
+    private Body bodyPortal;
+    private int numMaze;
+    private Portal exitPortal;
     private static float taille;
     private boolean actif;
+    private int numPortal;
+    private Timer timer;
+    protected Timer.Task actifTask;
 
-    public Portal(int num, Vector2 pos, World world){
+    private float tmpAnim;
+    private Animation animation;
 
+    public Portal(int n, int num, Vector2 pos, World world){
+
+        this.tmpAnim = Gdx.graphics.getDeltaTime();
+        this.animation = TextureFactory.INSTANCE.getAnimatedPurplePortal();
+
+        this.numPortal = n;
         this.numMaze = num;
         this.actif = true;
         this.posPortal = pos;
+        this.timer = new Timer();
+        this.actifTask = new Timer.Task() {
+            @Override
+            public void run() {
+                setActif(true);
+            }
+        };
 
-        taille = (1/40f)* 720;
-        BodyDef bodydef = new BodyDef();
-        bodydef.type = BodyDef.BodyType.StaticBody;
-        bodydef.position.set(posPortal);
-        bodyPortal = world.createBody(bodydef);
+        if(n == num) {
+            taille = (1/60f) * GameWorld.WIDTH;
+            BodyDef bodydef = new BodyDef();
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(posPortal);
+            bodyPortal = world.createBody(bodydef);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(taille);
-        fixtureDef.shape = shape;
-        //fixtureDef.isSensor = true;
-        bodyPortal.setUserData(this);
-        bodyPortal.createFixture(fixtureDef);
-        shape.dispose();
-
+            FixtureDef fixtureDef = new FixtureDef();
+            CircleShape shape = new CircleShape();
+            shape.setRadius(taille);
+            fixtureDef.shape = shape;
+            fixtureDef.isSensor = true;
+            bodyPortal.setUserData(this);
+            bodyPortal.createFixture(fixtureDef);
+            shape.dispose();
+        }
+        delai();
     }
 
     /**
@@ -118,10 +144,40 @@ public class Portal {
      * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
      */
     public void draw(SpriteBatch batch){
+        this.tmpAnim += Gdx.graphics.getDeltaTime();
+        TextureRegion region = (TextureRegion) this.animation.getKeyFrame(this.tmpAnim);
+
+        float x = this.bodyPortal.getPosition().x;
+        float y = this.bodyPortal.getPosition().y;
+
+        float size = taille*4;
+
         batch.begin();
-        //batch.draw(); Ajout Sprite
+        batch.draw(region, x-size/2, y-size/2, size, size);
         batch.end();
     }
 
+    /**
+     * @return le body du portail
+     */
+    public Body getBodyPortal() {
+        return bodyPortal;
+    }
+
+    /***
+     * Cette procedure permet de rajouter un delai d'inactivité de 3s sur le portail
+     ***/
+    public void delai(){
+        setActif(false);
+        timer.scheduleTask(actifTask, 3f);
+
+    }
+
+    /***
+     * Cette procedure permet de rajouter un delai d'inactivité de 3s sur le portail de sortie
+     ***/
+    public void exitPortalDelai(){
+        exitPortal.delai();
+    }
 
 }
