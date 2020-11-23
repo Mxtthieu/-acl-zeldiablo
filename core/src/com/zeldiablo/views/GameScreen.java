@@ -32,6 +32,7 @@ public class GameScreen extends ScreenAdapter {
     private float angle;
 
     private SpriteBatch batch;              // Ensemble de sprites contenu par le jeu
+    private SpriteBatch batchTexte;         // SpriteBatch pour les textes
     private Box2DDebugRenderer debug;       // Rendu de debug pour vérifier le placement des corps du jeu
 
     private GameWorld game;                 // Instance du jeu
@@ -41,9 +42,11 @@ public class GameScreen extends ScreenAdapter {
     private CollisionListener collision;    // Controleur de la collision
 
     private OrthographicCamera camera;      // La caméra du jeu
+    private OrthographicCamera cameraText;  // La caméra pour le texte
 
     public GameScreen() {
         this.batch = new SpriteBatch();
+        this.batchTexte = new SpriteBatch();
         this.debug = new Box2DDebugRenderer();
 
         // --- Instanciation des modèles --- //
@@ -107,7 +110,7 @@ public class GameScreen extends ScreenAdapter {
             batch.end();
         } else {
             if(!this.gameState.isLoading()){
-                this.game.draw(this.batch);
+                this.game.draw(this.batch, this.batchTexte);
             }
         }
 
@@ -192,6 +195,13 @@ public class GameScreen extends ScreenAdapter {
         this.camera.position.set((float)GameWorld.WIDTH / 2, (float) GameWorld.HEIGHT / 2, 0);
         this.camera.update();
         this.batch.setProjectionMatrix(camera.combined);
+
+
+        // --- Définition de la caméra pour les textes --- //
+        this.cameraText = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cameraText.position.set((float)Gdx.graphics.getWidth(),(float)Gdx.graphics.getHeight(), 0);
+        cameraText.update();
+
     }
 
     @Override

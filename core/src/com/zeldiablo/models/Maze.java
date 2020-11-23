@@ -2,10 +2,12 @@ package com.zeldiablo.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.enums.MazeObjects;
@@ -212,7 +214,7 @@ public class Maze {
 
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, SpriteBatch batchText) {
         this.tmpAnim += Gdx.graphics.getDeltaTime();
 
         // Textures du sol
@@ -224,6 +226,8 @@ public class Maze {
         batch.begin();
         batch.draw(grassRegion, 0, 0, grass.getWidth(), grass.getHeight());
         batch.end();
+
+        drawNumMaze(batchText);
 
         // Texture portail
         for (Portal p :portalList){
@@ -239,7 +243,7 @@ public class Maze {
 
         // Texture des monstres
         for (Monster m : monsterList)
-            m.draw(batch);
+            m.draw(batch, batchText);
 
         // Texture des murs
         batch.begin();
@@ -252,6 +256,19 @@ public class Maze {
                     x, y, radius *2, radius *2);
         }
         batch.end();
+    }
+
+    private void drawNumMaze(SpriteBatch batchText) {
+        batchText.begin();
+        Label text;
+        Label.LabelStyle textStyle;
+        textStyle = new Label.LabelStyle();
+        textStyle.font = new BitmapFont();
+        text = new Label(Integer.toString(this.currentNumMaze),textStyle);
+        text.setFontScale(2f,2f);
+        text.setPosition(Gdx.graphics.getWidth() - 50, Gdx.graphics.getHeight() - 50);
+        text.draw(batchText, 1);
+        batchText.end();
     }
 
     public void resetMaze() {

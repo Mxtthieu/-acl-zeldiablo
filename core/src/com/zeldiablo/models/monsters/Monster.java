@@ -2,10 +2,12 @@ package com.zeldiablo.models.monsters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.controllers.Direction;
 import com.zeldiablo.controllers.ai.Node;
@@ -175,12 +177,23 @@ public abstract class Monster implements Entity, Effectable {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, SpriteBatch batchText) {
         this.tmpAnim += Gdx.graphics.getDeltaTime()*this.walking;
         TextureRegion region = (TextureRegion) this.animations.get(this.direction).getKeyFrame(this.tmpAnim);
         batch.begin();
         batch.draw(region, getX()-SIZE/2, getY()-SIZE/2, SIZE, SIZE);
         batch.end();
+
+        batchText.begin();
+        Label text;
+        Label.LabelStyle textStyle;
+        textStyle = new Label.LabelStyle();
+        textStyle.font = new BitmapFont();
+        text = new Label(Integer.toString(this.hp),textStyle);
+        text.setFontScale(2f,2f);
+        text.setPosition((((float)(this.getX() - 1.3)*Gdx.graphics.getWidth()) / GameWorld.WIDTH), ((this.getY() + 2)*Gdx.graphics.getHeight()) / GameWorld.HEIGHT);
+        text.draw(batchText, 1);
+        batchText.end();
     }
 
 

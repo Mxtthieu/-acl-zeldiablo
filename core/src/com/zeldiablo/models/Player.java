@@ -51,10 +51,14 @@ public class Player implements Entity, Effectable {
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         this.direction = Direction.Left;
         this.walking = 0;
+        this.createBody(10, 10);
 
+    }
+
+    public void createBody(float x, float y) {
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(10, 10);
+        bd.position.set(x,y);
         body = this.gameWorld.getWorld().createBody(bd);
         body.setUserData(this);
 
@@ -68,7 +72,6 @@ public class Player implements Entity, Effectable {
 
         body.createFixture(fixture);
         shape.dispose();
-
     }
 
     /**
@@ -174,7 +177,7 @@ public class Player implements Entity, Effectable {
      * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
      */
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, SpriteBatch batchText) {
         this.tmpAnim += Gdx.graphics.getDeltaTime()*this.walking;
         TextureRegion region = (TextureRegion) this.animations.get(this.direction).getKeyFrame(this.tmpAnim);
         batch.begin();

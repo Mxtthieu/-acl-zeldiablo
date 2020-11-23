@@ -38,7 +38,7 @@ public interface Entity {
      * Permet de déssiner le joueur sur l'ensemble de srpites présent sur l'écran
      * @param batch SpriteBatch qui regroupe tous les sprite déssiné à l'écran
      */
-    void draw(SpriteBatch batch);
+    void draw(SpriteBatch batch, SpriteBatch batchText);
 
     /**
      * Permet de récupérer le radius de l'entité

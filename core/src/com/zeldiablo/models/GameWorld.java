@@ -1,9 +1,11 @@
 package com.zeldiablo.models;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.monsters.Monster;
@@ -31,6 +33,9 @@ public class GameWorld {
     private Player player;
     private Maze maze;
 
+    // --- Bitmap
+    private BitmapFont bitmapFont;
+
     // --- Données Téleportation
     public boolean isTp;
     public Portal portal;
@@ -45,15 +50,31 @@ public class GameWorld {
         this.maze = new Maze(this);
         this.maze.initMonster();
         this.isTp = false;
+        this.bitmapFont = new BitmapFont();
     }
 
     /**
      * Demande au modèle Player de s'afficher sur le jeu
      * @param batch ensemble de sprite
      */
-    public void draw(SpriteBatch batch) {
-        this.maze.draw(batch);
-        this.player.draw(batch);
+    public void draw(SpriteBatch batch, SpriteBatch batchText) {
+        this.maze.draw(batch, batchText);
+        this.player.draw(batch, batchText);
+        drawPlayerLife(batchText);
+    }
+
+    private void drawPlayerLife(SpriteBatch batch) {
+        batch.begin();
+        this.bitmapFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        Label text;
+        Label.LabelStyle textStyle;
+        textStyle = new Label.LabelStyle();
+        textStyle.font = this.bitmapFont;
+        text = new Label(Integer.toString(this.player.getHP()),textStyle);
+        text.setFontScale(2f,2f);
+        text.setPosition(30, 30);
+        text.draw(batch, 1);
+        batch.end();
     }
 
     public World getWorld() {
@@ -88,8 +109,7 @@ public class GameWorld {
         this.gameState.setState(State.LOADING);
         this.maze.resetMaze();
         this.world.destroyBody(this.player.getBody());
-        this.player = new Player(this, "TESTER");
-        this.player.setPosition(playerX, playerY);
+        this.player.createBody(playerX, playerY);
         this.maze.loadMaze(num);
         this.maze.initMonster();
         this.gameState.setState(State.IN_PROGRESS);
