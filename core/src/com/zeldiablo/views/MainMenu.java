@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.zeldiablo.models.GameWorld;
 
 public class MainMenu extends ScreenAdapter {
 
@@ -34,7 +33,7 @@ public class MainMenu extends ScreenAdapter {
 
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(GameWorld.WIDTH, GameWorld.HEIGHT, this.camera);
+        this.viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), this.camera);
         this.viewport.apply();
 
         this.camera.position.set(this.camera.viewportWidth/2, this.camera.viewportHeight/2, 0);
@@ -56,8 +55,8 @@ public class MainMenu extends ScreenAdapter {
         mainTable.bottom();
 
         // Deux boutons qui vont permettre de jouer ou de quitter l'application
-        TextButton playButton = new TextButton("Jouer", this.skin);
-        TextButton exitButton = new TextButton("Quitter", this.skin);
+        TextButton playButton = new TextButton("Jouer", this.skin, "silver_button");
+        TextButton exitButton = new TextButton("Quitter", this.skin, "red_button");
 
         // On ajoute a chaque bouton son action
         playButton.addListener(new ClickListener() {
@@ -74,9 +73,9 @@ public class MainMenu extends ScreenAdapter {
         });
 
         // On ajoute les boutons à la table
-        mainTable.add(playButton);
-        mainTable.row();            // Permet de sauter une ligne
-        mainTable.add(exitButton);
+        mainTable.add(playButton).width(200).height(50).pad(5);
+        mainTable.row();// Permet de sauter une ligne
+        mainTable.add(exitButton).width(200).height(50).pad(5).padBottom(50);
 
         // Et on ajoute la table à l'écran
         this.stage.addActor(mainTable);
