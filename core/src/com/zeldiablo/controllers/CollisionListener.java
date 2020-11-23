@@ -7,6 +7,7 @@ import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
+import com.zeldiablo.models.treasure.Treasure;
 import com.zeldiablo.models.weapons.weaponsCAC.Cac;
 import com.zeldiablo.models.weapons.weaponsCAC.Sword;
 
@@ -33,8 +34,10 @@ public class CollisionListener implements ContactListener {
         checkProjectileCollision(a,b);
         checkPortalCollision(a,b);
         checkAttackCollision(a,b);
+        checkTreasureCollision(a,b);
 
     }
+
 
     @Override
     public void endContact(Contact contact) {
@@ -92,6 +95,16 @@ public class CollisionListener implements ContactListener {
         } else if (b.getUserData() instanceof Cac && a.getUserData() instanceof Monster){
             Cac weapon = player.getWeapon();
             weapon.effect(a);
+        }
+    }
+
+    private void checkTreasureCollision(Body a, Body b) {
+        if(a.getUserData() instanceof Player && b.getUserData() instanceof Treasure){
+            Treasure treasure = (Treasure)b.getUserData();
+            treasure.effect(gameWorld);
+        } else if (b.getUserData() instanceof Cac && a.getUserData() instanceof Monster){
+            Treasure treasure = (Treasure)b.getUserData();
+            treasure.effect(gameWorld);
         }
     }
 }

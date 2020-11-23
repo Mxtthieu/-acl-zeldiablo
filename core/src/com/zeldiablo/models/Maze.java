@@ -16,6 +16,7 @@ import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
+import com.zeldiablo.models.treasure.Treasure;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class Maze {
     private ArrayList<Trap> trapList;
     private ArrayList<Portal> portalList;
     private ArrayList<Monster> monsterList;
+    private ArrayList<Treasure> treasureList;
     private ArrayList<Vector2> monsterToInit;
 
     private int currentNumMaze;
@@ -42,6 +44,7 @@ public class Maze {
         this.portalList = new ArrayList<>();
         this.monsterList = new ArrayList<>();
         this.monsterToInit = new ArrayList<>();
+        this.treasureList = new ArrayList<>();
         this.currentNumMaze = 0;
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         loadMaze(1);
@@ -101,6 +104,8 @@ public class Maze {
                             case MazeObjects.TRAP:
                                 addTrap(line, column);
                                 break;
+                            case MazeObjects.TREASURE:
+                                addTreasure(line,column);
                             default:
                                 break;
                         }
@@ -138,6 +143,15 @@ public class Maze {
         }
 
 
+    }
+
+    /**
+     * Ajoute un trésor au monde
+     * @param line la ligne dans le fichier
+     * @param column la colonne dans le fichier
+     */
+    private void addTreasure(int line, int column) {
+        this.treasureList.add(new Treasure(gameWorld,column+1,GameWorld.HEIGHT - line+1, 10));
     }
 
     /**
