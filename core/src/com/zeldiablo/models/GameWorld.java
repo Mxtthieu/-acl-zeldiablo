@@ -32,6 +32,7 @@ public class GameWorld {
     private World world;
     private Player player;
     private Maze maze;
+    private GameStats stats;
 
     // --- Bitmap
     private BitmapFont bitmapFont;
@@ -51,6 +52,7 @@ public class GameWorld {
         this.maze.initMonster();
         this.isTp = false;
         this.bitmapFont = new BitmapFont();
+        this.stats = new GameStats();
     }
 
     /**
@@ -156,5 +158,13 @@ public class GameWorld {
             grid[y][x] = false;
         }
         return grid;
+    }
+
+    public void startTimer() {
+        stats.startTimer();
+    }
+
+    public void stopTimer(){
+        stats.stopTimer();
     }
 }

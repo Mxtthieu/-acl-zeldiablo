@@ -79,6 +79,7 @@ public class GameScreen extends ScreenAdapter {
         if(this.keyboard.isPaused()){
             this.gameState.setState(State.PAUSED);
             this.drawPause();
+            this.game.stopTimer();
             for(Body b :this.game.getBodies()){
                 if(b.getUserData() instanceof Trap){
                     t = (Trap)b.getUserData();
@@ -87,6 +88,7 @@ public class GameScreen extends ScreenAdapter {
             }
         } else {
             this.gameState.setState(State.IN_PROGRESS);
+            this.game.startTimer();
             for(Body b :this.game.getBodies()){
                 if(b.getUserData() instanceof Trap){
                     t = (Trap)b.getUserData();

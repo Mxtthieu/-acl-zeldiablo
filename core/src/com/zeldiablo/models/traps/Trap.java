@@ -31,7 +31,7 @@ public abstract class Trap {
         bodyPiege = gameWorld.getWorld().createBody(bodydef);
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(height/2f,width/2f,new Vector2(0,0), angle);
+        shape.setAsBox(width/2f,height/2f,new Vector2(width,height), angle);
         fixtureDef.shape = shape;
         fixtureDef.isSensor = false;
         bodyPiege.setUserData(this);
