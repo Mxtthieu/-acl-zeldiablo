@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g3d.utils.MeshBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.video.VideoPlayer;
+import com.badlogic.gdx.video.VideoPlayerCreator;
+
+import java.io.FileNotFoundException;
 
 public class MainMenu extends ScreenAdapter {
 
@@ -25,6 +30,7 @@ public class MainMenu extends ScreenAdapter {
     private OrthographicCamera camera;
     private TextureAtlas atlas;
     private Skin skin;
+    private VideoPlayer videoPlayer;
 
     public MainMenu() {
         // L'atlas et le skin vont permettre de créer, modifier et d'afficher les éléments (les boutons) plus facilement
@@ -40,6 +46,13 @@ public class MainMenu extends ScreenAdapter {
         this.camera.update();
 
         this.stage = new Stage(this.viewport, this.batch);
+        this.videoPlayer = VideoPlayerCreator.createVideoPlayer();
+        this.videoPlayer.setLooping(true);
+        try {
+            this.videoPlayer.play(Gdx.files.internal("video/main_menu.mp4"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

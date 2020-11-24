@@ -9,20 +9,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zeldiablo.controllers.CollisionListener;
 import com.zeldiablo.controllers.KeyboardListener;
 import com.zeldiablo.controllers.MouseListener;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameState;
 import com.zeldiablo.models.GameWorld;
-import com.zeldiablo.models.Maze;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.enums.State;
-import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
-import com.zeldiablo.models.traps.TrapDamage;
 
 public class GameScreen extends ScreenAdapter {
 

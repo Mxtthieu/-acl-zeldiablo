@@ -1,6 +1,7 @@
 package com.zeldiablo.controllers.ai;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Cette classe permet de calculer un chemin de coût minimal entre deux noeuds avec l'algorithme A*.

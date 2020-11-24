@@ -1,17 +1,11 @@
 package com.zeldiablo.models;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.zeldiablo.models.enums.State;
-import com.zeldiablo.models.monsters.Monster;
-import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
-import com.zeldiablo.models.traps.Projectile;
-import com.zeldiablo.models.traps.Trap;
-import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.views.GameScreen;
 
 import java.util.ArrayList;
