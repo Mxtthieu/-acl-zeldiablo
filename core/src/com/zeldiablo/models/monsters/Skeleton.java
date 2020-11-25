@@ -1,14 +1,9 @@
 package com.zeldiablo.models.monsters;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.World;
 import com.zeldiablo.controllers.Direction;
 import com.zeldiablo.factories.TextureFactory;
-import com.zeldiablo.models.Effectable;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
-import com.zeldiablo.models.monsters.Monster;
 
 public class Skeleton extends Monster {
 
