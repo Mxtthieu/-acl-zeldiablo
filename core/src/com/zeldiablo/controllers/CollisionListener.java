@@ -1,6 +1,7 @@
 package com.zeldiablo.controllers;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.models.GameStats;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.monsters.Monster;
@@ -102,9 +103,11 @@ public class CollisionListener implements ContactListener {
         if(a.getUserData() instanceof Player && b.getUserData() instanceof Treasure){
             Treasure treasure = (Treasure)b.getUserData();
             treasure.effect(gameWorld);
-        } else if (b.getUserData() instanceof Cac && a.getUserData() instanceof Monster){
+            this.gameWorld.addBodyToDelete(b);
+        } else if (b.getUserData() instanceof Player && a.getUserData() instanceof Treasure){
             Treasure treasure = (Treasure)b.getUserData();
             treasure.effect(gameWorld);
+            this.gameWorld.addBodyToDelete(a);
         }
     }
 }

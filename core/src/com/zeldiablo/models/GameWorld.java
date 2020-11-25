@@ -1,6 +1,7 @@
 package com.zeldiablo.models;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -27,6 +28,7 @@ public class GameWorld {
     // --- Eléments du jeu
     private GameScreen screen;
     private GameState gameState;
+    private GameStats gameStats;
     private ArrayList<Body> bodiesToDelet;
     private ArrayList<Body> bodies;
     private World world;
@@ -44,6 +46,7 @@ public class GameWorld {
     public GameWorld(GameScreen s, GameState gameState) {
         this.screen = s;
         this.gameState = gameState;
+        this.gameStats = new GameStats();
         this.bodiesToDelet = new ArrayList<>();
         this.bodies = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
@@ -63,11 +66,38 @@ public class GameWorld {
         this.maze.draw(batch, batchText);
         this.player.draw(batch, batchText);
         drawPlayerLife(batchText);
+        drawScore(batchText);
+        drawTime(batchText);
+    }
+
+    private void drawTime(SpriteBatch batchText) {
+        batchText.begin();
+        Label text;
+        Label.LabelStyle textStyle;
+        textStyle = new Label.LabelStyle();
+        textStyle.font = this.bitmapFont;
+        text = new Label(Integer.toString(this.gameStats.getTime()),textStyle);
+        text.setFontScale(2f,2f);
+        text.setPosition(30, Gdx.graphics.getHeight() - 50);
+        text.draw(batchText, 1);
+        batchText.end();
+    }
+
+    private void drawScore(SpriteBatch batchText) {
+        batchText.begin();
+        Label text;
+        Label.LabelStyle textStyle;
+        textStyle = new Label.LabelStyle();
+        textStyle.font = this.bitmapFont;
+        text = new Label("Score : " + this.gameStats.getScore(),textStyle);
+        text.setFontScale(2f,2f);
+        text.setPosition((Gdx.graphics.getWidth() / 2f) - text.getWidth(), Gdx.graphics.getHeight() - 50);
+        text.draw(batchText, 1);
+        batchText.end();
     }
 
     private void drawPlayerLife(SpriteBatch batch) {
         batch.begin();
-        this.bitmapFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         Label text;
         Label.LabelStyle textStyle;
         textStyle = new Label.LabelStyle();
@@ -138,6 +168,10 @@ public class GameWorld {
 
     public ArrayList<Body> getBodies(){
         return bodies;
+    }
+
+    public GameStats getGameStats() {
+        return this.gameStats;
     }
 
     /**

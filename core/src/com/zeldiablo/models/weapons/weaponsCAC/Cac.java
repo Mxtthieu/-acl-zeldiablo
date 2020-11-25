@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
+import com.zeldiablo.models.GameWorld;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -27,9 +28,10 @@ public abstract class Cac {
     protected Timer timer;
     protected Timer.Task timertask;
     protected Timer.Task destroytask;
+    protected GameWorld gameWorld;
     protected Body hitbox;
     
-    public Cac(String name, float as, int w, int r, int d){
+    public Cac(String name, float as, int w, int r, int d, GameWorld gameWorld){
         this.name = name;
         this.atkspeed = as;
         this.width = w;
@@ -44,6 +46,7 @@ public abstract class Cac {
                 canAtk = true;
             }
         };
+        this.gameWorld = gameWorld;
 
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         this.attacking = false;

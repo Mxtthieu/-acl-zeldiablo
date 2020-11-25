@@ -191,7 +191,7 @@ public abstract class Monster implements Entity, Effectable {
         textStyle.font = new BitmapFont();
         text = new Label(Integer.toString(this.hp),textStyle);
         text.setFontScale(2f,2f);
-        text.setPosition((((float)(this.getX() - 1.3)*Gdx.graphics.getWidth()) / GameWorld.WIDTH), ((this.getY() + 2)*Gdx.graphics.getHeight()) / GameWorld.HEIGHT);
+        text.setPosition(((this.getX() - (text.getWidth()/GameWorld.WIDTH) - 1)*Gdx.graphics.getWidth()) / GameWorld.WIDTH, ((this.getY() + 2)*Gdx.graphics.getHeight()) / GameWorld.HEIGHT);
         text.draw(batchText, 1);
         batchText.end();
     }

@@ -15,8 +15,8 @@ import static java.lang.Math.sin;
 
 public class Sword extends Cac {
 
-    public Sword(){
-        super("Sword", 1, 2, 4, 10);
+    public Sword(GameWorld gameWorld){
+        super("Sword", 1, 2, 4, 10, gameWorld);
         this.animation = TextureFactory.INSTANCE.getAnimatedSlashAttack();
     }
 
@@ -46,7 +46,7 @@ public class Sword extends Cac {
     public void effect(Body b) {
         Monster monster = (Monster)b.getUserData();
         monster.decreaseHP(this.damage);
-        System.out.println(monster.getHp());
+        this.gameWorld.getGameStats().increaseScore();
     }
 
 }

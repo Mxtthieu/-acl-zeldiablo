@@ -13,6 +13,7 @@ public class GameStats {
         this.score = 0;
         this.time = 0;
         this.timer = new Timer();
+        this.timer.start();
         this.timeTask = new Timer.Task() {
             @Override
             public void run() {

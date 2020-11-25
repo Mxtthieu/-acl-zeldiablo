@@ -39,7 +39,7 @@ public class Player implements Entity, Effectable {
         this.att = 0;
         this.def = 0;
         this.speed = 10;
-        this.weapon = new Sword();
+        this.weapon = new Sword(gameWorld);
         this.gameWorld = gameWorld;
         this.attacking = false;
 
