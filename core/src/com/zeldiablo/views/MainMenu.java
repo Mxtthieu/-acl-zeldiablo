@@ -6,9 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.utils.MeshBuilder;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,10 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.video.VideoPlayer;
-import com.badlogic.gdx.video.VideoPlayerCreator;
-
-import java.io.FileNotFoundException;
 
 public class MainMenu extends ScreenAdapter {
 
@@ -30,12 +29,15 @@ public class MainMenu extends ScreenAdapter {
     private OrthographicCamera camera;
     private TextureAtlas atlas;
     private Skin skin;
-    private VideoPlayer videoPlayer;
+    private Sprite title;
+
+    private int yPos;
 
     public MainMenu() {
         // L'atlas et le skin vont permettre de créer, modifier et d'afficher les éléments (les boutons) plus facilement
         this.atlas = new TextureAtlas("images/buttons/main_menu_buttons.atlas");
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"), this.atlas);
+        this.title = new Sprite(new Texture(Gdx.files.internal("images/title.png")));
 
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
@@ -46,13 +48,7 @@ public class MainMenu extends ScreenAdapter {
         this.camera.update();
 
         this.stage = new Stage(this.viewport, this.batch);
-        this.videoPlayer = VideoPlayerCreator.createVideoPlayer();
-        this.videoPlayer.setLooping(true);
-        try {
-            this.videoPlayer.play(Gdx.files.internal("video/main_menu.mp4"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        this.yPos = Gdx.graphics.getHeight();       // Va servire a mémoriser la hauteur du titre
     }
 
     /**
@@ -66,6 +62,9 @@ public class MainMenu extends ScreenAdapter {
         Table mainTable = new Table();
         mainTable.setFillParent(true);
         mainTable.bottom();
+
+        // On place le titre en haut de l'écran
+        this.title.setPosition(Gdx.graphics.getWidth()/2 - this.title.getWidth()/2, Gdx.graphics.getHeight());
 
         // Deux boutons qui vont permettre de jouer ou de quitter l'application
         TextButton playButton = new TextButton("Jouer", this.skin, "silver_button");
@@ -104,9 +103,23 @@ public class MainMenu extends ScreenAdapter {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.stage.act();
-        this.stage.draw();
+        // on fait descendre le titre du jeu jusqu'à arriver au centre
+        if (this.yPos >= Gdx.graphics.getHeight()/2) {
+            this.yPos--;
+            this.title.setY(this.yPos);
+        }
+
+        // On récupère le Batch utilisé par le menu et on déssine le titre dessus
+        Batch batch = this.stage.getBatch();
+        batch.begin();
+        this.title.draw(batch);
+        batch.end();
+
+        this.stage.act();   // On actualise
+        this.stage.draw();  // et on déssine
     }
+
+
 
     /**
      * @param width
