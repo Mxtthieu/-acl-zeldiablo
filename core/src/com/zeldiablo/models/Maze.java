@@ -17,6 +17,13 @@ import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.models.treasure.Treasure;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import java.io.File;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -47,7 +54,7 @@ public class Maze {
         this.treasureList = new ArrayList<>();
         this.currentNumMaze = 0;
         this.tmpAnim = Gdx.graphics.getDeltaTime();
-        loadMaze(1);
+        loadMaze(0);
     }
 
     /**
@@ -71,6 +78,7 @@ public class Maze {
      * (piege, mur, etc..)
      */
     public void readObjects() {
+
         try {
             FileReader fr = new FileReader(this.mazeFile);
 
@@ -78,63 +86,28 @@ public class Maze {
 
             String c;
             int line = 0;
-            boolean normalRead = true;
-            boolean portalRead = false;
 
             while ((c = bufferedReader.readLine()) != null) {
 
-                if(c.equals("Portals Links:")){
-                    normalRead = false;
-                    portalRead = true;
-                }
-                if(c.equals("FIN")){
-                    normalRead = true;
-                    portalRead = false;
-                }
-
-                if (normalRead){
-                    for (int column = 0; column < c.length(); column++) {
-                        switch (c.charAt(column)) {
-                            case MazeObjects.MONSTER:
-                                this.monsterToInit.add(new Vector2(line, column));
-                                break;
-                            case MazeObjects.WALL:
-                                addWall(line, column);
-                                break;
-                            case MazeObjects.TRAP:
-                                addTrap(line, column);
-                                break;
-                            case MazeObjects.TREASURE:
-                                addTreasure(line,column);
-                            default:
-                                break;
-                        }
-                    }
-                    line++;
-                }
-
-                if(portalRead){
-                    String[] a;
-                    String[] p1;
-                    String[] p2;
-                    Portal por1;
-                    Portal por2;
-                    if(!c.equals("Portals Links:") && !c.equals("Fin")) {
-                        a = c.split("\\|");
-                        p1 = a[1].split(",");
-                        p2 = a[2].split(",");
-                        por1 = new Portal(this.currentNumMaze,Integer.parseInt(p1[2]),new Vector2(Integer.parseInt(p1[0]) +1,GameWorld.HEIGHT -Integer.parseInt(p1[1])), gameWorld.getWorld());
-                        por2 = new Portal(this.currentNumMaze,Integer.parseInt(p2[2]),new Vector2(Integer.parseInt(p2[0]) +1,GameWorld.HEIGHT -Integer.parseInt(p2[1])), gameWorld.getWorld());
-                        por1.setExitPortal(por2);
-                        por2.setExitPortal(por1);
-                        if(por1.getNumMaze() == this.currentNumMaze) {
-                            this.portalList.add(por1);
-                        }
-                        if(por2.getNumMaze() == this.currentNumMaze) {
-                            this.portalList.add(por2);
-                        }
+                for (int column = 0; column < c.length(); column++) {
+                    switch (c.charAt(column)) {
+                        case MazeObjects.MONSTER:
+                            this.monsterToInit.add(new Vector2(line, column));
+                            break;
+                        case MazeObjects.WALL:
+                            addWall(line, column);
+                            break;
+                        case MazeObjects.TRAP:
+                            //addTrap(line, column);
+                            break;
+                        case MazeObjects.TREASURE:
+                            addTreasure(line,column);
+                        default:
+                            break;
                     }
                 }
+                line++;
+
             }
             bufferedReader.close();
 
@@ -142,6 +115,89 @@ public class Maze {
             System.err.println("Unable to read the file.");
         }
 
+        try {
+
+            File fXmlFile = new File("core/assets/maze/Config");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+            doc.getDocumentElement().normalize();
+
+            NodeList nLabyList = doc.getElementsByTagName("laby");
+            Node nNode = nLabyList.item(this.currentNumMaze);
+            NodeList nPortalList = ((Element) nNode).getElementsByTagName("portal");
+
+            for (int temp2 = 0; temp2 < nPortalList.getLength(); temp2++) {
+
+                Node nNode2 = nPortalList.item(temp2);
+
+                if (nNode2.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement2 = (Element) nNode2;
+                    int id = Integer.valueOf(eElement2.getAttribute("id"));
+                    int numLaby = Integer.valueOf(eElement2.getElementsByTagName("numlaby").item(0).getTextContent());
+                    int posx = Integer.valueOf(eElement2.getElementsByTagName("posx").item(0).getTextContent());
+                    int posy = Integer.valueOf(eElement2.getElementsByTagName("posy").item(0).getTextContent());
+                    int d = Integer.valueOf(eElement2.getElementsByTagName("draw").item(0).getTextContent());
+                    portalList.add(new Portal(id,numLaby,new Vector2(posx+1,GameWorld.HEIGHT - (posy+1)),d,this.gameWorld.getWorld()));
+                }
+            }
+
+            NodeList nLinkList = ((Element) nNode).getElementsByTagName("link");
+
+
+            for (int temp2 = 0; temp2 < nLinkList.getLength(); temp2++) {
+
+                Node nNode2 = nLinkList.item(temp2);
+
+                if (nNode2.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement2 = (Element) nNode2;
+
+                    int num1 = Integer.valueOf(eElement2.getElementsByTagName("p1").item(0).getTextContent());
+                    int num2 = Integer.valueOf(eElement2.getElementsByTagName("p2").item(0).getTextContent());
+                    Portal p1 = null;
+                    Portal p2 = null;
+                    for(int i = 0; i < portalList.size();i++){
+
+                        if(portalList.get(i).getNumPortal() == num1){
+                            p1 = portalList.get(i);
+                        }
+
+                        if(portalList.get(i).getNumPortal() == num2){
+                            p2 = portalList.get(i);
+                        }
+                    }
+                    if ( p1 == null || p2 == null ){
+                        System.out.println("Nous pouvons pas lier " + eElement2.getAttribute("id") + " car un des portail n'est pas existant");
+                    }else {
+                        p1.setExitPortal(p2);
+                        p2.setExitPortal(p1);
+                    }
+                }
+            }
+
+            NodeList nTrapList = ((Element) nNode).getElementsByTagName("trap");
+
+            for (int temp2 = 0; temp2 < nTrapList.getLength(); temp2++) {
+
+                Node nNode2 = nTrapList.item(temp2);
+
+                if (nNode2.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement2 = (Element) nNode2;
+
+                    int posx = Integer.valueOf(eElement2.getElementsByTagName("posx").item(0).getTextContent());
+                    int posy = Integer.valueOf(eElement2.getElementsByTagName("posy").item(0).getTextContent());
+                    int angle = Integer.valueOf(eElement2.getElementsByTagName("angle").item(0).getTextContent());
+                    addTrap(posx,posy,angle);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Unable to read the file.");
+        }
 
     }
 
@@ -180,7 +236,7 @@ public class Maze {
      */
     private void addPortal(int i, int j) {
         World world = gameWorld.getWorld();
-        this.portalList.add(new Portal(this.currentNumMaze,this.currentNumMaze,new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
+        //this.portalList.add(new Portal(this.currentNumMaze,this.currentNumMaze,new Vector2(j+1,GameWorld.HEIGHT - (i+1)), world));
 
     }
 
@@ -189,8 +245,8 @@ public class Maze {
      * @param i la ligne dans le fichier
      * @param j la colonne dans le fichier
      */
-    private void addTrap(int i, int j) {
-        Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld, (float) (0*Math.PI/180));
+    private void addTrap(int i, int j, int angle) {
+        Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld, (float) (angle*Math.PI/180));
         this.gameWorld.addBody(trap.getBody());
         this.trapList.add(trap);
     }

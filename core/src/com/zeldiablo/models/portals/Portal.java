@@ -26,10 +26,11 @@ public class Portal {
     private Timer timer;
     protected Timer.Task actifTask;
 
+
     private float tmpAnim;
     private Animation animation;
 
-    public Portal(int n, int num, Vector2 pos, World world){
+    public Portal(int n, int num, Vector2 pos, int draw, World world){
 
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         this.animation = TextureFactory.INSTANCE.getAnimatedPurplePortal();
@@ -46,7 +47,7 @@ public class Portal {
             }
         };
 
-        if(n == num) {
+        if(draw == 1) {
             taille = (1/60f) * GameWorld.WIDTH;
             BodyDef bodydef = new BodyDef();
             bodydef.type = BodyDef.BodyType.StaticBody;
@@ -180,4 +181,7 @@ public class Portal {
         exitPortal.delai();
     }
 
+    public int getNumPortal() {
+        return numPortal;
+    }
 }
