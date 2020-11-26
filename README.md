@@ -39,3 +39,9 @@ https://docs.google.com/document/d/1c-QqIp6g--KTkimu69hkha2MXkiM_1MiSqSOMicLLng/
 Lien vers le document du sprint review et du sprint retrospective de notre Sprint 2 :
 
 https://docs.google.com/document/d/1gCXaweQ6ZDnBxnNlrl-D2YFLPIRejfrOMYdIIqyUTFI/edit?usp=sharing
+
+# Sprint 3
+
+Lien vers le document qui décrit le déroulement de notre Sprint 3 :
+
+https://docs.google.com/document/d/1rJb7rOlbQE8Vm07xzwpAB0g_WSLQFZ1Q8DacquF9log/edit?usp=sharing
