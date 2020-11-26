@@ -115,21 +115,20 @@ public abstract class Monster implements Entity, Effectable {
         float y = this.target.getY() - this.getY();
 
         // Un peu de magie (et de la trigo) et on obtient l'angle
-        float angle = (float) Math.atan(y/x);
-        if (x < 0)
-            angle += Math.PI;
+        float angle = (float) Math.atan2(y, x);
 
         // Application du mouvement
         this.body.setTransform(body.getPosition(), angle);
         this.body.setLinearVelocity(dx, dy);
 
-        if (dx > 0)
+        float pi = (float) Math.PI;
+        if ((angle <= pi && angle >= 3*pi/4) || (angle >= -pi && angle <= -3*pi/4))
             this.direction = Direction.Left;
-        if (dx < 0)
+        if (-pi/4 <= angle && angle <= pi/4)
             this.direction = Direction.Right;
-        if (dy > 0)
+        if (3*pi/4 >= angle && angle >= pi/4)
             this.direction = Direction.Up;
-        if (dy < 0)
+        if (-3*pi/4 <= angle && angle <= -pi/4)
             this.direction = Direction.Down;
 
         if (dx == 0 && dy == 0)

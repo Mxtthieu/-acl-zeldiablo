@@ -140,11 +140,9 @@ public class GameScreen extends ScreenAdapter {
         float y = yM - yP;
 
         // Un peu de magie (et de la trigo) et on obtient l'angle
-        this.angle = (float) Math.atan(y/x);
-        if (x < 0)
-            angle += Math.PI;
-
+        this.angle = (float) Math.atan2(y, x);
         p.move(step.x, step.y, angle);
+
         // --- Fin de la gestion --- //
 
         // --- Gestion de la téléportation ---//
