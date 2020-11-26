@@ -98,7 +98,7 @@ public class Maze {
                             addWall(line, column);
                             break;
                         case MazeObjects.TRAP:
-                            //addTrap(line, column);
+
                             break;
                         case MazeObjects.TREASURE:
                             addTreasure(line,column);

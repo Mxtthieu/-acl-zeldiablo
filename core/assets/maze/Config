@@ -41,6 +41,105 @@
             <posy>30</posy>
             <angle>0</angle>
         </trap>
+        <trap id = "2">
+            <posx>10</posx>
+            <posy>50</posy>
+            <angle>90</angle>
+        </trap>
+    </laby>
+
+    <laby id = "1">
+        <portal id="0">
+            <numlaby>0</numlaby>
+            <posx>50</posx>
+            <posy>50</posy>
+            <draw>0</draw>
+        </portal>
+        <portal id="1">
+            <numlaby>1</numlaby>
+            <posx>10</posx>
+            <posy>10</posy>
+            <draw>1</draw>
+        </portal>
+        <portal id="2">
+            <numlaby>1</numlaby>
+            <posx>10</posx>
+            <posy>50</posy>
+            <draw>1</draw>
+        </portal>
+        <portal id="3">
+            <numlaby>1</numlaby>
+            <posx>60</posx>
+            <posy>20</posy>
+            <draw>1</draw>
+        </portal>
+        <portal id="4">
+            <numlaby>1</numlaby>
+            <posx>55</posx>
+            <posy>50</posy>
+            <draw>1</draw>
+        </portal>
+        <portal id="5">
+            <numlaby>2</numlaby>
+            <posx>10</posx>
+            <posy>10</posy>
+            <draw>0</draw>
+        </portal>
+
+        <link id = "0">
+            <p1>0</p1>
+            <p2>1</p2>
+        </link>
+        <link id = "1">
+            <p1>2</p1>
+            <p2>3</p2>
+        </link>
+        <link id = "2">
+            <p1>4</p1>
+            <p2>5</p2>
+        </link>
+
+        <trap id = "1">
+            <posx>30</posx>
+            <posy>30</posy>
+            <angle>180</angle>
+        </trap>
+        <trap id = "2">
+            <posx>10</posx>
+            <posy>50</posy>
+            <angle>90</angle>
+        </trap>
+    </laby>
+
+    <laby id = "2">
+        <portal id="0">
+            <numlaby>1</numlaby>
+            <posx>55</posx>
+            <posy>50</posy>
+            <draw>0</draw>
+        </portal>
+        <portal id="1">
+            <numlaby>2</numlaby>
+            <posx>10</posx>
+            <posy>10</posy>
+            <draw>1</draw>
+        </portal>
+
+        <link id = "0">
+            <p1>0</p1>
+            <p2>1</p2>
+        </link>
+
+        <trap id = "1">
+            <posx>30</posx>
+            <posy>30</posy>
+            <angle>180</angle>
+        </trap>
+        <trap id = "2">
+            <posx>10</posx>
+            <posy>50</posy>
+            <angle>90</angle>
+        </trap>
     </laby>
 
 </Labyrinthe>

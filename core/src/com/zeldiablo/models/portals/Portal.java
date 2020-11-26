@@ -170,7 +170,7 @@ public class Portal {
      ***/
     public void delai(){
         setActif(false);
-        timer.scheduleTask(actifTask, 3f);
+        timer.scheduleTask(actifTask, 2f);
 
     }
 
