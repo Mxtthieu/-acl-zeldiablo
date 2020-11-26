@@ -8,14 +8,18 @@ Avant de pouvoir lancer le projet, vous devez changer de version Java et prendre
 Libgdx a des problèmes avec les versions plus récentes de Java.
 
 Pour télécharger Java 8:
+
 `sudo apt install openjdk-8-jdk`
 
 Pour changer de version si plusieurs installations de java sont présentes:
+
 `sudo update-alternatives --config java`
 
 Ensuite pour lancer le projet il faut se placer à la racine de celui-ci et faire :
-`gradle
-gradle run`
+
+`gradle`
+
+`gradle run`
   
   
 # Touches principales
