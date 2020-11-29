@@ -2,12 +2,10 @@ package com.zeldiablo.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.enums.MazeObjects;
@@ -18,7 +16,10 @@ import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
 import com.zeldiablo.models.treasure.Treasure;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Maze {
@@ -29,9 +30,9 @@ public class Maze {
 
     private ArrayList<Body> wallList;
     private ArrayList<Trap> trapList;
+    private ArrayList<Treasure> treasureList;
     private ArrayList<Portal> portalList;
     private ArrayList<Monster> monsterList;
-    private ArrayList<Treasure> treasureList;
     private ArrayList<Vector2> monsterToInit;
 
     private int currentNumMaze;
@@ -61,6 +62,7 @@ public class Maze {
         this.wallList.clear();
         this.trapList.clear();
         this.portalList.clear();
+        this.treasureList.clear();
         this.currentNumMaze = num;
         this.mazeFile = new File("./core/assets/maze/Maze" + this.currentNumMaze);
         readObjects();
@@ -101,11 +103,13 @@ public class Maze {
                             case MazeObjects.WALL:
                                 addWall(line, column);
                                 break;
-                            case MazeObjects.TRAP:
-                                addTrap(line, column);
-                                break;
                             case MazeObjects.TREASURE:
-                                addTreasure(line,column);
+                                addTreasure(line, column);
+                                break;
+                            case MazeObjects.SPAWN:
+                                gameWorld.getPlayer().setPosition(
+                                        line+1,GameWorld.HEIGHT - (column+1)
+                                );
                             default:
                                 break;
                         }
@@ -151,7 +155,7 @@ public class Maze {
      * @param column la colonne dans le fichier
      */
     private void addTreasure(int line, int column) {
-        this.treasureList.add(new Treasure(gameWorld,column+1,GameWorld.HEIGHT - line+1, 10));
+        this.treasureList.add(new Treasure(gameWorld, line+1,GameWorld.HEIGHT - (column+1), 10));
     }
 
     /**
@@ -241,8 +245,6 @@ public class Maze {
         batch.draw(grassRegion, 0, 0, grass.getWidth(), grass.getHeight());
         batch.end();
 
-        drawNumMaze(batchText);
-
         // Texture portail
         for (Portal p :portalList){
             if(p.getNumMaze() == this.currentNumMaze) {
@@ -259,10 +261,6 @@ public class Maze {
         for (Monster m : monsterList)
             m.draw(batch, batchText);
 
-        // Texture des trésors
-        for (Treasure t : treasureList)
-            t.draw(batch);
-
         // Texture des murs
         batch.begin();
         float x, y, radius;
@@ -274,19 +272,6 @@ public class Maze {
                     x, y, radius *2, radius *2);
         }
         batch.end();
-    }
-
-    private void drawNumMaze(SpriteBatch batchText) {
-        batchText.begin();
-        Label text;
-        Label.LabelStyle textStyle;
-        textStyle = new Label.LabelStyle();
-        textStyle.font = new BitmapFont();
-        text = new Label(Integer.toString(this.currentNumMaze),textStyle);
-        text.setFontScale(2f,2f);
-        text.setPosition(Gdx.graphics.getWidth() - 50, Gdx.graphics.getHeight() - 50);
-        text.draw(batchText, 1);
-        batchText.end();
     }
 
     public void resetMaze() {
