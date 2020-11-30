@@ -41,6 +41,9 @@ public enum TextureFactory {
     // Attack
     private TextureAtlas slash_attack;
 
+    // Treasure
+    private Texture treasure;
+
     TextureFactory() {
         this.pause = new Texture(Gdx.files.internal("images/Pause.png"));
         this.grass = new Texture("images/grass.jpg");
@@ -68,6 +71,9 @@ public enum TextureFactory {
 
         // Attack
         this.slash_attack = new TextureAtlas("images/attack/slash_attack.atlas");
+
+        // treasure
+        this.treasure = new Texture("images/treasure.png");
     }
 
     public Texture getPause() { return pause; }
@@ -82,6 +88,10 @@ public enum TextureFactory {
 
     public Texture getCannonball() {
         return this.cannonball;
+    }
+
+    public Texture getTreasure() {
+        return this.treasure;
     }
 
     public Animation getAnimatedTree() {

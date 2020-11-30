@@ -110,6 +110,7 @@ public class Maze {
                                 gameWorld.getPlayer().setPosition(
                                         line+1,GameWorld.HEIGHT - (column+1)
                                 );
+                                System.out.println(gameWorld.getPlayer());
                             default:
                                 break;
                         }
@@ -255,6 +256,10 @@ public class Maze {
         // Texture piège
         for (Trap p :trapList){
             p.draw(batch);
+        }
+
+        for (Treasure t : this.treasureList) {
+            t.draw(batch);
         }
 
         // Texture des monstres
