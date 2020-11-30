@@ -236,4 +236,13 @@ public class Player implements Entity, Effectable {
     public void setPosition(float playerX, float playerY) {
         this.body.setTransform(playerX, playerY, 0f);
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                getX() +
+                "," +
+                getY() +
+                "}";
+    }
 }

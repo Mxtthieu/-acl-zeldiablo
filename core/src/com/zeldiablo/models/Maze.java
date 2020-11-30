@@ -108,9 +108,9 @@ public class Maze {
                                 break;
                             case MazeObjects.SPAWN:
                                 gameWorld.getPlayer().setPosition(
-                                        line+1,GameWorld.HEIGHT - (column+1)
+                                        column+1,line-1
                                 );
-                                System.out.println(gameWorld.getPlayer());
+                                System.out.println("Column: " + (column-1) + ", Length: " + c.length() + ", Char: " + c.charAt(column));
                             default:
                                 break;
                         }
