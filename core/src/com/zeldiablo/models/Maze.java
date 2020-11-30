@@ -110,7 +110,6 @@ public class Maze {
                                 gameWorld.getPlayer().setPosition(
                                         column+1,line-1
                                 );
-                                System.out.println("Column: " + (column-1) + ", Length: " + c.length() + ", Char: " + c.charAt(column));
                             default:
                                 break;
                         }
