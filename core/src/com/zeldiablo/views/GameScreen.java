@@ -74,28 +74,6 @@ public class GameScreen extends ScreenAdapter {
             this.gameState.setState(State.IN_PROGRESS);
         }
 
-        // --- Gestion de la pause --- //
-        Trap t;
-        if(this.keyboard.isPaused()){
-            this.gameState.setState(State.PAUSED);
-            this.drawPause();
-            this.game.stopTimer();
-            for(Body b :this.game.getBodies()){
-                if(b.getUserData() instanceof Trap){
-                    t = (Trap)b.getUserData();
-                    t.pause();
-                }
-            }
-        } else {
-            this.gameState.setState(State.IN_PROGRESS);
-            this.game.startTimer();
-            for(Body b :this.game.getBodies()){
-                if(b.getUserData() instanceof Trap){
-                    t = (Trap)b.getUserData();
-                    t.play();
-                }
-            }
-        }
 
         if (this.keyboard.isReset()) {
             this.gameState.setState(State.RESET);
@@ -114,6 +92,36 @@ public class GameScreen extends ScreenAdapter {
             if(!this.gameState.isLoading()){
                 this.game.draw(this.batch, this.batchTexte);
             }
+        }
+
+        // --- Gestion de la pause --- //
+        Trap t;
+        if(this.keyboard.isPaused()){
+            this.gameState.setState(State.PAUSED);
+            this.drawPause();
+            this.game.stopTimer();
+            for(Body b :this.game.getBodies()){
+                if(b.getUserData() instanceof Trap){
+                    t = (Trap)b.getUserData();
+                    t.pause();
+                }
+            }
+        } else if (!this.gameState.isLost()){
+            this.gameState.setState(State.IN_PROGRESS);
+            this.game.startTimer();
+            for(Body b :this.game.getBodies()){
+                if(b.getUserData() instanceof Trap){
+                    t = (Trap)b.getUserData();
+                    t.play();
+                }
+            }
+        }
+
+        // --- Gesion de la mort --- //
+        if(this.gameState.isLost()){
+            Gdx.gl.glClearColor(1, 1, 1, 0);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            this.drawGameOver();
         }
 
         if(!this.gameState.isPaused()){
@@ -214,8 +222,14 @@ public class GameScreen extends ScreenAdapter {
 
     private void drawPause() {
             batch.begin();
-            batch.draw(TextureFactory.INSTANCE.getPause(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.draw(TextureFactory.INSTANCE.getPause(), 0, 0, GameWorld.WIDTH, GameWorld.HEIGHT);
             batch.end();
+    }
+
+    private void drawGameOver() {
+        batch.begin();
+        batch.draw(TextureFactory.INSTANCE.getGameover(), 0, 0, GameWorld.WIDTH, GameWorld.HEIGHT);
+        batch.end();
     }
 
 

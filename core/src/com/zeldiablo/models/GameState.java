@@ -19,4 +19,6 @@ public class GameState {
     public boolean isLoading() { return state == State.LOADING; }
 
     public void setState(State state) { this.state = state; }
+
+    public boolean isLost() { return state == State.LOST; }
 }

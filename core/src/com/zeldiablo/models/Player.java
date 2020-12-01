@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.controllers.Direction;
 import com.zeldiablo.factories.TextureFactory;
+import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.weapons.weaponsCAC.Cac;
 import com.zeldiablo.models.weapons.weaponsCAC.Sword;
 
@@ -216,6 +217,9 @@ public class Player implements Entity, Effectable {
     public int decreaseHP(int hp) {
         this.hp -= hp;
         this.hp = Math.max(0, this.hp);
+        if(this.hp == 0){
+            this.gameWorld.getGameState().setState(State.LOST);
+        }
         return this.hp;
     }
 

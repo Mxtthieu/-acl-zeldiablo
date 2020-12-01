@@ -18,7 +18,6 @@ public class GameStats {
             @Override
             public void run() {
                 time++;
-                System.out.println(time);
             }
         };
         timer.scheduleTask(timeTask,1.0f,1.0f);

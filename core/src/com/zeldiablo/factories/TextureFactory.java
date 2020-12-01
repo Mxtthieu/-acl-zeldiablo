@@ -13,6 +13,7 @@ public enum TextureFactory {
     INSTANCE;
 
     private Texture pause;
+    private Texture gameover;
     private Texture grass;
 
     private static final float FRAMERATE = 1/4f;
@@ -45,7 +46,8 @@ public enum TextureFactory {
     private Texture treasure;
 
     TextureFactory() {
-        this.pause = new Texture(Gdx.files.internal("images/Pause.png"));
+        this.pause = new Texture(Gdx.files.internal("images/ps.png"));
+        this.gameover = new Texture(Gdx.files.internal("images/gs.png"));
         this.grass = new Texture("images/grass.jpg");
 
         // Decor
@@ -77,6 +79,10 @@ public enum TextureFactory {
     }
 
     public Texture getPause() { return pause; }
+
+    public Texture getGameover() {
+        return gameover;
+    }
 
     public Texture getGrass() {
         return this.grass;

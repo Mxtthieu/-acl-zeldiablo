@@ -36,6 +36,7 @@ public class CollisionListener implements ContactListener {
         checkPortalCollision(a,b);
         checkAttackCollision(a,b);
         checkTreasureCollision(a,b);
+        checkMonsterCollision(a,b);
 
     }
 
@@ -105,9 +106,19 @@ public class CollisionListener implements ContactListener {
             treasure.effect(gameWorld);
             this.gameWorld.addBodyToDelete(b);
         } else if (b.getUserData() instanceof Player && a.getUserData() instanceof Treasure){
-            Treasure treasure = (Treasure)b.getUserData();
+            Treasure treasure = (Treasure)a.getUserData();
             treasure.effect(gameWorld);
             this.gameWorld.addBodyToDelete(a);
+        }
+    }
+
+    private void checkMonsterCollision(Body a, Body b) {
+        if(a.getUserData() instanceof Player && b.getUserData() instanceof Monster){
+            Monster monster = (Monster) b.getUserData();
+            monster.effect(gameWorld);
+        } else if (b.getUserData() instanceof Player && a.getUserData() instanceof Monster){
+            Monster monster = (Monster)a.getUserData();
+            monster.effect(gameWorld);
         }
     }
 }

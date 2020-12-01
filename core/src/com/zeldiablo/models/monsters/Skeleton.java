@@ -91,4 +91,9 @@ public class Skeleton extends Monster {
         }
         return this.hp;
     }
+
+    @Override
+    public void effect(GameWorld gameWorld) {
+        gameWorld.getPlayer().decreaseHP(10);
+    }
 }

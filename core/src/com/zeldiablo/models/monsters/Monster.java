@@ -200,4 +200,6 @@ public abstract class Monster implements Entity, Effectable {
     public void stopTimer(){
         this.recalculate.cancel();
     }
+
+    public abstract void effect(GameWorld gameWorld);
 }

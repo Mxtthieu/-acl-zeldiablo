@@ -174,6 +174,11 @@ public class GameWorld {
         return this.gameStats;
     }
 
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
     /**
      * Retourne une grille de booléen indiquant, pour chaque case, si elle est libre ou non.
      * @return grille de booléen
