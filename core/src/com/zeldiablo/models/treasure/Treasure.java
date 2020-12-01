@@ -13,6 +13,7 @@ public class Treasure {
     private Body body;
     private int posX;
     private int posY;
+    private boolean pickedUp;
 
     private static final float RADIUS = 1/90f * GameWorld.WIDTH;
 
@@ -21,6 +22,7 @@ public class Treasure {
         this.treasurePoint = treasurePoint;
         this.posX = x;
         this.posY = y;
+        this.pickedUp = false;
 
         BodyDef bodydef = new BodyDef();
         bodydef.type = BodyDef.BodyType.StaticBody;
@@ -45,11 +47,14 @@ public class Treasure {
 
     public void effect(GameWorld gameWorld){
         this.gameWorld.getGameStats().increaseScore();
+        this.pickedUp = true;
     }
 
     public void draw(SpriteBatch batch) {
-        batch.begin();
-        batch.draw(TextureFactory.INSTANCE.getTreasure(), this.posX-RADIUS, this.posY-RADIUS, RADIUS*2, RADIUS*2);
-        batch.end();
+        if (!this.pickedUp) {
+            batch.begin();
+            batch.draw(TextureFactory.INSTANCE.getTreasure(), this.posX - RADIUS, this.posY - RADIUS, RADIUS * 2, RADIUS * 2);
+            batch.end();
+        }
     }
 }
