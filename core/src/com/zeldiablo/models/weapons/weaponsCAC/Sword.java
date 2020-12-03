@@ -45,7 +45,7 @@ public class Sword extends Cac {
     public void effect(Body b) {
         Monster monster = (Monster)b.getUserData();
         monster.decreaseHP(this.damage);
-        this.gameWorld.getGameStats().increaseScore();
+        this.gameWorld.increaseScore(10);
     }
 
 }

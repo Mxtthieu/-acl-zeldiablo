@@ -46,7 +46,7 @@ public class Treasure {
     }
 
     public void effect(GameWorld gameWorld){
-        this.gameWorld.getGameStats().increaseScore();
+        this.gameWorld.increaseScore(10);
         this.pickedUp = true;
     }
 

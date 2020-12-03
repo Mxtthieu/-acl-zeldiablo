@@ -1,7 +1,6 @@
 package com.zeldiablo.controllers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.zeldiablo.models.GameStats;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
 import com.zeldiablo.models.monsters.Monster;
