@@ -8,9 +8,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.models.GameWorld;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 public abstract class Cac {
 
     protected float atkspeed;

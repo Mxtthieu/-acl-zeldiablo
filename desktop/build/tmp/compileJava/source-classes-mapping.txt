@@ -1,2 +1,0 @@
-com/zeldiablo/desktop/DesktopLauncher.java
- com.zeldiablo.desktop.DesktopLauncher

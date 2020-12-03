@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.monsters.Monster;
-import com.zeldiablo.models.monsters.Skeleton;
 import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;

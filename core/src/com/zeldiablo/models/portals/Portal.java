@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
-import com.badlogic.gdx.utils.Timer;
 
 
 /**

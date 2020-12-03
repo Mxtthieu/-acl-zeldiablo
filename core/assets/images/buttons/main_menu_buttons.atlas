@@ -1,0 +1,19 @@
+main_menu_buttons.png
+size: 1032, 242
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+red_button
+  rotate: false
+  xy: 0, 0
+  size: 516, 242
+  orig: 516, 242
+  offset: 0, 0
+  index: -1
+silver_button
+  rotate: false
+  xy: 516, 0
+  size: 516, 242
+  orig: 516, 242
+  offset: 0, 0
+  index: -1

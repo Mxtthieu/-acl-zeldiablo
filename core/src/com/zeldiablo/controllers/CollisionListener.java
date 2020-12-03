@@ -10,7 +10,6 @@ import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.treasure.Treasure;
 import com.zeldiablo.models.weapons.weaponsCAC.Cac;
-import com.zeldiablo.models.weapons.weaponsCAC.Sword;
 
 public class CollisionListener implements ContactListener {
 
