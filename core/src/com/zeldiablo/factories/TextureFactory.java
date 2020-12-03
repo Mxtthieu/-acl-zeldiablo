@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import jdk.internal.util.ArraysSupport;
+//import jdk.internal.util.ArraysSupport;
 
 public enum TextureFactory {
     INSTANCE;

@@ -76,4 +76,6 @@ public abstract class Cac {
     public abstract void draw(SpriteBatch sb);
 
     public abstract void effect(Body b);
+
+    public Body getHitbox(){return hitbox;}
 }

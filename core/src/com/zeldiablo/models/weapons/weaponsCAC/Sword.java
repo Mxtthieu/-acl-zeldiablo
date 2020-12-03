@@ -36,4 +36,5 @@ public class Sword extends Cac {
         System.out.println(monster.getHp());
     }
 
+
 }
