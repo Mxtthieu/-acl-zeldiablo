@@ -51,9 +51,14 @@ public class TrapDamage extends Trap {
         float x = this.bodyPiege.getPosition().x;
         float y = this.bodyPiege.getPosition().y;
         float size = getWidth();
+        Sprite sprite = new Sprite(tex);
+        sprite.rotate((float)Math.toDegrees(angle));
+        sprite.setOrigin(size/2, size/2);
+        sprite.setPosition(x-size/2, y-size/2);
+        sprite.setSize(size*2, size*2);
 
         batch.begin();
-        batch.draw(tex, x-size/2, y-size/2, size*2, size*2);
+        sprite.draw(batch);
         batch.end();
 
         for (Projectile p : this.projectileList)
