@@ -69,15 +69,16 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(this.gameState.isReset()){
-            this.reset();
-            this.gameState.setState(State.IN_PROGRESS);
-        }
-
-
         if (this.keyboard.isReset()) {
             this.gameState.setState(State.RESET);
             this.keyboard.setReset(false);
+        }
+
+
+        if(this.gameState.isReset()){
+            System.out.println("RESET");
+            this.reset();
+            this.gameState.setState(State.IN_PROGRESS);
         }
 
         if (this.keyboard.isAttack()){
@@ -131,7 +132,8 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void reset() {
-        this.game.loadMaze(1, 10,10);
+        this.game.reset();
+        this.game.getWorld().setContactListener(this.collision);
     }
 
     /**

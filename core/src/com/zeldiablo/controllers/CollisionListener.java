@@ -94,9 +94,11 @@ public class CollisionListener implements ContactListener {
         if(a.getUserData() instanceof Cac && b.getUserData() instanceof Monster){
             Cac weapon = player.getWeapon();
             weapon.effect(b);
+            ((Monster) b.getUserData()).die();
         } else if (b.getUserData() instanceof Cac && a.getUserData() instanceof Monster){
             Cac weapon = player.getWeapon();
             weapon.effect(a);
+            ((Monster) a.getUserData()).die();
         }
     }
 
@@ -105,6 +107,7 @@ public class CollisionListener implements ContactListener {
             Treasure treasure = (Treasure)b.getUserData();
             treasure.effect(gameWorld);
             this.gameWorld.addBodyToDelete(b);
+            this.gameWorld.deleteTreasureMaze(treasure);
         } else if (b.getUserData() instanceof Player && a.getUserData() instanceof Treasure){
             Treasure treasure = (Treasure)a.getUserData();
             treasure.effect(gameWorld);

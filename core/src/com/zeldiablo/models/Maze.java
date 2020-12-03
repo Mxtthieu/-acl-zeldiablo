@@ -303,4 +303,12 @@ public class Maze {
             walls.add(body.getPosition());
         return walls;
     }
+
+    public void deleteTreasure(Treasure treasure) {
+        this.treasureList.remove(treasure);
+    }
+
+    public void deleteMonster(Monster monster) {
+        this.monsterList.remove(monster);
+    }
 }

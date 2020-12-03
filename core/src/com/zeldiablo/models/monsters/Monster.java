@@ -25,6 +25,7 @@ public abstract class Monster implements Entity, Effectable {
     private Entity target;
     private Body body;
     private float speed;
+    private GameWorld gameWorld;
 
     protected int hp;
 
@@ -46,6 +47,7 @@ public abstract class Monster implements Entity, Effectable {
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         this.walking = 0;
         this.direction = Direction.Down;
+        this.gameWorld = gameWorld;
 
         // --- Création du body --- //
         BodyDef bd = new BodyDef();
@@ -202,4 +204,10 @@ public abstract class Monster implements Entity, Effectable {
     }
 
     public abstract void effect(GameWorld gameWorld);
+
+    public void die() {
+        if(this.hp <= 0){
+            this.gameWorld.deleteMonsterMaze(this);
+        }
+    }
 }

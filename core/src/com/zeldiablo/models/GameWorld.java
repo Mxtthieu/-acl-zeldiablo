@@ -15,6 +15,7 @@ import com.zeldiablo.models.portals.Portal;
 import com.zeldiablo.models.traps.Projectile;
 import com.zeldiablo.models.traps.Trap;
 import com.zeldiablo.models.traps.TrapDamage;
+import com.zeldiablo.models.treasure.Treasure;
 import com.zeldiablo.views.GameScreen;
 
 import java.util.ArrayList;
@@ -205,5 +206,20 @@ public class GameWorld {
 
     public void stopTimer(){
         stats.stopTimer();
+    }
+
+    public void deleteTreasureMaze(Treasure treasure) {
+        this.maze.deleteTreasure(treasure);
+    }
+
+    public void deleteMonsterMaze(Monster monster) {
+        this.maze.deleteMonster(monster);
+    }
+
+    public void reset() {
+        this.world = new World(new Vector2(0, 0), true);
+        this.player = new Player(this, "Tester");
+        this.maze = new Maze(this);
+        this.maze.initMonster();
     }
 }
