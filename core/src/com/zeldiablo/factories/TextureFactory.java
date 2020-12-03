@@ -66,7 +66,7 @@ public enum TextureFactory {
         this.skeleton_down = new TextureAtlas("images/monster/skeleton/walk_down.atlas");
 
         // Trap
-        this.cannon = new Texture("images/trap/cannon.png");
+        this.cannon = new Texture("images/trap/ncannon.png");
         this.cannonball = new Texture("images/trap/cannonball.png");
 
         // Attack

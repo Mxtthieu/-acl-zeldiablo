@@ -142,7 +142,7 @@ public class Maze {
                     int posx = Integer.valueOf(eElement2.getElementsByTagName("posx").item(0).getTextContent());
                     int posy = Integer.valueOf(eElement2.getElementsByTagName("posy").item(0).getTextContent());
                     int d = Integer.valueOf(eElement2.getElementsByTagName("draw").item(0).getTextContent());
-                    portalList.add(new Portal(id,numLaby,new Vector2(posx+1,GameWorld.HEIGHT - (posy+1)),d,this.gameWorld.getWorld()));
+                    portalList.add(new Portal(id,numLaby,new Vector2(posx,(posy)),d,this.gameWorld.getWorld()));
                 }
             }
 
@@ -248,7 +248,7 @@ public class Maze {
      * @param j la colonne dans le fichier
      */
     private void addTrap(int i, int j, int angle) {
-        Trap trap = new TrapDamage(new Vector2(j+1,GameWorld.HEIGHT - (i+1)), gameWorld, (float) (angle*Math.PI/180));
+        Trap trap = new TrapDamage(new Vector2(j+1, (i+1)), gameWorld, (float) (angle*Math.PI/180));
         this.gameWorld.addBody(trap.getBody());
         this.trapList.add(trap);
     }

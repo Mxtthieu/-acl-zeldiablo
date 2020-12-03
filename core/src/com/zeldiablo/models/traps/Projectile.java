@@ -40,7 +40,7 @@ public class Projectile {
         CircleShape shape = new CircleShape();
         shape.setRadius(taille);
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = false;
+        fixtureDef.isSensor = true;
         bodyProjectil.setUserData(this);
         bodyProjectil.createFixture(fixtureDef);
         bodyProjectil.setLinearVelocity((float)cos(angle)*5f,(float)sin(angle)*5f);
