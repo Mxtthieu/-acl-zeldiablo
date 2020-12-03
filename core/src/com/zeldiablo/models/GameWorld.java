@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.portals.Portal;
@@ -34,7 +35,10 @@ public class GameWorld {
     private World world;
     private Player player;
     private Maze maze;
-    private GameStats stats;
+    private int score;
+    private Timer timer;
+    protected Timer.Task timeTask;
+    private int time;
 
     // --- Bitmap
     private BitmapFont bitmapFont;
@@ -55,7 +59,17 @@ public class GameWorld {
         this.maze.initMonster();
         this.isTp = false;
         this.bitmapFont = new BitmapFont();
-        this.stats = new GameStats();
+        this.score = 0;
+        this.time = 0;
+        this.timer = new Timer();
+        this.timeTask = new Timer.Task() {
+            @Override
+            public void run() {
+                time++;
+            }
+        };
+        timer.scheduleTask(timeTask,1.0f,1.0f);
+
     }
 
     /**
@@ -200,11 +214,15 @@ public class GameWorld {
     }
 
     public void startTimer() {
-        stats.startTimer();
+        timer.start();
     }
 
     public void stopTimer(){
-        stats.stopTimer();
+        timer.stop();
+    }
+
+    public void increaseScore(int score){
+        this.score += score;
     }
 
     public void deleteTreasureMaze(Treasure treasure) {
