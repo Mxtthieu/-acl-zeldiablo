@@ -1,5 +1,6 @@
 package com.test.monsters;
 
+import com.badlogic.gdx.Game;
 import com.zeldiablo.models.GameState;
 import com.zeldiablo.models.GameWorld;
 import com.zeldiablo.models.Player;
@@ -10,13 +11,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SkeletonTest {
+class SkeletonTest extends Game {
     GameWorld gm;
     Skeleton ske;
+    GameScreen gs;
 
     @BeforeEach
     void ini(){
-        gm = new GameWorld(new GameScreen(), new GameState());
+        gm = new GameWorld(gs, new GameState());
         ske = new Skeleton(gm, 0, 0, new Player(gm, ""));
     }
 
@@ -34,5 +36,10 @@ class SkeletonTest {
     void increaseHPTest() {
         ske.increaseHP(5);
         assertTrue(ske.getHp() == 105);
+    }
+
+    @Override
+    public void create() {
+        gs = new GameScreen();
     }
 }
