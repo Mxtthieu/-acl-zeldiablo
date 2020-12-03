@@ -178,6 +178,8 @@ public abstract class Monster implements Entity, Effectable {
         return hp;
     }
 
+    public Body getBody(){return body;}
+
     @Override
     public void draw(SpriteBatch batch, SpriteBatch batchText) {
         this.tmpAnim += Gdx.graphics.getDeltaTime()*this.walking;

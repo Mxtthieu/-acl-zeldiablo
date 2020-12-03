@@ -48,4 +48,5 @@ public class Sword extends Cac {
         this.gameWorld.increaseScore(10);
     }
 
+
 }
