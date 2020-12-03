@@ -1,7 +1,9 @@
 package com.zeldiablo.models.traps;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -37,7 +39,7 @@ public class TrapDamage extends Trap {
     }
 
     private void addProjectile() {
-        Projectile p = new Projectile(this, new Vector2(this.pos.x + (float)Math.cos(angle) ,pos.y + (float)Math.sin(angle) ), angle, this.gameWorld);
+        Projectile p = new Projectile(this, new Vector2(this.pos.x + (float)Math.cos(angle)*2 ,pos.y + (float)Math.sin(angle)*2f + 0.5f), angle, this.gameWorld);
         this.projectileList.add(p);
     }
 
@@ -48,7 +50,6 @@ public class TrapDamage extends Trap {
      */
     public void draw(SpriteBatch batch){
         Texture tex = TextureFactory.INSTANCE.getCannon();
-
         float x = this.bodyPiege.getPosition().x;
         float y = this.bodyPiege.getPosition().y;
         float size = getWidth();
