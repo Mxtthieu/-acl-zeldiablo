@@ -37,9 +37,9 @@ class CollisionListenerTest {
         t = new TrapDamage(new Vector2(0,0), gm,0);
         p = new Projectile(t, new Vector2(0,0), 0, gm);
         m = new Skeleton(gm, 0, 0, new Player(gm, ""));
-        s = new Sword();
-        p1 = new Portal(0, 0, new Vector2(0,0), new World(new Vector2(0,0), true));
-        p2 = new Portal(0, 0, new Vector2(30,30), new World(new Vector2(0,0), true));
+        s = new Sword(gm);
+        p1 = new Portal(0, 0, new Vector2(0,0), 0,  new World(new Vector2(0,0), true));
+        p2 = new Portal(0, 0, new Vector2(30,30), 0,  new World(new Vector2(0,0), true));
         p1.setExitPortal(p2);
     }
     /*

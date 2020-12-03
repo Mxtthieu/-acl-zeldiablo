@@ -20,8 +20,8 @@ class GameWorldTest {
 
     @Test
     void teleportTest() {
-        Portal p = new Portal(0, 0, new Vector2(0,0), this.world);
-        Portal p2 = new Portal(0, 0, new Vector2(30,30), this.world);
+        Portal p = new Portal(0, 0, new Vector2(0,0), 0, this.world);
+        Portal p2 = new Portal(0, 0, new Vector2(30,30), 0, this.world);
         p.setExitPortal(p2);
         GameWorld gm = new GameWorld(new GameScreen(), new GameState());
         assertTrue(gm.getPlayer().getPosition()==new Vector2(0,0));

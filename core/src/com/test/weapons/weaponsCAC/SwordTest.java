@@ -20,8 +20,8 @@ class SwordTest {
 
     @BeforeEach
     void ini(){
-        s = new Sword();
         gm = new GameWorld(new GameScreen(), new GameState());
+        s = new Sword(gm);
         m = new Skeleton(gm, 0, 0, new Player(gm, ""));
     }
 
