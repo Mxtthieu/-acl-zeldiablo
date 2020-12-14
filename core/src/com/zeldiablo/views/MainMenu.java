@@ -21,6 +21,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class MainMenu extends ScreenAdapter {
 
     private SpriteBatch batch;
@@ -67,10 +72,22 @@ public class MainMenu extends ScreenAdapter {
         this.title.setPosition(Gdx.graphics.getWidth()/2 - this.title.getWidth()/2, Gdx.graphics.getHeight());
 
         // Deux boutons qui vont permettre de jouer ou de quitter l'application
+        TextButton editorButton = new TextButton("Editeur", this.skin, "silver_button");
         TextButton playButton = new TextButton("Jouer", this.skin, "silver_button");
         TextButton exitButton = new TextButton("Quitter", this.skin, "red_button");
 
         // On ajoute a chaque bouton son action
+        editorButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String editorJar = Gdx.files.getLocalStoragePath() + "/editor.jar";
+                try {
+                    runProcess("java -jar " + editorJar);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -85,6 +102,8 @@ public class MainMenu extends ScreenAdapter {
         });
 
         // On ajoute les boutons à la table
+        mainTable.add(editorButton).width(200).height(50).pad(5);
+        mainTable.row();// Permet de sauter une ligne
         mainTable.add(playButton).width(200).height(50).pad(5);
         mainTable.row();// Permet de sauter une ligne
         mainTable.add(exitButton).width(200).height(50).pad(5).padBottom(50);
@@ -140,5 +159,23 @@ public class MainMenu extends ScreenAdapter {
     public void dispose() {
         this.skin.dispose();
         this.atlas.dispose();
+    }
+
+    private static void printLines(String cmd, InputStream ins) throws Exception {
+        String line = null;
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(ins))) {
+            while ((line = in.readLine()) != null) {
+                System.out.println(cmd + " " + line);
+            }
+        }
+    }
+
+    private static void runProcess(String command) throws Exception {
+        Process pro = Runtime.getRuntime().exec(command);
+        printLines(command + " stdout:", pro.getInputStream());
+        printLines(command + " stderr:", pro.getErrorStream());
+        pro.waitFor();
+        System.out.println(command + " exitValue() " + pro.exitValue());
     }
 }
