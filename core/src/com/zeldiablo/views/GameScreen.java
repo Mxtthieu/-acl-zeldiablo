@@ -3,6 +3,8 @@ package com.zeldiablo.views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.zeldiablo.controllers.CollisionListener;
 import com.zeldiablo.controllers.KeyboardListener;
 import com.zeldiablo.controllers.MouseListener;
+import com.zeldiablo.factories.SoundFactory;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameState;
 import com.zeldiablo.models.GameWorld;
@@ -39,6 +42,9 @@ public class GameScreen extends ScreenAdapter {
     private OrthographicCamera camera;      // La caméra du jeu
     private OrthographicCamera cameraText;  // La caméra pour le texte
 
+    private Music music;
+    private boolean losePlayed = false;
+
     public GameScreen() {
         this.batch = new SpriteBatch();
         this.batchTexte = new SpriteBatch();
@@ -57,6 +63,9 @@ public class GameScreen extends ScreenAdapter {
         multi.addProcessor(this.mouse);
         Gdx.input.setInputProcessor(multi);                      // Ajout de la liste d'écouteurs
         this.game.getWorld().setContactListener(this.collision); // Ajout des effects de collision au monde
+
+        this.music = SoundFactory.getInstance().misc_game;
+        this.music.play();
     }
 
     @Override
@@ -74,6 +83,8 @@ public class GameScreen extends ScreenAdapter {
             System.out.println("RESET");
             this.reset();
             this.gameState.setState(State.IN_PROGRESS);
+            this.music.stop();
+            this.losePlayed = false;
         }
 
         if (this.keyboard.isAttack()){
@@ -96,6 +107,7 @@ public class GameScreen extends ScreenAdapter {
             this.gameState.setState(State.PAUSED);
             this.drawPause();
             this.game.stopTimer();
+            this.music.pause();
             for(Body b :this.game.getBodies()){
                 if(b.getUserData() instanceof Trap){
                     t = (Trap)b.getUserData();
@@ -118,10 +130,17 @@ public class GameScreen extends ScreenAdapter {
             Gdx.gl.glClearColor(1, 1, 1, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             this.drawGameOver();
+            if (!this.losePlayed) {
+                SoundFactory.getInstance().lose.play();
+                this.losePlayed = true;
+            }
         }
 
         if(!this.gameState.isPaused()){
             this.update();
+            if (!this.music.isPlaying()) {
+                this.music.play();
+            }
         }
 
     }

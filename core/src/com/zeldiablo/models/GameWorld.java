@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.zeldiablo.factories.SoundFactory;
 import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.monsters.Monster;
 import com.zeldiablo.models.portals.Portal;
@@ -137,6 +138,7 @@ public class GameWorld {
     public void teleport(Player p, Portal por){
         //Si le portail est actif je peux teleporter
         if(por.isActif()) {
+            SoundFactory.getInstance().portal.play();
             // Je rend le portail de sortie inactif pour eviter de teleporter en boucle
             por.exitPortalDelai();
             por.delai();

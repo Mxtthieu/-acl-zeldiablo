@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.zeldiablo.factories.SoundFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +38,8 @@ public class MainMenu extends ScreenAdapter {
     private TextureAtlas atlas;
     private Skin skin;
     private Sprite title;
+    private Sound touchSound;
+    private Music music;
 
     private int yPos;
 
@@ -54,6 +59,10 @@ public class MainMenu extends ScreenAdapter {
 
         this.stage = new Stage(this.viewport, this.batch);
         this.yPos = Gdx.graphics.getHeight();       // Va servire a mémoriser la hauteur du titre
+
+        this.touchSound = SoundFactory.getInstance().touch;
+        this.music = SoundFactory.getInstance().misc_title;
+        this.music.play();
     }
 
     /**
@@ -80,6 +89,7 @@ public class MainMenu extends ScreenAdapter {
         editorButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                touchSound.play();
                 String editorJar = Gdx.files.getLocalStoragePath() + "/editor.jar";
                 try {
                     runProcess("java -jar " + editorJar);
@@ -91,12 +101,16 @@ public class MainMenu extends ScreenAdapter {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                touchSound.play();
+                music.stop();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
             }
         });
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                touchSound.play();
+                music.stop();
                 Gdx.app.exit();
             }
         });
