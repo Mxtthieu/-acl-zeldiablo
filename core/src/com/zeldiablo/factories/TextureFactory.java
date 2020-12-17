@@ -20,6 +20,7 @@ public enum TextureFactory {
     private TextureAtlas animeTree;
     private TextureAtlas animGreenPortal;
     private TextureAtlas animPurplePortal;
+    private Texture portal_inactif;
 
     // Player
     private TextureAtlas player_right;
@@ -52,6 +53,7 @@ public enum TextureFactory {
         this.animeTree = new TextureAtlas("images/tree/pack.atlas");
         this.animGreenPortal = new TextureAtlas("images/portal/green_portal.atlas");
         this.animPurplePortal = new TextureAtlas("images/portal/purple_portal.atlas");
+        this.portal_inactif = new Texture("images/portal/idle_portal.png");
 
         // Texture Player
         this.player_right = new TextureAtlas("images/player/walk_right.atlas");
@@ -88,6 +90,10 @@ public enum TextureFactory {
 
     public Texture getCannon() {
         return this.cannon;
+    }
+
+    public Texture getPortal_inactif() {
+        return this.portal_inactif;
     }
 
     public Texture getCannonball() {
