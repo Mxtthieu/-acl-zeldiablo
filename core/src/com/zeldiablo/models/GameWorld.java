@@ -232,4 +232,12 @@ public class GameWorld {
         this.maze = new Maze(this);
         this.maze.initMonster();
     }
+
+    public Maze getMaze(){
+        return this.maze;
+    }
+
+    public int getScore(){
+        return this.score;
+    }
 }
