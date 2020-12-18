@@ -1,6 +1,7 @@
 package com.zeldiablo.models.portals;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -89,6 +90,9 @@ public class Portal {
      */
     public void setExitPortal(Portal exitPortal) {
         this.exitPortal = exitPortal;
+        if (!this.exitSameMaze()){
+            this.animation = TextureFactory.INSTANCE.getAnimatedGreenPortal();
+        }
     }
 
     /***
@@ -146,7 +150,13 @@ public class Portal {
      */
     public void draw(SpriteBatch batch){
         this.tmpAnim += Gdx.graphics.getDeltaTime();
-        TextureRegion region = (TextureRegion) this.animation.getKeyFrame(this.tmpAnim);
+        Texture tex = null;
+        TextureRegion region = null;
+        if(this.actif) {
+             region = (TextureRegion) this.animation.getKeyFrame(this.tmpAnim);
+        }else{
+            tex = TextureFactory.INSTANCE.getPortal_inactif();
+        }
 
         float x = this.bodyPortal.getPosition().x;
         float y = this.bodyPortal.getPosition().y;
@@ -154,7 +164,11 @@ public class Portal {
         float size = taille*4;
 
         batch.begin();
-        batch.draw(region, x-size/2, y-size/2, size, size);
+        if(this.actif) {
+            batch.draw(region, x - size / 2, y - size / 2, size, size);
+        }else{
+            batch.draw(tex, x - size / 2, y - size / 2, size/3, size/3);
+        }
         batch.end();
     }
 
