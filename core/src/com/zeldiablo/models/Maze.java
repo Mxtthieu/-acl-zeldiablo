@@ -57,7 +57,7 @@ public class Maze {
         this.monsterToInit = new ArrayList<>();
         this.treasureList = new ArrayList<>();
         this.currentNumMaze = 0;
-        this.currentHPM = 100;
+        this.currentHPM = 20;
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         loadMaze(0);
     }
@@ -369,7 +369,9 @@ public class Maze {
     }
 
     public void deleteMonster(Monster monster) {
+        monster.stopTimer();
         this.monsterList.remove(monster);
+        this.gameWorld.addBodyToDelete(monster.getBody());
     }
 
     public int getCurrentHPM(){

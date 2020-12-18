@@ -44,6 +44,7 @@ public class GameScreen extends ScreenAdapter {
 
     private Music music;
     private boolean losePlayed = false;
+    private boolean winPlayed = false;
 
     public GameScreen() {
         this.batch = new SpriteBatch();
@@ -80,7 +81,6 @@ public class GameScreen extends ScreenAdapter {
 
 
         if(this.gameState.isReset()){
-            System.out.println("RESET");
             this.reset();
             this.gameState.setState(State.IN_PROGRESS);
             this.music.stop();
@@ -114,7 +114,7 @@ public class GameScreen extends ScreenAdapter {
                     t.pause();
                 }
             }
-        } else if (!this.gameState.isLost()){
+        } else if (!this.gameState.isLost() && !this.gameState.isWinned()){
             this.gameState.setState(State.IN_PROGRESS);
             this.game.startTimer();
             for(Body b :this.game.getBodies()){
@@ -136,6 +136,18 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
+        // --- Gestion de la victoire --- //
+        if(this.gameState.isWinned()){
+            Gdx.gl.glClearColor(1, 1, 1, 0);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            this.music.stop();
+            this.drawWin();
+            if(!this.winPlayed) {
+                //SoundFactory.getInstance().win.play();
+                this.winPlayed = true;
+            }
+        }
+
         if(!this.gameState.isPaused()){
             this.update();
             if (!this.music.isPlaying()) {
@@ -145,7 +157,11 @@ public class GameScreen extends ScreenAdapter {
 
     }
 
+
+
     private void reset() {
+        this.losePlayed = false;
+        this.winPlayed = false;
         this.game.reset();
         this.game.getWorld().setContactListener(this.collision);
     }
@@ -156,6 +172,9 @@ public class GameScreen extends ScreenAdapter {
     private void update() {
 
         // --- Fin de Gestion --- //
+        if(game.getScore() >= 50){
+            this.gameState.setState(State.WINNED);
+        }
 
         // --- Gestion du déplacement et de la rotation du personnage dans le jeu --- //
         Vector2 step = keyboard.getStep();
@@ -243,6 +262,12 @@ public class GameScreen extends ScreenAdapter {
     private void drawGameOver() {
         batch.begin();
         batch.draw(TextureFactory.INSTANCE.getGameover(), 0, 0, GameWorld.WIDTH, GameWorld.HEIGHT);
+        batch.end();
+    }
+
+    private void drawWin() {
+        batch.begin();
+        batch.draw(TextureFactory.INSTANCE.getWin(), 0, 0, GameWorld.WIDTH, GameWorld.HEIGHT);
         batch.end();
     }
 

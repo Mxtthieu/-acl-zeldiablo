@@ -92,11 +92,11 @@ public class CollisionListener implements ContactListener {
         if(a.getUserData() instanceof Cac && b.getUserData() instanceof Monster){
             Cac weapon = player.getWeapon();
             weapon.effect(b);
-            ((Monster) b.getUserData()).die();
+            ((Monster)b.getUserData()).die();
         } else if (b.getUserData() instanceof Cac && a.getUserData() instanceof Monster){
             Cac weapon = player.getWeapon();
             weapon.effect(a);
-            ((Monster) a.getUserData()).die();
+            ((Monster)a.getUserData()).die();
         }
     }
 

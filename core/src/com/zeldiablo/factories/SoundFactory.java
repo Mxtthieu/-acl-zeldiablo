@@ -3,6 +3,7 @@ package com.zeldiablo.factories;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.zeldiablo.models.traps.Trap;
 
 public class SoundFactory {
 
@@ -21,12 +22,14 @@ public class SoundFactory {
     private static final String MUSIC = SOUND + "music/";
     public final Music misc_game;
     public final Music misc_title;
+    public Music win;
 
     private SoundFactory() {
         this.attack = loadSound("attack.wav");
         this.coins  = loadSound("coins.wav");
         this.hurt   = loadSound("hurt.wav");
         this.lose   = loadSound("lose.wav");
+        //this.win = loadSound("win.wav");
         this.portal = loadSound("portal.wav");
         this.touch  = loadSound("touch.wav");
 

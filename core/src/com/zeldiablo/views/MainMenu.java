@@ -90,7 +90,7 @@ public class MainMenu extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 touchSound.play();
-                String editorJar = Gdx.files.getLocalStoragePath() + "/editor.jar";
+                String editorJar = Gdx.files.getLocalStoragePath() + "editor.jar";
                 try {
                     runProcess("java -jar " + editorJar);
                 } catch (Exception e) {

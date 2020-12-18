@@ -8,7 +8,7 @@ import com.zeldiablo.models.Player;
 public class Skeleton extends Monster {
 
     public Skeleton(GameWorld gameWorld, float x, float y, Player target) {
-        super(gameWorld, x, y, target, 100);
+        super(gameWorld, x, y, target, 20);
         this.animations.put(Direction.Down, TextureFactory.INSTANCE.getAnimatedSkeletonDown());
         this.animations.put(Direction.Left, TextureFactory.INSTANCE.getAnimatedSkeletonLeft());
         this.animations.put(Direction.Right, TextureFactory.INSTANCE.getAnimatedSkeletonRight());
