@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +22,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.zeldiablo.factories.SoundFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainMenu extends ScreenAdapter {
 
@@ -30,6 +38,8 @@ public class MainMenu extends ScreenAdapter {
     private TextureAtlas atlas;
     private Skin skin;
     private Sprite title;
+    private Sound touchSound;
+    private Music music;
 
     private int yPos;
 
@@ -49,6 +59,10 @@ public class MainMenu extends ScreenAdapter {
 
         this.stage = new Stage(this.viewport, this.batch);
         this.yPos = Gdx.graphics.getHeight();       // Va servire a mémoriser la hauteur du titre
+
+        this.touchSound = SoundFactory.getInstance().touch;
+        this.music = SoundFactory.getInstance().misc_title;
+        this.music.play();
     }
 
     /**
@@ -67,24 +81,43 @@ public class MainMenu extends ScreenAdapter {
         this.title.setPosition(Gdx.graphics.getWidth()/2 - this.title.getWidth()/2, Gdx.graphics.getHeight());
 
         // Deux boutons qui vont permettre de jouer ou de quitter l'application
+        TextButton editorButton = new TextButton("Editeur", this.skin, "silver_button");
         TextButton playButton = new TextButton("Jouer", this.skin, "silver_button");
         TextButton exitButton = new TextButton("Quitter", this.skin, "red_button");
 
         // On ajoute a chaque bouton son action
+        editorButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                touchSound.play();
+                String editorJar = Gdx.files.getLocalStoragePath() + "/editor.jar";
+                try {
+                    runProcess("java -jar " + editorJar);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                touchSound.play();
+                music.stop();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
             }
         });
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                touchSound.play();
+                music.stop();
                 Gdx.app.exit();
             }
         });
 
         // On ajoute les boutons à la table
+        mainTable.add(editorButton).width(200).height(50).pad(5);
+        mainTable.row();// Permet de sauter une ligne
         mainTable.add(playButton).width(200).height(50).pad(5);
         mainTable.row();// Permet de sauter une ligne
         mainTable.add(exitButton).width(200).height(50).pad(5).padBottom(50);
@@ -140,5 +173,23 @@ public class MainMenu extends ScreenAdapter {
     public void dispose() {
         this.skin.dispose();
         this.atlas.dispose();
+    }
+
+    private static void printLines(String cmd, InputStream ins) throws Exception {
+        String line = null;
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(ins))) {
+            while ((line = in.readLine()) != null) {
+                System.out.println(cmd + " " + line);
+            }
+        }
+    }
+
+    private static void runProcess(String command) throws Exception {
+        Process pro = Runtime.getRuntime().exec(command);
+        printLines(command + " stdout:", pro.getInputStream());
+        printLines(command + " stderr:", pro.getErrorStream());
+        pro.waitFor();
+        System.out.println(command + " exitValue() " + pro.exitValue());
     }
 }

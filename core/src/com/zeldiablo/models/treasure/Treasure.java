@@ -3,6 +3,7 @@ package com.zeldiablo.models.treasure;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.zeldiablo.factories.SoundFactory;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.GameWorld;
 
@@ -48,6 +49,7 @@ public class Treasure {
     public void effect(GameWorld gameWorld){
         this.gameWorld.increaseScore(10);
         this.pickedUp = true;
+        SoundFactory.getInstance().coins.play();
     }
 
     public void draw(SpriteBatch batch) {

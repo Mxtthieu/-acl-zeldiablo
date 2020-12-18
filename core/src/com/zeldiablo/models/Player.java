@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.zeldiablo.controllers.Direction;
+import com.zeldiablo.factories.SoundFactory;
 import com.zeldiablo.factories.TextureFactory;
 import com.zeldiablo.models.enums.State;
 import com.zeldiablo.models.weapons.weaponsCAC.Cac;
@@ -39,7 +40,7 @@ public class Player implements Entity, Effectable {
         this.hp = 100;
         this.att = 0;
         this.def = 0;
-        this.speed = 10;
+        this.speed = 5;
         this.weapon = new Sword(gameWorld);
         this.gameWorld = gameWorld;
         this.attacking = false;
@@ -197,6 +198,7 @@ public class Player implements Entity, Effectable {
     public void attack(float angle){
         this.attacking = true;
         weapon.attack(this.getRadius() ,this.body.getPosition().x,this.body.getPosition().y, angle, gameWorld.getWorld());
+        SoundFactory.getInstance().attack.play();
     }
 
     public void setHp(int hp) {
@@ -215,6 +217,7 @@ public class Player implements Entity, Effectable {
      */
     @Override
     public int decreaseHP(int hp) {
+        SoundFactory.getInstance().hurt.play();
         this.hp -= hp;
         this.hp = Math.max(0, this.hp);
         if(this.hp == 0){
