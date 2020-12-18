@@ -45,6 +45,7 @@ public class Sword extends Cac {
         Monster monster = (Monster)b.getUserData();
         monster.decreaseHP(this.damage);
         this.gameWorld.increaseScore(10);
+        this.gameWorld.getMaze().setCurrentHPM(100 + this.gameWorld.getScore()/10);
     }
 
 

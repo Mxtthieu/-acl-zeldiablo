@@ -44,6 +44,9 @@ public class Maze {
 
     private int currentNumMaze;
     private float tmpAnim;
+    private int currentHPM;
+
+    private Monster s;
 
     public Maze(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
@@ -54,6 +57,7 @@ public class Maze {
         this.monsterToInit = new ArrayList<>();
         this.treasureList = new ArrayList<>();
         this.currentNumMaze = 0;
+        this.currentHPM = 100;
         this.tmpAnim = Gdx.graphics.getDeltaTime();
         loadMaze(0);
     }
@@ -228,7 +232,9 @@ public class Maze {
      * @param j la colonne dans le fichier
      */
     private void addMonster(int i, int j) {
-        this.monsterList.add(new Skeleton(gameWorld,j+1,GameWorld.HEIGHT - (i+1), gameWorld.getPlayer()));
+        this.s = new Skeleton(gameWorld,j+1,GameWorld.HEIGHT - (i+1), gameWorld.getPlayer());
+        this.s.setHp(currentHPM);
+        this.monsterList.add(s);
     }
 
     /**
@@ -364,5 +370,19 @@ public class Maze {
 
     public void deleteMonster(Monster monster) {
         this.monsterList.remove(monster);
+    }
+
+    public int getCurrentHPM(){
+        return this.currentHPM;
+    }
+
+    public void setCurrentHPM(int i){
+        this.currentHPM = i;
+    }
+
+    public void setMonstersHP(int i){
+        for (Monster m : this.monsterList){
+            m.setHp(i);
+        }
     }
 }
