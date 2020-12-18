@@ -167,7 +167,7 @@ public class Portal {
         if(this.actif) {
             batch.draw(region, x - size / 2, y - size / 2, size, size);
         }else{
-            batch.draw(tex, x - size / 2, y - size / 2, size/3, size/3);
+            batch.draw(tex, x+1 - size / 4, y + 0.5f - size / 2, size/6, size/2+ 0.7f);
         }
         batch.end();
     }
