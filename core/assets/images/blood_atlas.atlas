@@ -1,0 +1,47 @@
+blood.png
+size: 43, 208
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blood-0
+  rotate: false
+  xy: 1, 182
+  size: 29, 25
+  orig: 64, 56
+  offset: 18, 16
+  index: -1
+blood-1
+  rotate: false
+  xy: 1, 150
+  size: 34, 30
+  orig: 64, 56
+  offset: 16, 16
+  index: -1
+blood-2
+  rotate: false
+  xy: 1, 115
+  size: 37, 33
+  orig: 64, 56
+  offset: 15, 16
+  index: -1
+blood-3
+  rotate: false
+  xy: 1, 79
+  size: 40, 34
+  orig: 64, 56
+  offset: 14, 15
+  index: -1
+blood-4
+  rotate: false
+  xy: 1, 41
+  size: 40, 36
+  orig: 64, 56
+  offset: 14, 13
+  index: -1
+blood-5
+  rotate: false
+  xy: 1, 1
+  size: 41, 38
+  orig: 64, 56
+  offset: 14, 11
+  index: -1

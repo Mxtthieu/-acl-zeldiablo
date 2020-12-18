@@ -22,6 +22,9 @@ public enum TextureFactory {
     private TextureAtlas animPurplePortal;
     private Texture portal_inactif;
 
+    // Blood
+    private TextureAtlas animBlood;
+
     // Player
     private TextureAtlas player_right;
     private TextureAtlas player_left;
@@ -51,9 +54,14 @@ public enum TextureFactory {
 
         // Decor
         this.animeTree = new TextureAtlas("images/tree/pack.atlas");
+
+        // Portal
         this.animGreenPortal = new TextureAtlas("images/portal/green_portal.atlas");
         this.animPurplePortal = new TextureAtlas("images/portal/purple_portal.atlas");
         this.portal_inactif = new Texture("images/portal/idle_portal.png");
+
+        // Blood
+        this.animBlood = new TextureAtlas("images/blood_atlas.atlas");
 
         // Texture Player
         this.player_right = new TextureAtlas("images/player/walk_right.atlas");
@@ -111,6 +119,11 @@ public enum TextureFactory {
 
     public Animation getAnimatedGreenPortal() {
         Array<Sprite> img = this.animGreenPortal.createSprites();
+        return new Animation(FRAMERATE, img, Animation.PlayMode.LOOP);
+    }
+
+    public Animation getAnimBlood() {
+        Array<Sprite> img = this.animBlood.createSprites();
         return new Animation(FRAMERATE, img, Animation.PlayMode.LOOP);
     }
 

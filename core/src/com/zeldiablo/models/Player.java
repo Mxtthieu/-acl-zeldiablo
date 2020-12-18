@@ -29,13 +29,17 @@ public class Player implements Entity, Effectable {
     private Body body;
     private GameWorld gameWorld;
     private boolean attacking;
+    private boolean hited;
 
     private HashMap<Direction, Animation> animations;
+    private Animation animation;
     private Direction direction;
     private float tmpAnim;
+    private float tmpAnim2;
     private int walking;
 
     public Player(GameWorld gameWorld, String n) {
+        this.hited = false;
         this.name = n;
         this.hp = 100;
         this.att = 0;
@@ -44,6 +48,9 @@ public class Player implements Entity, Effectable {
         this.weapon = new Sword(gameWorld);
         this.gameWorld = gameWorld;
         this.attacking = false;
+
+        this.tmpAnim2 = Gdx.graphics.getDeltaTime();
+        this.animation = TextureFactory.INSTANCE.getAnimBlood();
 
         this.animations = new HashMap<>();
         this.animations.put(Direction.Up, TextureFactory.INSTANCE.getAnimatedPlayerUp());
@@ -181,9 +188,17 @@ public class Player implements Entity, Effectable {
     @Override
     public void draw(SpriteBatch batch, SpriteBatch batchText) {
         this.tmpAnim += Gdx.graphics.getDeltaTime()*this.walking;
+        this.tmpAnim2 += Gdx.graphics.getDeltaTime();
+        if(this.tmpAnim2>1){
+            this.hited =false;
+        }
+        TextureRegion region2 = (TextureRegion) this.animation.getKeyFrame(this.tmpAnim2);
         TextureRegion region = (TextureRegion) this.animations.get(this.direction).getKeyFrame(this.tmpAnim);
         batch.begin();
         batch.draw(region, getX()-SIZE/2, getY()-SIZE/2, SIZE, SIZE);
+        if (hited) {
+            batch.draw(region2, getX() - SIZE / 2, getY() - SIZE / 2, SIZE, SIZE);
+        }
         batch.end();
 
         this.weapon.draw(batch);
@@ -218,6 +233,8 @@ public class Player implements Entity, Effectable {
     @Override
     public int decreaseHP(int hp) {
         SoundFactory.getInstance().hurt.play();
+        this.hited = true;
+        this.tmpAnim2 = 0f;
         this.hp -= hp;
         this.hp = Math.max(0, this.hp);
         if(this.hp == 0){
